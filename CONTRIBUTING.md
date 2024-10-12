@@ -9,7 +9,7 @@ Grazie per voler contribuire a Weather App! La tua partecipazione è fondamental
 2. **Clona il repository forkato**: Clona il tuo fork locale sul tuo computer.
 
   ```bash
-  git clone 
+  git clone https://github.com/nagcas/Weather-App.git
   cd weather-app
   ```
 

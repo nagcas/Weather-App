@@ -40,7 +40,7 @@ Assicurati di avere installato Node.js, npm e MongoDB sul tuo computer.
 1. Clona il repository:
 
   ```bash
-  git clone
+  git clone https://github.com/nagcas/Weather-App.git
   cd weather-app
   ```
 
