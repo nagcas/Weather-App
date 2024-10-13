@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const userRouter = require('./routes/userRoutes');
 const app = express();
 const PORT = 3000;
 
@@ -14,10 +15,7 @@ app.get('/',(req,res) =>{
     res.status(200).send('Handling basic get request on / endpoint')
 })
 
-app.post('/',(req,res) =>{
-    res.status(200).send("Post response");
-    
-})
+app.use('/register',userRouter);
 
 
 mongoose.connect(MONGO_URI)
