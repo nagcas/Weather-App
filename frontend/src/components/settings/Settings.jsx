@@ -3,7 +3,7 @@ import "./Settings.css";
 function Settings() {
   return (
     <>
-      <p>Settings</p>
+      <p className="title">Settings</p>
     </>
   );
 };

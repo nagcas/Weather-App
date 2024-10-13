@@ -3,7 +3,7 @@ import "./Forecast.css";
 function Forecast() {
   return (
     <>
-      <p>Forecast</p>
+      <p className="title">Forecast</p>
     </>
   );
 };

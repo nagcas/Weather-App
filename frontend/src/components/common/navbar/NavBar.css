@@ -1,3 +1,9 @@
+.logo {
+  font-size: 1.5rem;
+  text-decoration: none;
+  color: #fff;
+}
+
 .close__white .btn-close {
   filter: invert(1);
   border: none;
@@ -5,18 +11,24 @@
   box-shadow: none;
 }
 
-.btn__accedi {
-  color: #fff;
-  text-transform: uppercase;
+.btn__login {
+  background-color: #fff;
+  color: #000;
+  box-shadow: 5px 10px 20px 0px rgba(0, 0, 0, 0.3);
+  border: 0;
+  padding: 10px 20px;
+  border-radius: 15px;
   text-decoration: none;
+  text-transform: uppercase;
+  margin-right: 20px;
 }
  
-.btn__accedi:hover {
-  color: #014c9c;
+.btn__login:hover {
+  background-color: #aaa6a6;
 }
 
-.btn__registrati {
-  background-color: #1c547d;
+.btn__signUp {
+  background-color: #545553;
   box-shadow: 5px 10px 20px 0px rgba(0, 0, 0, 0.3);
   color: #fff;
   border: 0;
@@ -25,8 +37,8 @@
   text-transform: uppercase;
 }
 
-.btn__registrati:hover {
-  background-color: #002144;
+.btn__signUp:hover {
+  background-color: #40413f;
   color:#fff;
 }
 
@@ -34,7 +46,7 @@
 .nav__menu {
   position: relative;
   text-decoration: none;
-  color: inherit;
+  color: #fff;
 }
 
 .nav__menu::after {
@@ -58,7 +70,7 @@
 .nav__menu:focus::after {
   width: 100%;
   left: 0;
-  background: #014c9c;
+  background: #545553;;
 }
 
 .menu__navbar {
@@ -93,16 +105,6 @@
   margin-top: var(--bs-dropdown-spacer);
 }
 
-.btn__translations {
-  background-color: rgba(255, 255, 255, 0);
-  border: 0;
-}
-
-.btn__translations:hover {
-  background-color: rgba(255, 255, 255, 0);
-  border: 0;
-}
-
 .custom-dropdown-toggle::after {
   border-top-color: #fff;
 }
@@ -116,10 +118,6 @@
 .dropdown-menu .dropdown-item:active {
   background-color: #1c547d;
   color: #ffffff;
-}
-
-.image__bandiera {
-  width: 25px;
 }
 
 /* smartphone */

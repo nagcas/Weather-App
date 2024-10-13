@@ -1,14 +1,15 @@
 import "./NavBar.css";
 import { useState } from "react";
 import {
+  Button,
   Container,
   Dropdown,
   Image,
   Nav,
   Navbar,
-  NavLink,
   Offcanvas,
 } from "react-bootstrap";
+import { Link, NavLink } from "react-router-dom";
 
 function NavBar() {
 
@@ -25,7 +26,9 @@ function NavBar() {
       <Container fluid={true}>
         {/* Logo Portfolio */}
         <Navbar.Brand>
-          Weather App        
+          <Link to="/" class="logo">
+            Weather App        
+          </Link>
         </Navbar.Brand>
         {/* Toggle Btn */}
         <Navbar.Toggle
@@ -40,7 +43,6 @@ function NavBar() {
           onHide={handleClose}
           id="offcanvasNavbar-expand-lg"
           aria-labelledby="offcanvasNavbarLabel-expand-lg"
-          placement="start"
           className="sidebar"
         >
           {/* Sidebar header */}
@@ -56,29 +58,15 @@ function NavBar() {
           {/* Sidebar body */}
           <Offcanvas.Body className="d-flex flex-column flex-lg-row p-4 p-lg-0">
             <Nav className="d-flex justify-content-center align-items-center flex-grow-1 pe-3">
-              <NavLink>Home</NavLink>
-              <NavLink>Current Weather</NavLink>
-              <NavLink>Forecast</NavLink>
-              <NavLink>Settings</NavLink>
-              <NavLink>About</NavLink>
-              <NavLink>Login</NavLink>
-              <NavLink>Sign Up</NavLink>
+              <NavLink to="/" className="nav__menu m-3" onClick={handleClose}>Home</NavLink>
+              <NavLink to="/current-weather" className="nav__menu m-3" onClick={handleClose}>Current Weather</NavLink>
+              <NavLink to="/forecast" className="nav__menu m-3" onClick={handleClose}>Forecast</NavLink>
+              <NavLink to="/settings" className="nav__menu m-3" onClick={handleClose}>Settings</NavLink>
+              <NavLink to="/about" className="nav__menu m-3" onClick={handleClose}>About</NavLink>
             </Nav>
             <div className="d-flex justify-content-center align-items-center">
-              <a
-                href="https://github.com/nagcas"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <i className="bi bi-github icons__social me-4"></i>
-              </a>
-              <a
-                href="https://www.linkedin.com/in/gianluca-chiaravalloti-5694081a2/"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <i className="bi bi-linkedin icons__social"></i>
-              </a>
+              <Button className="btn__login" onClick={handleClose}>Login</Button>
+              <Button className="btn__signUp" onClick={handleClose}>Sign Up</Button>
             </div>
           </Offcanvas.Body>
         </Navbar.Offcanvas>

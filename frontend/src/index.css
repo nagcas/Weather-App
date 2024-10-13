@@ -5,7 +5,7 @@
 }
 
 body {
-  background: url('./assets/background/background.jpg') rgba(0, 0, 0, 0.6) fixed;
+  background: url('./assets/background/background2.jpg') rgba(0, 0, 0, 0.5) fixed;
   background-blend-mode: multiply;
   background-position: center;
   background-size: cover;

@@ -3,7 +3,7 @@ import "./Favorites.css";
 function Favorites() {
   return (
     <>
-      <p>Favorites</p>
+      <p className="title">Favorites</p>
     </>
   );
 };

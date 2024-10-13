@@ -3,7 +3,7 @@ import "./CurrentWeather.css";
 function CurrentWeather() {
   return (
     <>
-      <p>Current Weather</p>
+      <p className="title">Current Weather</p>
     </>
   );
 };
