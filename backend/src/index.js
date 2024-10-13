@@ -15,6 +15,7 @@ app.get('/',(req,res) =>{
     res.status(200).send('Handling basic get request on / endpoint')
 })
 
+app.use('/login',userRouter);
 app.use('/register',userRouter);
 
 
