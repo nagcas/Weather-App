@@ -1,7 +1,9 @@
+import "./Home.css";
+
 function Home() {
   return (
     <>
-      <h1>Weather App</h1>
+      <h1 className="title__app">Weather App</h1>
     </>
   );
 };

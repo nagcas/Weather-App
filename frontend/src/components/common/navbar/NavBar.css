@@ -1,0 +1,148 @@
+.close__white .btn-close {
+  filter: invert(1);
+  border: none;
+  outline: none;
+  box-shadow: none;
+}
+
+.btn__accedi {
+  color: #fff;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+ 
+.btn__accedi:hover {
+  color: #014c9c;
+}
+
+.btn__registrati {
+  background-color: #1c547d;
+  box-shadow: 5px 10px 20px 0px rgba(0, 0, 0, 0.3);
+  color: #fff;
+  border: 0;
+  padding: 10px 20px;
+  border-radius: 15px;
+  text-transform: uppercase;
+}
+
+.btn__registrati:hover {
+  background-color: #002144;
+  color:#fff;
+}
+
+/* NavbarSafe.css */
+.nav__menu {
+  position: relative;
+  text-decoration: none;
+  color: inherit;
+}
+
+.nav__menu::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  display: block;
+  margin-top: 1px;
+  right: 0;
+  background: #ccc;
+  transition: width 0.3s ease;
+}
+
+.nav__menu:hover::after {
+  width: 100%;
+  left: 0;
+  background: #ccc;
+}
+
+.nav__menu:focus::after {
+  width: 100%;
+  left: 0;
+  background: #014c9c;
+}
+
+.menu__navbar {
+  color: #fff;
+  transition: color 0.3s;
+  backdrop-filter: blur(40px);
+}
+
+.menu__navbar__link {
+  font-size: 0.9rem;
+  color: #fff;
+  text-decoration: none;
+}
+
+.menu__navbar__link:hover {
+  color: #ccc;
+}
+
+.menu__navbar__link.active {
+  color: #fff;
+}
+
+.menu__navbar__link.active::after {
+  background: #fff;
+  width: 100%;
+  left: 0;
+}
+
+.dropdown-menu[data-bs-popper] {
+  top: 100%;
+  left: 20px;
+  margin-top: var(--bs-dropdown-spacer);
+}
+
+.btn__translations {
+  background-color: rgba(255, 255, 255, 0);
+  border: 0;
+}
+
+.btn__translations:hover {
+  background-color: rgba(255, 255, 255, 0);
+  border: 0;
+}
+
+.custom-dropdown-toggle::after {
+  border-top-color: #fff;
+}
+
+.custom-dropdown-toggle:focus::after,
+.custom-dropdown-toggle:hover::after {
+  border-top-color: #fff;
+}
+
+.dropdown-menu .dropdown-item.active,
+.dropdown-menu .dropdown-item:active {
+  background-color: #1c547d;
+  color: #ffffff;
+}
+
+.image__bandiera {
+  width: 25px;
+}
+
+/* smartphone */
+@media(max-width: 991px) {
+  .sidebar {
+    background-color: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+  }
+
+  .menu__navbar__link {
+    color: #fff;
+    text-decoration: none;
+    margin-top: 20px;
+  }
+
+  .menu__navbar__link:hover {
+    color: #fff;
+  }
+
+  .drop__menu[data-bs-popper] {
+    top: 100%;
+    left: 20px;
+    margin-top: var(--bs-dropdown-spacer);
+  }
+
+}
