@@ -1,11 +1,14 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+import Home from './pages/home/home';
+
 
 function App() {
 
   return (
     <>
-      <h1>Wheather App</h1>
+      <Home />
     </>
   )
 }
