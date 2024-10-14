@@ -1,0 +1,18 @@
+.nav__link {
+  text-decoration: none;
+}
+
+.nav__link:hover {
+  color: #fff;
+  text-decoration: underline;
+}
+
+.link__hack {
+  color: #fff;
+  text-decoration: none;
+}
+
+.link__hack:hover {
+  color: #ccc;
+  text-decoration: underline;
+}

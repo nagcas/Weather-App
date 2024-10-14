@@ -26,7 +26,7 @@ function NavBar() {
       <Container fluid={true}>
         {/* Logo Portfolio */}
         <Navbar.Brand>
-          <Link to="/" class="logo">
+          <Link to="/" className="logo">
             Weather App        
           </Link>
         </Navbar.Brand>
