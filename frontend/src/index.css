@@ -12,3 +12,46 @@ body {
   background-repeat: no-repeat;
   font-family: 'Roboto', sans-serif;
 }
+
+.btn__login {
+  background-color: #fff;
+  color: #000;
+  box-shadow: 5px 10px 20px 0px rgba(0, 0, 0, 0.3);
+  border: 0;
+  padding: 10px 20px;
+  border-radius: 15px;
+  text-decoration: none;
+  text-transform: uppercase;
+  margin-right: 20px;
+}
+ 
+.btn__login:hover {
+  background-color: #aaa6a6;
+}
+
+.btn__login:focus, 
+.btn__login:active {
+  background-color: #aaa6a6 !important; 
+  outline: none !important; 
+}
+
+.btn__signUp {
+  background-color: #545553;
+  box-shadow: 5px 10px 20px 0px rgba(0, 0, 0, 0.3);
+  color: #fff;
+  border: 0;
+  padding: 10px 20px;
+  border-radius: 15px;
+  text-transform: uppercase;
+}
+
+.btn__signUp:hover {
+  background-color: #40413f;
+  color:#fff;
+}
+
+.btn__signUp:focus, 
+.btn__signUp:active {
+  background-color: #40413f !important;
+  outline: none !important; 
+}

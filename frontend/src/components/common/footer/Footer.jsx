@@ -15,7 +15,8 @@ function Footer() {
       <li className="nav__item"><Link to="/favorites" className="nav__link px-2 text-body-secondary">Favorites</Link></li>
       <li className="nav__item"><Link to="about" className="nav__link px-2 text-body-secondary">About</Link></li>
     </ul>
-    <p className="text-center text-body-secondary">© {currentYear} Weather App</p>
+    <p>Created with ❤️ during <a className="link__hack" href="https://hacktoberfest.com/" target="_blank" rel="noopener noreferrer">Hacktoberfest</a> 2024</p>
+    <p className="text-center text-body-secondary">{currentYear} Gianluca Chiaravalloti and Team</p>
   </footer>
   );
 };
