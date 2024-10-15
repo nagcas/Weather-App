@@ -5,13 +5,18 @@
 
 Weather App è un'applicazione che permette di visualizzare il meteo corrente e le previsioni per più città utilizzando l'API di OpenWeatherMap. L'app consente agli utenti registrati di salvare le loro città preferite. Il progetto include un backend per l'autenticazione (login e registrazione) e la gestione delle preferenze.
 
-## Funzionalità
+
 
 - 🌍 **Visualizza il meteo attuale** di qualsiasi città.
 - 🔮 **Previsioni meteo a 5 giorni**.
 - 🔐 **Autenticazione**: sistema di login e registrazione.
 - ⭐ **Salvataggio delle città preferite** per gli utenti registrati.
 - 💻 **Design responsive** per un'esperienza ottimale su mobile e desktop.
+
+  ## Screenshot
+  
+  ![screenshot-weather-app](https://github.com/user-attachments/assets/4bbbe4b3-da49-4bdb-9cda-23af94fac909)
+
 
 ## Tecnologie utilizzate
 
