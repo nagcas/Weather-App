@@ -69,7 +69,6 @@ function Login() {
     // You can add the login API request here and handle the response
   };
 
-  // Handles login via Google, checks if the token is present in the query string
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const token = params.get("token");
@@ -80,7 +79,7 @@ function Login() {
       
       // Dispatches an event to trigger updates in components listening to storage changes
       window.dispatchEvent(new Event("storage"));
-      navigate("/profile");
+      navigate("/");
     }
   }, [location, navigate]);
 
