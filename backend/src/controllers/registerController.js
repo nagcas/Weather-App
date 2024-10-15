@@ -1,4 +1,4 @@
-import userModel from "../models/user";
+import userModel from "../models/user.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
@@ -47,4 +47,4 @@ try {
     }
 }
 
-module.exports = register;
+export default register;

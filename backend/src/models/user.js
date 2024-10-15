@@ -9,25 +9,29 @@ const userSchema = new Schema(
     password: {
       type: String,
       required: true,
+      select: false, // This ensures the password is not returned in queries unless explicitly requested
     },
     email: {
       type: String,
       required: true,
+      unique: true, // Ensures no duplicate emails
+      match: [/\S+@\S+\.\S+/, 'Please provide a valid email address'], // Email validation
     },
     favoriteCities: [
       {
-        type: Schema.ObjectId, //This is where city IDs go or how the cities will be sotred(through their id)
-        ref: "cityModel", // The name of the model to reference .
-        // we created a reference here to cityModel so we can associate each user with their favorite cities list
+        type: Schema.Types.ObjectId, // This stores the IDs of the favorite cities
+        ref: "City", // Reference to the City model
+        // Each user can have a list of favorite cities, referenced by their IDs
       },
     ],
   },
   {
-    timestamps: true,
-    collection: "userModels"
+    timestamps: true, // Automatically adds createdAt and updatedAt fields
+    collection: "userModels", // Optional, specifies the collection name
   }
 );
 
 const userModel = model("User", userSchema);
 
-module.exports = userModel;
+export default userModel;
+

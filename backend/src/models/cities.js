@@ -5,21 +5,23 @@ const citySchema = new Schema(
     cityName: {
       type: String,
       required: true,
-      unique: true,
-      trim: true,
+      unique: true, // Ensures no two cities can have the same name
+      trim: true,   // Removes any leading or trailing whitespace
     },
     country: {
       type: String,
-      require: true,
-      trim: true,
+      required: true, // Corrected from 'require' to 'required'
+      trim: true,     // Removes any leading or trailing whitespace
     },
   },
   {
-    timestamps: true,
-    collection: "cityModels",
+    timestamps: true,  // Automatically adds createdAt and updatedAt fields
+    collection: "cityModels",  // Optional: the name of the collection in the database
   }
 );
 
-const cityModel = model("cityModel", citySchema);
+// Name the model "City" for better clarity and convention
+const City = model("City", citySchema);
 
-module.exports = cityModel;
+export default City;
+

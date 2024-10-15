@@ -2,7 +2,7 @@ import express from "express";
 import endpoints from "express-list-endpoints";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import userRouter from "./routes/userRoutes.js";
+import userRouter from "./src/routes/userRoutes.js";
 import cors from "cors";
 
 // Configuring dotenv to load environment variables from the .env file
