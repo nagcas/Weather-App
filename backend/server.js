@@ -61,7 +61,7 @@ mongoose
 // Definition of the port on which the server will listen
 const PORT = process.env.PORT || 3000;
 
-app.get("/", (req, res) => {
+app.get("/api", (req, res) => {
   res.status(200).send("Handling basic get request on / endpoint");
 });
 
