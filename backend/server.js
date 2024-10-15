@@ -11,6 +11,10 @@ dotenv.config();
 // setting up basic express server
 const app = express();
 
+// Definition of the port on which the server will listen
+const PORT = process.env.PORT || 3000;
+
+// CORS configuration options
 const corsOptions = {
   origin: function (origin, callback) {
     // We define a whitelist of allowed sources.
@@ -18,7 +22,7 @@ const corsOptions = {
     const whitelist = [
       "http://localhost:5173",
       "https://weather-app-hacktoberfest.vercel.app", // URL frontend
-      "", // URL backend
+      process.env.BACKEND_URL, // Use backend URL from environment variable
     ];
 
     if (process.env.NODE_ENV === "development") {
@@ -45,8 +49,7 @@ app.use(express.json());
 mongoose
   .connect(process.env.MONGO_URI)
 	.then(() => {
-    //This will make app to start only when we have connected to DB
-
+    // Start the server only when we are connected to the DB
     app.listen(PORT, () => {
       console.log(`Server turned on on the port ${PORT}`);
   		console.log("The following endpoints are available:");
@@ -57,14 +60,10 @@ mongoose
     console.log("error establishing connection to mongodb ", error)
   );
 
-
-// Definition of the port on which the server will listen
-const PORT = process.env.PORT || 3000;
-
+// Handle GET requests on the base API endpoint
 app.get("/api", (req, res) => {
-  res.status(200).send("Handling basic get request on / endpoint");
+  res.status(200).send("Handling basic get request on /api endpoint");
 });
 
-// Use routes for users
+// Use routes for user registration
 app.use("/api/register", userRouter);
-
