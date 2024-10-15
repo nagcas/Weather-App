@@ -24,9 +24,22 @@ body {
   text-transform: uppercase;
   margin-right: 20px;
 }
- 
+
+.btn__login {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #ffffffbd;
+  color: #000;
+  border: none;
+  border-radius: 15px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
 .btn__login:hover {
-  background-color: #aaa6a6;
+  background-color: #ffffff26;
+  color: #fff;
+  border: none;
 }
 
 .btn__login:focus, 
@@ -43,6 +56,7 @@ body {
   padding: 10px 20px;
   border-radius: 15px;
   text-transform: uppercase;
+  transition: background-color 0.3s ease;
 }
 
 .btn__signUp:hover {
