@@ -1,0 +1,33 @@
+.form__login {
+  background-color: #3e49545b;
+  box-shadow: 5px 10px 20px 0px rgba(0, 0, 0, 0.3);
+  border-radius: 25px;
+  padding: 20px;
+  margin-top: 100px;
+}
+
+.content__form__login {
+  width: 500px;
+}
+
+.title__login {
+  font-size: 2.0rem;
+  color: #fff;
+}
+
+.text__signup,
+.text__password__forgot {
+  color: #fff;
+}
+
+.link__signUp,
+.link__forgot {
+  color: #000;
+  text-decoration: none;
+}
+
+.link__signUp:hover,
+.link__forgot:hover {
+  color: #ccc;
+  text-decoration: underline;
+}

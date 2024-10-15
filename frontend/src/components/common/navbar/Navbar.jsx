@@ -10,6 +10,7 @@ import {
   Offcanvas,
 } from "react-bootstrap";
 import { Link, NavLink } from "react-router-dom";
+import LoggedIn from "../loggedIn/LoggedIn";
 
 function NavBar() {
 
@@ -64,10 +65,7 @@ function NavBar() {
               <NavLink to="/settings" className="nav__menu m-3" onClick={handleClose}>Settings</NavLink>
               <NavLink to="/about" className="nav__menu m-3" onClick={handleClose}>About</NavLink>
             </Nav>
-            <div className="d-flex justify-content-center align-items-center">
-              <Button className="btn__login" onClick={handleClose}>Login</Button>
-              <Button className="btn__signUp" onClick={handleClose}>Sign Up</Button>
-            </div>
+            <LoggedIn handleClose={handleClose} />
           </Offcanvas.Body>
         </Navbar.Offcanvas>
       </Container>
