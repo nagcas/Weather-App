@@ -9,6 +9,8 @@ import Favorites from "./components/favorites/Favorites";
 import Settings from "./components/settings/Settings";
 import About from "./pages/about/About";
 import Footer from "./components/common/footer/Footer";
+import Login from "./pages/auth/Login";
+import SignUp from "./pages/auth/SignUp";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
@@ -22,6 +24,8 @@ function App() {
         <Route path="/favorites" element={<Favorites />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="/about" element={<About />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signUp" element={<SignUp />} />
       </Routes>
       <Footer />
     </Router>
