@@ -1,6 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const userRouter = require('./routes/userRoutes');
+const authMiddleware = require('./middlewares/auth');
+const addfavoriteCities = require('./routes/favoritesRoute');
 const app = express();
 const PORT = 3000;
 
@@ -17,6 +19,10 @@ app.get('/',(req,res) =>{
 
 app.use('/login',userRouter);
 app.use('/register',userRouter);
+
+
+//protected routes(with auth  middleware)
+app.use('/favorites',authMiddleware,addfavoriteCities);
 
 
 mongoose.connect(MONGO_URI)
