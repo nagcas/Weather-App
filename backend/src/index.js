@@ -26,6 +26,8 @@ app.use('/register',userRouter);
 app.use('/favorites',authMiddleware,favoriteRouter);
 
 
+
+
 mongoose.connect(MONGO_URI)
 .then(()=>{
     //This will make app to start only when we have connected to DB 
