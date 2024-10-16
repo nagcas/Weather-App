@@ -1,11 +1,16 @@
-import React, { useState, useEffect } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import React, { useState, useEffect, useContext } from "react";
+import { Link, useNavigate, useLocation, Navigate } from "react-router-dom";
 import { Button, Container, FloatingLabel, Form, Alert } from "react-bootstrap";
 import "./Auth.css";
+import { Context } from "../../modules/Context";
 
 function Login() {
   const navigate = useNavigate();
   const location = useLocation();
+  const { isLoggedIn } = useContext(Context);
+
+  // URL backend
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
   const [errors, setErrors] = useState({});
   const [apiError, setApiError] = useState(null);
@@ -49,7 +54,7 @@ function Login() {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/register/userLogin",
+        `${API_URL}/api/register/userLogin`,
         {
           method: "POST",
           headers: {
@@ -93,84 +98,89 @@ function Login() {
 
   return (
     <Container>
-      <div className="form__login d-flex justify-content-center align-items-center">
-        <div className="content__form__login">
-          <div className="form__content__title__login d-flex flex-column justify-content-center align-items-center">
-            <p className="title__login">Login</p>
+      {!isLoggedIn ? (
+        <div className="form__login d-flex justify-content-center align-items-center">
+          <div className="content__form__login">
+            <div className="form__content__title__login d-flex flex-column justify-content-center align-items-center">
+              <p className="title__login">Login</p>
+            </div>
+
+            <Form onSubmit={handleLoginSubmit}>
+              <FloatingLabel
+                controlId="login-email"
+                label={
+                  errors.email ? (
+                    <span className="text-danger">{errors.email}</span>
+                  ) : (
+                    "Email"
+                  )
+                }
+                className="mb-3"
+              >
+                <Form.Control
+                  type="email"
+                  name="email"
+                  aria-label="Enter email"
+                  placeholder="email@example.com"
+                  onChange={handleInputChange}
+                  isInvalid={!!errors.email}
+                />
+              </FloatingLabel>
+
+              <FloatingLabel
+                controlId="login-password"
+                label={
+                  errors.password ? (
+                    <span className="text-danger">{errors.password}</span>
+                  ) : (
+                    "Password"
+                  )
+                }
+              >
+                <Form.Control
+                  type="password"
+                  name="password"
+                  aria-label="Enter password"
+                  placeholder="password"
+                  onChange={handleInputChange}
+                  isInvalid={!!errors.password}
+                />
+              </FloatingLabel>
+
+              {apiError && (
+                <Alert variant="danger" className="mt-3">
+                  {apiError}
+                </Alert>
+              )}
+
+              <Button
+                type="submit"
+                className="btn__login w-75 mt-4"
+                aria-label="login"
+                disabled={isLoading}
+              >
+                {isLoading ? "Logging in..." : "Login"}
+              </Button>
+            </Form>
+
+            <p className="text__signup mt-3">
+              Not registered yet?{" "}
+              <Link className="link__signUp" to="/signUp">
+                Sign Up
+              </Link>
+            </p>
+            <p className="text__password__forgot">
+              Forgot your password?{" "}
+              <Link className="link__forgot" to="/forgot-password">
+                Recover
+              </Link>
+            </p>
           </div>
-
-          <Form onSubmit={handleLoginSubmit}>
-            <FloatingLabel
-              controlId="login-email"
-              label={
-                errors.email ? (
-                  <span className="text-danger">{errors.email}</span>
-                ) : (
-                  "Email"
-                )
-              }
-              className="mb-3"
-            >
-              <Form.Control
-                type="email"
-                name="email"
-                aria-label="Enter email"
-                placeholder="email@example.com"
-                onChange={handleInputChange}
-                isInvalid={!!errors.email}
-              />
-            </FloatingLabel>
-
-            <FloatingLabel
-              controlId="login-password"
-              label={
-                errors.password ? (
-                  <span className="text-danger">{errors.password}</span>
-                ) : (
-                  "Password"
-                )
-              }
-            >
-              <Form.Control
-                type="password"
-                name="password"
-                aria-label="Enter password"
-                placeholder="password"
-                onChange={handleInputChange}
-                isInvalid={!!errors.password}
-              />
-            </FloatingLabel>
-
-            {apiError && (
-              <Alert variant="danger" className="mt-3">
-                {apiError}
-              </Alert>
-            )}
-
-            <Button
-              type="submit"
-              className="btn__login w-75 mt-4"
-              aria-label="login"
-              disabled={isLoading}
-            >
-              {isLoading ? "Logging in..." : "Login"}
-            </Button>
-          </Form>
-
-          <p className="text__signup mt-3">
-            Not registered yet?{" "}
-            <Link className="link__signUp" to="/signUp">
-              Sign Up
-            </Link>
-          </p>
-          <p className="text__password__forgot">
-            Forgot your password?{" "}
-            <Link className="link__forgot" to="/forgot-password">
-              Recover
-            </Link>
-          </p>
         </div>
-      </div>
+      ) : (
+        <Navigate to='/' replace={true} />
+      )
+    }
     </Container>
   );
 }
