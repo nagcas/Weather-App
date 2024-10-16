@@ -1,3 +1,13 @@
-.title {
-  margin-top: 80px;
+.about__section {
+  margin-top: 100px;
+}
+
+.title__about {
+  color: #fff;
+  margin-bottom: 40px;
+}
+
+.about__section p {
+  text-align: left;
+  color: #ccc;
 }
