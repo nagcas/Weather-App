@@ -1,21 +1,32 @@
 import "./WeatherApi.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useFetch } from "../../modules/useFetch.js";
 import { Col, Container, Image, Row } from "react-bootstrap";
 
 function WeatherApi() {
   const apiKey = import.meta.env.VITE_API_WEATHER;
-
+  
+  // set default
   const [city, setCity] = useState("Roma");
+  const [country, setCountry] = useState("it");
 
-  const URL_API = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`;
+  const [URL_API, setURL_API] = useState(`https://api.openweathermap.org/data/2.5/weather?q=${city},${country}&units=metric&appid=${apiKey}`);
   const { data, loading, error } = useFetch(URL_API);
 
   const icon = data?.weather?.[0]?.icon
     ? `https://openweathermap.org/img/wn/${data.weather[0]?.icon}@4x.png`
     : null;
 
-  console.log(data);
+  useEffect(() => {
+    const fetchData = () => {
+      setURL_API(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`);
+    };
+
+    fetchData(); // Call fetchData initially to load data
+    const intervalId = setInterval(fetchData, 60000); // Update every 60 seconds
+
+    return () => clearInterval(intervalId); // Clean up the interval on unmount
+  }, [city, country, apiKey]); // Add dependencies
 
   return (
     <Container className="mt-4">

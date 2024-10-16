@@ -9,8 +9,9 @@ dotenv.config();
 const SECRET_KEY = process.env.JWT_SECRET;
 
 const login = async (req, res) => {
+  console.log("request is here")
   const { email, password } = req.body;
-
+  console.log(email);
   try {
     const existingUser = await userModel.findOne({ email });
 
