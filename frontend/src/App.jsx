@@ -14,7 +14,7 @@ import Login from "./pages/auth/Login";
 import SignUp from "./pages/auth/SignUp";
 import Page404 from "./pages/page404/Page404";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { AuthProvider } from "./modules/authPriveder";
+import AuthProvider from "./modules/AuthProvider";
 
 function App() {
   return (

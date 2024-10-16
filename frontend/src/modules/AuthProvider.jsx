@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Context } from './Context.jsx';
 
 // AuthProvider component that provides authentication state and user to child components
-export const AuthProvider = ({ children }) => {
+const AuthProvider = ({ children }) => {
 
   // State to store user/login details
   const [userLogin, setUserLogin] = useState({});
@@ -23,3 +23,5 @@ export const AuthProvider = ({ children }) => {
     </Context.Provider>
   );
 };
+
+export default AuthProvider;
