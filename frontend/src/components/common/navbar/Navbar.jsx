@@ -11,6 +11,7 @@ import {
 } from "react-bootstrap";
 import { Link, NavLink } from "react-router-dom";
 import LoggedIn from "../loggedIn/LoggedIn";
+import logo from "../../../assets/images/Weather.256.png";
 
 function NavBar() {
 
@@ -28,7 +29,10 @@ function NavBar() {
         {/* Logo Weather App */}
         <Navbar.Brand>
           <Link to="/" className="logo">
-            Weather App        
+          <div className="d-flex justify-content-center align-items-center">
+            <Image src={logo} alt="logo weather app" className="logo__image me-3" />
+            Weather App
+          </div>
           </Link>
         </Navbar.Brand>
         {/* Toggle Btn */}

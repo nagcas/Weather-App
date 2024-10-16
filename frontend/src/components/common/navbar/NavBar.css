@@ -4,6 +4,10 @@
   color: #fff;
 }
 
+.logo__image {
+  width: 50px;
+}
+
 .close__white .btn-close {
   filter: invert(1);
   border: none;
