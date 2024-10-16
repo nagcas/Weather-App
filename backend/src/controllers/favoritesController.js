@@ -2,7 +2,7 @@ import cityModel from "../models/cities.js";
 import userModel from "../models/user.js";
 import axios from "axios";
 
-const addfavoriteCities = async (req, res) => {
+const addFavoriteCities = async (req, res) => {
   try {
     const { cityName, cityId } = req.body;
     const userId = req.userId;
@@ -59,4 +59,4 @@ const addfavoriteCities = async (req, res) => {
   }
 };
 
-export default addfavoriteCities;
+export default addFavoriteCities;
