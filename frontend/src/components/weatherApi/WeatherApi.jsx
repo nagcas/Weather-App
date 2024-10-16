@@ -26,9 +26,10 @@ function WeatherApi() {
           </Col>
           <Col>
             <p>City: <span className="fw-bold">{data.name}</span></p>
-            <p>Temp. <span className="fw-bold">{data.main?.temp} °C</span> - Temp. Min <span className="fw-bold">{data.main?.temp_min} °C</span>  - Temp. Max <span className="fw-bold">{data.main?.temp_max} °C</span></p>
-            <p>Pressure: <span className="fw-bold">{data.main?.pressure} mmHg</span> - Humidity: <span className="fw-bold">{data.main?.humidity} %</span></p>
-            <p>Wind: <span>{data.wind?.speed} meter/sec</span> - Deg: <span>{data.wind?.deg} degrees</span> - Gust: <span>{data.wind?.gust} meter/sec</span></p>
+            <p><i className="bi bi-thermometer-half"></i>{" "}Temp. <span className="fw-bold">{data.main?.temp} °C</span> - <i className="bi bi-thermometer-low"></i>{" "}Temp. Min <span className="fw-bold">{data.main?.temp_min} °C</span>  - <i className="bi bi-thermometer-high"></i>{" "}Temp. Max <span className="fw-bold">{data.main?.temp_max} °C</span></p>
+            <p>Pressure: <span className="fw-bold">{data.main?.pressure} mmHg</span></p> 
+            <p><i className="bi bi-droplet"></i>{" "}Humidity: <span className="fw-bold">{data.main?.humidity} %</span></p>
+            <p><i className="bi bi-wind"></i>{" "}Wind: <span>{data.wind?.speed} meter/sec</span> - Deg: <span>{data.wind?.deg} degrees</span> - Gust: <span>{data.wind?.gust} meter/sec</span></p>
           </Col>
         </Row>
       </div>
