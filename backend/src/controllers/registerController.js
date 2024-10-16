@@ -12,6 +12,7 @@ const SECRET_KEY = process.env.JWT_SECRET;
 
 const register = async (req, res) => {
   const { email, password, username } = req.body;
+  console.log(email, password, username);
 
   //checking existing user . as it connects with db to find that user ,we need to make it await
 
