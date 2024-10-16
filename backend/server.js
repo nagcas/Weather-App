@@ -68,4 +68,4 @@ app.get("/api", (req, res) => {
 
 // Use routes for user registration
 app.use("/api/register", userRouter);
-app.use('/favorites',favoriteRouter);
+app.use('/api/favorites',favoriteRouter);
