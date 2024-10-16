@@ -21,7 +21,7 @@ const corsOptions = {
     // These are the URLs from which our frontend will make requests to the backend.
     const whitelist = [
       "http://localhost:5173",
-      "https://weather-app-hacktoberfest.vercel.app", // URL frontend
+      process.env.FRONTEND_URL, // Use frontend URL from environment variable
       process.env.BACKEND_URL, // Use backend URL from environment variable
     ];
 
