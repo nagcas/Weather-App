@@ -70,11 +70,9 @@ function NavBar() {
               <NavLink to="/forecast" className="nav__menu m-3" onClick={handleClose}>Forecast</NavLink>
               <NavLink to="/settings" className="nav__menu m-3" onClick={handleClose}>Settings</NavLink>
               {isLoggedIn && (
-                <>
-                  <NavLink to="/favorites" className="nav__menu m-3" onClick={handleClose}>Favorites City</NavLink>
-                  <NavLink to="/about" className="nav__menu m-3" onClick={handleClose}>About</NavLink>
-                </>
+                <NavLink to="/favorites" className="nav__menu m-3" onClick={handleClose}>Favorites City</NavLink>
               )}
+              <NavLink to="/about" className="nav__menu m-3" onClick={handleClose}>About</NavLink>
             </Nav>
             <LoggedIn handleClose={handleClose} />
           </Offcanvas.Body>
