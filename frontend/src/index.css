@@ -48,7 +48,8 @@ body {
   outline: none !important; 
 }
 
-.btn__signUp {
+.btn__signUp,
+.btn__logout {
   background-color: #545553;
   box-shadow: 5px 10px 20px 0px rgba(0, 0, 0, 0.3);
   color: #fff;
@@ -59,13 +60,16 @@ body {
   transition: background-color 0.3s ease;
 }
 
-.btn__signUp:hover {
+.btn__signUp:hover,
+.btn__logout:hover {
   background-color: #40413f;
   color:#fff;
 }
 
 .btn__signUp:focus, 
-.btn__signUp:active {
+.btn__signUp:active,
+.btn__logout:focus,
+.btn__logout:active {
   background-color: #40413f !important;
   outline: none !important; 
 }
