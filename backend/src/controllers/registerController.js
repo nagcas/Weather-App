@@ -14,7 +14,7 @@ const register = async (req, res) => {
   
   try {
     const { email, password, username } = req.body;
-    console.log(email, password, username);
+    // console.log(email, password, username);
   
     //checking existing user . as it connects with db to find that user ,we need to make it await
     const existingUser = await userModel.findOne({ email });
