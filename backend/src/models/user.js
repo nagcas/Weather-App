@@ -9,7 +9,6 @@ const userSchema = new Schema(
     password: {
       type: String,
       required: true,
-      select: false, // This ensures the password is not returned in queries unless explicitly requested
     },
     email: {
       type: String,

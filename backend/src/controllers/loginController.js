@@ -10,16 +10,18 @@ const SECRET_KEY = process.env.JWT_SECRET;
 
 const login = async (req, res) => {
   console.log("request is here")
-  const { email, password } = req.body;
-  console.log(email);
   try {
+    const { email, password } = req.body;
     const existingUser = await userModel.findOne({ email });
+    console.log(email);
 
     if (!existingUser) {
       return res.status(404).send("User not found.");
+      console.log("User not found!");
     }
 
     const matchPassword = await bcrypt.compare(password, existingUser.password);
+    console.log(matchPassword);
 
     if (!matchPassword)
       return res.send(400).json({ message: "Invalid Password." });
