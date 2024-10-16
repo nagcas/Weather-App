@@ -8,7 +8,7 @@ function WeatherApi() {
   
   // set default
   const [city, setCity] = useState("Roma");
-  const [country, setCountry] = useState("it");
+  const [country, setCountry] = useState("IT");
 
   const [URL_API, setURL_API] = useState(`https://api.openweathermap.org/data/2.5/weather?q=${city},${country}&units=metric&appid=${apiKey}`);
   const { data, loading, error } = useFetch(URL_API);

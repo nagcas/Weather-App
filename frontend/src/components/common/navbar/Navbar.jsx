@@ -1,5 +1,5 @@
 import "./NavBar.css";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import {
   Button,
   Container,
@@ -11,10 +11,13 @@ import {
 } from "react-bootstrap";
 import { Link, NavLink } from "react-router-dom";
 import LoggedIn from "../loggedIn/LoggedIn";
+import logo from "../../../assets/images/Weather.256.png";
+import { Context } from "../../../modules/Context";
 
 function NavBar() {
 
   const [showOffcanvas, setShowOffcanvas] = useState(false);
+  const { isLoggedIn } = useContext(Context);
 
   const handleClose = () => setShowOffcanvas(false);
   const handleShow = () => setShowOffcanvas(true);
@@ -28,7 +31,10 @@ function NavBar() {
         {/* Logo Weather App */}
         <Navbar.Brand>
           <Link to="/" className="logo">
-            Weather App        
+          <div className="d-flex justify-content-center align-items-center">
+            <Image src={logo} alt="logo weather app" className="logo__image me-3" />
+            Weather App
+          </div>
           </Link>
         </Navbar.Brand>
         {/* Toggle Btn */}
@@ -63,7 +69,12 @@ function NavBar() {
               <NavLink to="/current-weather" className="nav__menu m-3" onClick={handleClose}>Current Weather</NavLink>
               <NavLink to="/forecast" className="nav__menu m-3" onClick={handleClose}>Forecast</NavLink>
               <NavLink to="/settings" className="nav__menu m-3" onClick={handleClose}>Settings</NavLink>
-              <NavLink to="/about" className="nav__menu m-3" onClick={handleClose}>About</NavLink>
+              {isLoggedIn && (
+                <>
+                  <NavLink to="/favorites" className="nav__menu m-3" onClick={handleClose}>Favorites City</NavLink>
+                  <NavLink to="/about" className="nav__menu m-3" onClick={handleClose}>About</NavLink>
+                </>
+              )}
             </Nav>
             <LoggedIn handleClose={handleClose} />
           </Offcanvas.Body>
