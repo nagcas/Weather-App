@@ -25,7 +25,7 @@ function NavBar() {
       className="navbar-dark mb-4 fixed-top p-4 menu__navbar shadow"
     >
       <Container fluid={true}>
-        {/* Logo Portfolio */}
+        {/* Logo Weather App */}
         <Navbar.Brand>
           <Link to="/" className="logo">
             Weather App        

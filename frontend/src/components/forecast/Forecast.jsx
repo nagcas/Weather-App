@@ -1,10 +1,14 @@
+import { Container } from "react-bootstrap";
 import "./Forecast.css";
 
 function Forecast() {
   return (
-    <>
-      <p className="title">Forecast</p>
-    </>
+    <section className="forecast__section">
+      <Container>
+        <h2 className="title__forecast">Forecast</h2>
+        
+      </Container>
+    </section>
   );
 };
 
