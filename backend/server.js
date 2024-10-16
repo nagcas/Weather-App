@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import userRouter from "./src/routes/userRoutes.js";
 import cors from "cors";
+import favoriteRouter from "./src/routes/favorites.js";
 
 // Configuring dotenv to load environment variables from the .env file
 dotenv.config();
@@ -67,3 +68,4 @@ app.get("/api", (req, res) => {
 
 // Use routes for user registration
 app.use("/api/register", userRouter);
+app.use('/favorites',favoriteRouter);
