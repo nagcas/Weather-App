@@ -5,7 +5,7 @@
   box-shadow: 5px 10px 20px 0px rgba(0, 0, 0, 0.3);
   border-radius: 25px;
   padding: 20px;
-  margin-top: 80px;
+  margin-top: 100px;
 }
 
 .content__hero {
@@ -15,11 +15,12 @@
 }
 
 .hero__title {
-  font-size: 1.8rem;
+  font-size: 2.0rem;
+  font-weight: bold;
 }
 
 .hero__subtitle {
-  margin-top: 15px;
+  margin: 15px 0 20px 0;
   font-size: 1.0rem;
 }
 
@@ -28,7 +29,7 @@
 
   .content__hero__bg {
     margin-top: 100px;
-    padding: 80px;
+    padding: 10px;
   }
 
   .hero__title {

@@ -1,73 +1,104 @@
 import "./WeatherApi.css";
 import { useState, useEffect } from "react";
-import { useFetch } from "../../modules/useFetch.js";
-import { Col, Container, Image, Row } from "react-bootstrap";
+import { Card, Col, Container, Row, Image } from "react-bootstrap";
 
 function WeatherApi() {
+  // Retrieve the weather API key from environment variables
   const apiKey = import.meta.env.VITE_API_WEATHER;
+
+  // Array of cities for which weather data will be fetched
+  const cities = ["Milano", "Venezia", "Roma", "Catania"];
   
-  // set default
-  const [city, setCity] = useState("Roma");
-  const [country, setCountry] = useState("IT");
-
-  const [URL_API, setURL_API] = useState(`https://api.openweathermap.org/data/2.5/weather?q=${city},${country}&units=metric&appid=${apiKey}`);
-  const { data, loading, error } = useFetch(URL_API);
-
-  const icon = data?.weather?.[0]?.icon
-    ? `https://openweathermap.org/img/wn/${data.weather[0]?.icon}@4x.png`
-    : null;
+  // State variables to manage weather data, loading status, and error messages
+  const [weatherData, setWeatherData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchData = () => {
-      setURL_API(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`);
+    // Asynchronous function to fetch weather data for a single city
+    const fetchWeather = async (city) => {
+      try {
+        // Construct the API URL with the specified city and API key
+        const URL_API = `https://api.openweathermap.org/data/2.5/weather?q=${city},IT&units=metric&appid=${apiKey}`;
+        const response = await fetch(URL_API);
+
+        // Check if the response is successful; if not, throw an error
+        if (!response.ok) {
+          throw new Error(`Error fetching data for ${city}`);
+        }
+
+        // Parse the JSON response to extract weather data
+        const data = await response.json();
+        return { city, data }; // Return an object containing the city and its weather data
+      } catch (error) {
+        // In case of an error, return the city along with the error message
+        return { city, error: error.message };
+      }
     };
 
-    fetchData(); // Call fetchData initially to load data
-    const intervalId = setInterval(fetchData, 60000); // Update every 60 seconds
+    // Asynchronous function to fetch weather data for all cities
+    const fetchAllWeather = async () => {
+      setLoading(true); // Set loading state to true
+      setError(null); // Reset any previous errors
+      try {
+        // Use Promise.all to fetch weather data for all cities concurrently
+        const allWeatherData = await Promise.all(
+          cities.map((city) => fetchWeather(city))
+        );
+        setWeatherData(allWeatherData); // Update state with the fetched weather data for all cities
+      } catch (err) {
+        // If an error occurs, set the error state
+        setError(err.message);
+      } finally {
+        // Set loading state to false once data fetching is complete
+        setLoading(false);
+      }
+    };
 
-    return () => clearInterval(intervalId); // Clean up the interval on unmount
-  }, [city, country, apiKey]); // Add dependencies
+    // Initial call to fetch weather data for all specified cities
+    fetchAllWeather();
+  }, [apiKey]); // Dependency array ensures the effect runs when apiKey changes
 
   return (
     <Container className="mt-4">
-      {error && <p>Error: {error}</p>}
-      {loading && <p>Loading...</p>}
-      <div className="content__weather">
-        <Row className="d-flex justify-content-center">
-          <Col>
-            <Image src={icon} alt="weather icon" />
+      {error && <p>Error: {error}</p>} {/* Display error message if present */}
+      {loading && <p>Loading...</p>} {/* Display loading message while fetching data */}
+      <Row>
+        {weatherData.map(({ city, data, error }, index) => (
+          <Col key={index} sm={12} md={6} lg={3} className="mb-4">
+            <Card className="card__city">
+              {error && <p>Error loading {city}: {error}</p>} {/* Display error message for individual cities */}
+              {!error && data && (
+                <>
+                  <Image
+                    src={`https://openweathermap.org/img/wn/${data.weather[0]?.icon}@4x.png`}
+                    alt="Weather icon"
+                    className="card-img-top"
+                  />
+                  <Card.Body>
+                    <Card.Title className="card__title">{city}</Card.Title>
+                    <Card.Text>
+                      <span className="card__temp">{Math.floor(data.main?.temp)} °C</span>
+                    </Card.Text>
+                    <Card.Text>
+                      <span className="card__humidity"><i className="bi bi-droplet"></i> Humidity: {data.main?.humidity} %</span>
+                    </Card.Text>
+                    <Card.Text>
+                      <span className="card__wind"><i className="bi bi-wind"></i> Wind: {Math.floor(data.wind?.speed)} m/s</span>
+                    </Card.Text>
+                  </Card.Body>
+                </>
+              )}
+            </Card>
           </Col>
-          <Col>
-            <p>
-              City: <span className="fw-bold">{data.name}</span>
-            </p>
-            <p>
-              <i className="bi bi-thermometer-half"></i> Temp.{" "}
-              <span className="fw-bold">{data.main?.temp} °C</span> -{" "}
-              <i className="bi bi-thermometer-low"></i> Temp. Min{" "}
-              <span className="fw-bold">{data.main?.temp_min} °C</span> -{" "}
-              <i className="bi bi-thermometer-high"></i> Temp. Max{" "}
-              <span className="fw-bold">{data.main?.temp_max} °C</span>
-            </p>
-            <p>
-              Pressure:{" "}
-              <span className="fw-bold">{data.main?.pressure} mmHg</span>
-            </p>
-            <p>
-              <i className="bi bi-droplet"></i> Humidity:{" "}
-              <span className="fw-bold">{data.main?.humidity} %</span>
-            </p>
-            <p>
-              <i className="bi bi-wind"></i> Wind:{" "}
-              <span>{data.wind?.speed} meter/sec</span> - Deg:{" "}
-              <span>{data.wind?.deg} degrees</span> - Gust:{" "}
-              <span>{data.wind?.gust} meter/sec</span>
-            </p>
-          </Col>
-        </Row>
-      </div>
+        ))}
+      </Row>
     </Container>
   );
 }
 
 export default WeatherApi;
+
+
+
+

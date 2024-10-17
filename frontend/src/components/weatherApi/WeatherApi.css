@@ -1,3 +1,25 @@
-.content__weather p {
-  color: #d8cdcd;
+.content__weather {
+  margin-top: 40px;
+}
+.card__city {
+  max-width: 300px;
+  background-color: #8f9ba75b;
+  box-shadow: 5px 10px 20px 0px rgba(0, 0, 0, 0.3);
+  border-radius: 15px;
+}
+
+.card__title {
+  font-size: 2.5rem;
+  color: #fff;
+}
+
+.card__temp {
+  font-size: 3.0rem;
+  color: #ccc;
+}
+
+.card__humidity,
+.card__wind {
+  font-size: 1.3rem;
+  color: #ccc;
 }
