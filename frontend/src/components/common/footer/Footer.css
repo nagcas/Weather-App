@@ -1,9 +1,10 @@
 .nav__link {
   text-decoration: none;
+  color: #ccc;
 }
 
 .nav__link:hover {
-  color: #fff;
+  color: #EB6E4B;
   text-decoration: underline;
 }
 
@@ -15,4 +16,8 @@
 .link__hack:hover {
   color: #ccc;
   text-decoration: underline;
+}
+
+.team {
+  color: #EB6E4B;
 }

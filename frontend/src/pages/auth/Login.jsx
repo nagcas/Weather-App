@@ -97,7 +97,7 @@ function Login() {
   }, [location, navigate]);
 
   return (
-    <Container>
+    <Container className="d-flex justify-content-center align-items-center">
       {!isLoggedIn ? (
         <div className="form__login d-flex justify-content-center align-items-center">
           <div className="content__form__login">

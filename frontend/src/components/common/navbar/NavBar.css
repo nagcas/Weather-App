@@ -1,7 +1,8 @@
 .logo {
   font-size: 1.5rem;
   text-decoration: none;
-  color: #fff;
+  color: #EB6E4B;
+  font-weight: 600;
 }
 
 .logo__image {
@@ -21,6 +22,10 @@
   color: #fff;
 }
 
+.nav__menu:hover {
+  color: #EB6E4B;
+}
+
 .nav__menu::after {
   content: '';
   position: absolute;
@@ -36,7 +41,7 @@
 .nav__menu:hover::after {
   width: 100%;
   left: 0;
-  background: #ccc;
+  background: #EB6E4B;
 }
 
 .nav__menu:focus::after {

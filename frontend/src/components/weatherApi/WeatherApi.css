@@ -14,8 +14,9 @@
 }
 
 .card__temp {
-  font-size: 3.0rem;
-  color: #ccc;
+  font-size: 3.5rem;
+  color: #EB6E4B;
+  font-weight: 600;
 }
 
 .card__humidity,

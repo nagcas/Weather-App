@@ -16,7 +16,8 @@
 
 .hero__title {
   font-size: 2.0rem;
-  font-weight: bold;
+  color: #EB6E4B;
+  font-weight: 600;
 }
 
 .hero__subtitle {
