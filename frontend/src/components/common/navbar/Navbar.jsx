@@ -66,7 +66,7 @@ function NavBar() {
           <Offcanvas.Body className="d-flex flex-column flex-lg-row p-4 p-lg-0">
             <Nav className="d-flex justify-content-center align-items-center flex-grow-1 pe-3">
               <NavLink to="/" className="nav__menu m-3" onClick={handleClose}>Home</NavLink>
-              <NavLink to="/current-weather" className="nav__menu m-3" onClick={handleClose}>Current Weather</NavLink>
+              <NavLink to="/default-weather" className="nav__menu m-3" onClick={handleClose}>Default Cities Weather</NavLink>
               <NavLink to="/forecast" className="nav__menu m-3" onClick={handleClose}>Forecast</NavLink>
               <NavLink to="/settings" className="nav__menu m-3" onClick={handleClose}>Settings</NavLink>
               {isLoggedIn && (
