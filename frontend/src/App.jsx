@@ -4,7 +4,6 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 
 import Home from "./pages/home/Home";
 import NavBar from "./components/common/navbar/Navbar";
-import CurrentWeather from "./components/currentWeather/CurrentWeather";
 import Forecast from "./components/forecast/Forecast";
 import Favorites from "./components/favorites/Favorites";
 import Settings from "./components/settings/Settings";
@@ -13,6 +12,7 @@ import Footer from "./components/common/footer/Footer";
 import Login from "./pages/auth/Login";
 import SignUp from "./pages/auth/SignUp";
 import Page404 from "./pages/page404/Page404";
+import DefaultWeather from "./components/defaultWeather/DefaultWeather";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import AuthProvider from "./modules/AuthProvider";
 
@@ -23,7 +23,7 @@ function App() {
         <NavBar />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/current-weather" element={<CurrentWeather />} />
+          <Route path="/default-weather" element={<DefaultWeather />} />
           <Route path="/forecast" element={<Forecast />} />
           <Route path="/favorites" element={<Favorites />} />
           <Route path="/settings" element={<Settings />} />
