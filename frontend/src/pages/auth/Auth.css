@@ -1,5 +1,6 @@
 .form__login,
 .form__signUp {
+  max-width: 400px;
   background-color: #3e49545b;
   box-shadow: 5px 10px 20px 0px rgba(0, 0, 0, 0.3);
   border-radius: 25px;
@@ -14,8 +15,9 @@
 
 .title__login,
 .title__signUp {
-  font-size: 2.0rem;
-  color: #fff;
+  font-size: 3.0rem;
+  color: #EB6E4B;
+  font-weight: 600;
 }
 
 .text__signup,
@@ -27,13 +29,22 @@
 .link__signUp,
 .link__login,
 .link__forgot {
-  color: #000;
+  color: #ccc;
   text-decoration: none;
 }
 
 .link__signUp:hover,
 .link__login:hover,
 .link__forgot:hover {
-  color: #ccc;
+  color: #EB6E4B;
   text-decoration: underline;
+}
+
+/* tablet e desktop */
+@media (min-width: 991px) { 
+  .form__login,
+  .form__signUp {
+    max-width: 800px;
+  }
+ 
 }

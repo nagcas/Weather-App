@@ -89,7 +89,7 @@ function SignUp() {
   };
 
   return (
-    <Container>
+    <Container className="d-flex justify-content-center align-items-center">
       <div className="form__signUp d-flex justify-content-center align-items-center">
         <div className="content__form__signUp">
           <div className="form__content__title__signUp d-flex flex-column justify-content-center align-items-center">
