@@ -7,7 +7,7 @@ dotenv.config();
 const SECRET_KEY = process.env.JWT_SECRET;
 
 const authMiddleware = (req, res, next) => {
-  let token = req.headers.authorization;
+  let token = req.headers.authorization?.replace("Bearer ", "");
 
   if (!token) return res.send("Access Denied. Token not provied.").status(401);
 

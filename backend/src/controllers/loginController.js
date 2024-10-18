@@ -16,8 +16,8 @@ const login = async (req, res) => {
     console.log(email);
 
     if (!existingUser) {
-      return res.status(404).send("User not found.");
       console.log("User not found!");
+      return res.status(404).send("User not found.");
     }
 
     const matchPassword = await bcrypt.compare(password, existingUser.password);

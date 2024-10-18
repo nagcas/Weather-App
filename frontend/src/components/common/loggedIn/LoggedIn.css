@@ -1,0 +1,9 @@
+.user__logged {
+  color: #ccc;
+}
+
+.username {
+  color: #EB6E4B;
+  text-transform: uppercase;
+  font-weight: 600;
+}

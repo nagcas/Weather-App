@@ -66,10 +66,29 @@ body {
   color:#fff;
 }
 
+
+.btn__hero {
+  background-color: #545553;
+  box-shadow: 5px 10px 20px 0px rgba(0, 0, 0, 0.3);
+  color: #fff;
+  border: 0;
+  padding: 20px 35px;
+  border-radius: 15px;
+  text-transform: uppercase;
+  transition: background-color 0.3s ease;
+}
+
+.btn__hero:hover {
+  background-color: #40413f;
+  color:#fff;
+}
+
 .btn__signUp:focus, 
 .btn__signUp:active,
 .btn__logout:focus,
-.btn__logout:active {
+.btn__logout:active,
+.btn__hero:focus,
+.btn__hero:active {
   background-color: #40413f !important;
   outline: none !important; 
 }
