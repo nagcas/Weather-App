@@ -13,10 +13,16 @@ const citySchema = new Schema(
       required: true, // Corrected from 'require' to 'required'
       trim: true,     // Removes any leading or trailing whitespace
     },
+    users: [
+      {
+        type: Schema.Types.ObjectId, // This stores the IDs of users who have this city as a favorite
+        ref: "User", // Reference to the User model
+      },
+    ],
   },
   {
-    timestamps: true,  // Automatically adds createdAt and updatedAt fields
-    collection: "cityModels",  // Optional: the name of the collection in the database
+    timestamps: true, // Automatically adds createdAt and updatedAt fields
+    collection: "cityModels", // Optional: the name of the collection in the database
   }
 );
 
@@ -24,4 +30,5 @@ const citySchema = new Schema(
 const City = model("City", citySchema);
 
 export default City;
+
 
