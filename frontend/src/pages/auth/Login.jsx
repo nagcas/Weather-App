@@ -7,10 +7,11 @@ import { Context } from "../../modules/Context";
 function Login() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { isLoggedIn } = useContext(Context);
+  const { isLoggedIn, setIsLoggedIn, setUserLogin } = useContext(Context);
 
-  // URL backend
+  // Backend URL
   const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
 
   const [errors, setErrors] = useState({});
   const [apiError, setApiError] = useState(null);
@@ -32,10 +33,10 @@ function Login() {
   const validate = () => {
     const newErrors = {};
     if (!login.email.trim()) {
-      newErrors.email = "Please enter your email";
+      newErrors.email = "Please enter your email!";
     }
     if (!login.password.trim()) {
-      newErrors.password = "Please enter your password";
+      newErrors.password = "Please enter your password!";
     }
     return newErrors;
   };
@@ -66,19 +67,22 @@ function Login() {
 
       const result = await response.json();
 
+      
       if (!response.ok) {
-        throw new Error(result.message || "Failed to login");
+        throw new Error(result.message || "Failed to login!");
       }
-
+      
       // Successful login
+      setIsLoading(result);
+      localStorage.setItem("userLogin", JSON.stringify(result.user));
       localStorage.setItem("token", result.token);
       window.dispatchEvent(new Event("storage"));
       navigate("/");
     } catch (error) {
-      if (error.message.includes("Invalid credentials")) {
-        setApiError("Invalid email or password. Please try again.");
+      if (error.message.includes("Invalid credentials!")) {
+        setApiError("Invalid email or password. Please try again!");
       } else {
-        setApiError("An error occurred during login. Please try again later.");
+        setApiError("An error occurred during login. Please try again later!");
       }
     } finally {
       setIsLoading(false);
