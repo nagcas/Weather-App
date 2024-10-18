@@ -12,7 +12,7 @@ function Hero() {
             Real-time forecasts and personalized weather insights at your
             fingertips
           </h3>
-          <Button as={Link} to="/" aria-label="Sign Up" className="btn__signUp">
+          <Button as={Link} to="/signup" aria-label="Sign Up" className="btn__signUp">
             Sign Up
           </Button>
         </div>
