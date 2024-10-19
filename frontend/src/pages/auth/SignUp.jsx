@@ -1,14 +1,17 @@
-import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
-import { Button, Container, FloatingLabel, Form } from "react-bootstrap";
-import "./Auth.css";
+import "./Auth.css"; 
+import { useState } from "react"; 
+import { useNavigate, Link } from "react-router-dom"; 
+import { Button, Container, FloatingLabel, Form } from "react-bootstrap"; 
 
 function SignUp() {
 
-  // Backend URL
+  // Backend URL, using environment variable or fallback to localhost
   const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
+  // useNavigate is used for navigation to other routes
   const navigate = useNavigate();
+
+  // States to manage errors, loading state, API error, and user input for sign-up
   const [errors, setErrors] = useState({});
   const [apiError, setApiError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -18,6 +21,7 @@ function SignUp() {
     password: "",
   });
 
+  // Handles input changes and clears errors for the current input field
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setSignUp({
@@ -27,6 +31,7 @@ function SignUp() {
     setErrors((prevErrors) => ({ ...prevErrors, [name]: "" }));
   };
 
+  // Validation function to check user inputs
   const validate = () => {
     const newErrors = {};
     if (!signUp.username.trim()) {
@@ -45,20 +50,24 @@ function SignUp() {
     return newErrors;
   };
 
+  // Handles form submission for sign-up
   const handleSignUpSubmit = async (event) => {
     event.preventDefault();
+
+    // Perform validation before submitting
     const validationErrors = validate();
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
       return;
     }
 
+    // Reset errors and start loading state
     setErrors({});
     setIsLoading(true);
     setApiError(null);
 
     try {
-      // Replace this with your actual API call
+      // Making a POST request to the backend to create a new user
       const response = await fetch(`${API_URL}/api/register`, {
         method: "POST",
         headers: {
@@ -69,25 +78,24 @@ function SignUp() {
 
       const result = await response.json();
 
+      // Handle non-success responses from the API
       if (!response.ok) {
         throw new Error(result.message || "Failed to sign up");
       }
 
-      // Successful signup
+      // Successful sign-up, navigate to login page
       navigate("/login");
     } catch (error) {
+      // Handle API errors based on the message from the backend
       if (error.message.includes("Username already exists")) {
-        setApiError(
-          "This username is already taken. Please choose a different one."
-        );
+        setApiError("This username is already taken. Please choose a different one.");
       } else if (error.message.includes("Email already exists")) {
-        setApiError(
-          "This email is already registered. Please use a different email or try logging in."
-        );
+        setApiError("This email is already registered. Please use a different email or try logging in.");
       } else {
         setApiError("Oops! Something went wrong. Please try again later.");
       }
     } finally {
+      // Stop the loading state once the process is complete
       setIsLoading(false);
     }
   };
@@ -100,6 +108,7 @@ function SignUp() {
             <p className="title__signUp">Sign Up</p>
           </div>
 
+          {/* Sign Up form with input fields for username, email, and password */}
           <Form onSubmit={handleSignUpSubmit}>
             <FloatingLabel
               controlId="signUp-username"
@@ -163,12 +172,14 @@ function SignUp() {
               />
             </FloatingLabel>
 
+            {/* Display API error message if there's one */}
             {apiError && (
               <div className="alert alert-danger mt-3" role="alert">
                 {apiError}
               </div>
             )}
 
+            {/* Submit button with loading state */}
             <Button
               type="submit"
               className="btn__login w-75 mt-4"
@@ -179,6 +190,7 @@ function SignUp() {
             </Button>
           </Form>
 
+          {/* Link to navigate to the login page if already registered */}
           <p className="text__login mt-3">
             You are already registered?{" "}
             <Link className="link__login" to="/login">
@@ -192,3 +204,4 @@ function SignUp() {
 }
 
 export default SignUp;
+
