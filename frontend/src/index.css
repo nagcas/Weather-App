@@ -83,6 +83,8 @@ body {
   color:#fff;
 }
 
+.btn__login:focus,
+.btn__login:active,
 .btn__signUp:focus, 
 .btn__signUp:active,
 .btn__logout:focus,
