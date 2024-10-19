@@ -4,6 +4,10 @@ import { Button, Container, FloatingLabel, Form } from "react-bootstrap";
 import "./Auth.css";
 
 function SignUp() {
+
+  // Backend URL
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
   const navigate = useNavigate();
   const [errors, setErrors] = useState({});
   const [apiError, setApiError] = useState(null);
@@ -55,7 +59,7 @@ function SignUp() {
 
     try {
       // Replace this with your actual API call
-      const response = await fetch("http://localhost:5000/api/register", {
+      const response = await fetch(`${API_URL}/api/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
