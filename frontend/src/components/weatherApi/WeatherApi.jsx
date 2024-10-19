@@ -1,8 +1,16 @@
 import "./WeatherApi.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Card, Col, Container, Row, Image } from "react-bootstrap";
+import { Context } from "../../modules/Context";
 
 function WeatherApi() {
+
+   // Retrieve the temperature unit from the global context (imperial or metric)
+   const { temperatureUnit } = useContext(Context);
+
+   // State to store the unit symbol (°C or °F)
+   const [unit, setUnit] = useState(null);
+
   // Retrieve the weather API key from environment variables
   const apiKey = import.meta.env.VITE_API_WEATHER;
 
@@ -19,7 +27,7 @@ function WeatherApi() {
     const fetchWeather = async (city) => {
       try {
         // Construct the API URL with the specified city and API key
-        const URL_API = `https://api.openweathermap.org/data/2.5/weather?q=${city},IT&units=metric&appid=${apiKey}`;
+        const URL_API = `https://api.openweathermap.org/data/2.5/weather?q=${city},IT&units=${temperatureUnit}&appid=${apiKey}`;
         const response = await fetch(URL_API);
 
         // Check if the response is successful; if not, throw an error
@@ -55,9 +63,16 @@ function WeatherApi() {
       }
     };
 
+    // Set unit temperature
+    if (temperatureUnit == "imperial") {
+      setUnit("°F");
+    } else {
+      setUnit("°C");
+    }
+
     // Initial call to fetch weather data for all specified cities
     fetchAllWeather();
-  }, [apiKey]); // Dependency array ensures the effect runs when apiKey changes
+  }, [apiKey, temperatureUnit]); // Dependency array ensures the effect runs when apiKey changes
 
   return (
     <Container className="mt-4">
@@ -78,7 +93,7 @@ function WeatherApi() {
                   <Card.Body>
                     <Card.Title className="card__title">{city}</Card.Title>
                     <Card.Text>
-                      <span className="card__temp">{Math.floor(data.main?.temp)} °C</span>
+                      <span className="card__temp">{Math.floor(data.main?.temp)} {unit}</span>
                     </Card.Text>
                     <Card.Text>
                       <span className="card__humidity"><i className="bi bi-droplet"></i> Humidity: {data.main?.humidity} %</span>
