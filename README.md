@@ -14,8 +14,7 @@ Weather App è un'applicazione che permette di visualizzare il meteo corrente e 
 - 💻 **Design responsive** per un'esperienza ottimale su mobile e desktop.
 
   ## Screenshot
-  
-  ![screenshot-weather-app](https://github.com/user-attachments/assets/4bbbe4b3-da49-4bdb-9cda-23af94fac909)
+  ![Screenshot 2024-10-20 002216](https://github.com/user-attachments/assets/810a383b-4a15-4194-8463-9fe06f65b806)
 
 
 ## Tecnologie utilizzate
