@@ -1,8 +1,9 @@
 .page__not__found {
+  margin-top: 100px;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 55vh;
   text-align: center;
 }
 
@@ -17,7 +18,7 @@
 
 h1 {
   font-size: 5rem;
-  color: #dc3545;
+  color: #EB6E4B
 }
 
 h4 {
