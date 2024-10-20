@@ -47,7 +47,7 @@
 .nav__menu:focus::after {
   width: 100%;
   left: 0;
-  background: #545553;;
+  background: #545553;
 }
 
 .menu__navbar {
@@ -105,9 +105,7 @@
   color: #EB6E4B;
 }
 
-
-/* smartphone */
-@media(max-width: 991px) {
+@media (max-width: 991px) {
   .sidebar {
     background-color: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(10px);
@@ -117,10 +115,11 @@
     color: #fff;
     text-decoration: none;
     margin-top: 20px;
+    font-size: 1rem;
   }
 
   .menu__navbar__link:hover {
-    color: #fff;
+    color: #EB6E4B;
   }
 
   .drop__menu[data-bs-popper] {
@@ -134,4 +133,8 @@
     --bs-offcanvas-color: #fff;
   }
 
+  .logo {
+    display: block;
+    margin: 0 auto;
+  }
 }

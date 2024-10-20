@@ -1,8 +1,10 @@
+/* Global Reset */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
+
 
 body {
   background: url('./assets/background/background2.jpg') rgba(0, 0, 0, 0.5) fixed;
@@ -11,6 +13,13 @@ body {
   background-size: cover;
   background-repeat: no-repeat;
   font-family: 'Roboto', sans-serif;
+}
+
+@media (max-width: 768px) {
+  body {
+    background-position: top;
+    background-size: cover;
+  }
 }
 
 .btn__login {
@@ -23,23 +32,12 @@ body {
   text-decoration: none;
   text-transform: uppercase;
   margin-right: 20px;
-}
-
-.btn__login {
-  display: inline-block;
-  padding: 10px 20px;
-  background-color: #ffffffbd;
-  color: #000;
-  border: none;
-  border-radius: 15px;
-  text-decoration: none;
   transition: background-color 0.3s ease;
 }
 
 .btn__login:hover {
   background-color: #ffffff26;
   color: #fff;
-  border: none;
 }
 
 .btn__login:focus, 
@@ -49,7 +47,8 @@ body {
 }
 
 .btn__signUp,
-.btn__logout {
+.btn__logout,
+.btn__hero {
   background-color: #545553;
   box-shadow: 5px 10px 20px 0px rgba(0, 0, 0, 0.3);
   color: #fff;
@@ -61,26 +60,10 @@ body {
 }
 
 .btn__signUp:hover,
-.btn__logout:hover {
-  background-color: #40413f;
-  color:#fff;
-}
-
-
-.btn__hero {
-  background-color: #545553;
-  box-shadow: 5px 10px 20px 0px rgba(0, 0, 0, 0.3);
-  color: #fff;
-  border: 0;
-  padding: 20px 35px;
-  border-radius: 15px;
-  text-transform: uppercase;
-  transition: background-color 0.3s ease;
-}
-
+.btn__logout:hover,
 .btn__hero:hover {
   background-color: #40413f;
-  color:#fff;
+  color: #fff;
 }
 
 .btn__login:focus,
@@ -93,4 +76,15 @@ body {
 .btn__hero:active {
   background-color: #40413f !important;
   outline: none !important; 
+}
+
+@media (max-width: 768px) {
+  .btn__login, 
+  .btn__signUp, 
+  .btn__logout, 
+  .btn__hero {
+    padding: 8px 15px; 
+    font-size: 0.9rem; 
+    border-radius: 10px; 
+  }
 }

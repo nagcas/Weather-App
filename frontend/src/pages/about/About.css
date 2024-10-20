@@ -1,14 +1,32 @@
 .about__section {
-  margin-top: 100px;
+  margin-top: 10vh;
+  padding: 20px;
 }
 
 .title__about {
   color: #EB6E4B;
   font-weight: 600;
   margin-bottom: 40px;
+  font-size: 2rem;
 }
 
 .about__section p {
   text-align: left;
   color: #ccc;
+  font-size: 1rem;
+}
+
+@media (max-width: 768px) {
+  .about__section {
+    margin-top: 5vh;
+    padding: 15px;
+  }
+
+  .title__about {
+    font-size: 1.5rem;
+  }
+
+  .about__section p {
+    font-size: 0.9rem;
+  }
 }

@@ -1,6 +1,8 @@
+/* Navigation Links */
 .nav__link {
   text-decoration: none;
   color: #ccc;
+  font-size: 1rem; 
 }
 
 .nav__link:hover {
@@ -11,6 +13,7 @@
 .link__hack {
   color: #fff;
   text-decoration: none;
+  font-size: 1rem; 
 }
 
 .link__hack:hover {
@@ -20,4 +23,13 @@
 
 .team {
   color: #EB6E4B;
+  font-size: 1rem; 
+}
+
+@media (max-width: 768px) {
+  .nav__link,
+  .link__hack,
+  .team {
+    font-size: 0.9rem; 
+  }
 }

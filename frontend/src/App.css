@@ -1,6 +1,15 @@
-#root {
+ #root {
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  max-width: 1200px; 
+  width: 100%; 
+  box-sizing: border-box; 
 }
 
+/* For mobile screens */
+@media (max-width: 768px) {
+  #root {
+    padding: 1rem; 
+  }
+}
