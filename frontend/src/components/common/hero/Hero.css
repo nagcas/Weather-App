@@ -1,11 +1,12 @@
-/* smartphone */
-
+/* Smartphone */
 .content__hero__bg {
   background-color: #3e49545b;
   box-shadow: 5px 10px 20px 0px rgba(0, 0, 0, 0.3);
   border-radius: 25px;
   padding: 20px;
-  margin-top: 100px;
+  margin-top: 60px; 
+  position: relative;
+  z-index: 1; 
 }
 
 .content__hero {
@@ -15,37 +16,79 @@
 }
 
 .hero__title {
-  font-size: 2.0rem;
+  font-size: 2rem; 
   color: #EB6E4B;
   font-weight: 600;
 }
 
 .hero__subtitle {
   margin: 15px 0 20px 0;
-  font-size: 1.0rem;
+  font-size: 1rem;
 }
 
-/* tablet e desktop */
-@media (min-width: 991px) { 
+.btn__signUp {
+  display: inline-block;
+  padding: 10px 20px; 
+  font-size: 1rem; 
+  border-radius: 25px; 
+  background-color: #333;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  text-align: center;
+  width: 100%; 
+  max-width: 300px; 
+}
 
+@media (min-width: 991px) {
   .content__hero__bg {
-    margin-top: 100px;
-    padding: 10px;
+    margin-top: 80px; 
+    padding: 20px; 
+    z-index: 1; 
   }
 
   .hero__title {
-    font-size: 3.5rem;
+    font-size: 3.5rem; 
   }
 
   .hero__subtitle {
     margin-top: 30px;
     margin-bottom: 30px;
-    font-size: 2.0rem;
+    font-size: 2rem; 
   }
 
   .btn__signUp {
     padding: 20px 35px;
-    font-size: 1.2rem;
+    font-size: 1.2rem; 
     border-radius: 50px;
+    width: auto; 
+    max-width: none; 
   }
+}
+
+@media (max-width: 991px) and (min-width: 768px) {
+  .content__hero__bg {
+    padding: 15px; 
+  }
+
+  .hero__title {
+    font-size: 2.5rem; 
+  }
+
+  .hero__subtitle {
+    font-size: 1.5rem; 
+  }
+}
+
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 10; 
+  background-color: rgba(0, 0, 0, 0.8); 
+  padding: 15px;
+}
+
+body {
+  padding-top: 60px; 
 }

@@ -1,26 +1,55 @@
 .content__weather {
   margin-top: 40px;
+  padding: 20px;
 }
+
 .card__city {
   max-width: 300px;
   background-color: #8f9ba75b;
   box-shadow: 5px 10px 20px 0px rgba(0, 0, 0, 0.3);
   border-radius: 15px;
+  margin: 0 auto;
 }
 
 .card__title {
   font-size: 2.5rem;
   color: #fff;
+  text-align: center;
 }
 
 .card__temp {
   font-size: 3.5rem;
   color: #EB6E4B;
   font-weight: 600;
+  text-align: center;
 }
 
 .card__humidity,
 .card__wind {
   font-size: 1.3rem;
   color: #ccc;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .content__weather {
+    padding: 10px;
+  }
+
+  .card__city {
+    max-width: 90%;
+  }
+
+  .card__title {
+    font-size: 2rem;
+  }
+
+  .card__temp {
+    font-size: 3rem;
+  }
+
+  .card__humidity,
+  .card__wind {
+    font-size: 1rem;
+  }
 }

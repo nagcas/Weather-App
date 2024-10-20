@@ -1,9 +1,23 @@
 .settings__section {
   margin-top: 100px;
+  padding: 20px; 
 }
 
 .title__settings {
   color: #EB6E4B;
   font-weight: 600;
   margin-bottom: 40px;
+  font-size: 2rem; 
+  text-align: center; 
+}
+
+@media (max-width: 768px) {
+  .settings__section {
+    margin-top: 50px;
+    padding: 10px; 
+  }
+
+  .title__settings {
+    font-size: 1.5rem;
+  }
 }

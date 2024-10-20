@@ -1,9 +1,23 @@
+* User logged styles */
 .user__logged {
   color: #ccc;
+  font-size: 1rem;
+  margin: 10px 0; 
 }
 
 .username {
   color: #EB6E4B;
   text-transform: uppercase;
   font-weight: 600;
+  font-size: 1.2rem; 
+}
+
+@media (max-width: 768px) {
+  .user__logged {
+    font-size: 0.9rem; 
+  }
+
+  .username {
+    font-size: 1rem; 
+  }
 }

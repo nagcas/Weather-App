@@ -1,4 +1,13 @@
 .title__app {
   margin-top: 80px;
   color: #000;
+  font-size: 2rem;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .title__app {
+    margin-top: 40px; 
+    font-size: 1.5rem;
+  }
 }
