@@ -1,60 +1,57 @@
 # Contributing to Weather App 🌦️
 
-Grazie per voler contribuire a Weather App! La tua partecipazione è fondamentale per migliorare il progetto. Segui queste linee guida per contribuire in modo efficace.
+Thank you for wanting to contribute to Weather App! Your participation is essential for improving the project. Follow these guidelines for effective contributions.
 
-## Come contribuire
+## How to Contribute
 
-1. **Fork del progetto**: Fai un fork del repository cliccando sul pulsante "Fork" in alto a destra della pagina del progetto su GitHub.
+1. **Fork the Project**: Fork the repository by clicking the "Fork" button at the top right of the project's GitHub page.
 
-2. **Clona il repository forkato**: Clona il tuo fork locale sul tuo computer.
+2. **Clone the Forked Repository**: Clone your local fork to your computer.
 
-  ```bash
-  git clone https://github.com/nagcas/Weather-App.git
-  cd weather-app
+   ```bash
+   git clone https://github.com/nagcas/Weather-App.git
+   cd weather-app
   ```
 
-## Crea un nuovo branch: Crea un nuovo branch per le tue modifiche
+## Create a New Branch: Create a new branch for your changes
 
   ```bash
   git checkout -b feature/nome-feature
   ```
 
-## Apporta modifiche
+## Make Changes
 
-Fai le modifiche desiderate al codice. Assicurati di testare il tuo codice per garantire che funzioni correttamente.
+Make the desired changes to the code. Be sure to test your code to ensure it works correctly.
 
-## Fai il commit delle modifiche
+## Commit Your Changes
 
-Aggiungi e fai il commit delle tue modifiche.
+Add and commit your changes.
 
 ```bash
   git add .
   git commit -m "Aggiunge una nuova feature o corregge un bug"
   ```
 
-## Fai il push delle modifiche: Invia il tuo branch al repository forkato
+## Push Your Changes: Push your branch to the forked repository
   
   ```bash
   git push origin feature/nome-feature
   ```
 
-## Invia una pull request
+## Submit a Pull Request
 
-Vai al repository originale e clicca su "New Pull Request". Segui le istruzioni per creare una pull request.
+Go to the original repository and click on "New Pull Request." Follow the instructions to create a pull request.
 
+## Code Guidelines
 
-## Linee guida per il codice
+- Follow the existing coding standards in the project.
+- Write clear and descriptive commit messages.
+- Document the code and any added features.
 
-Segui gli standard di codifica esistenti nel progetto.
-Scrivi messaggi di commit chiari e descrittivi.
-Documenta il codice e le funzionalità aggiunte.
+## Reporting Issues
 
-## Segnalare problemi
+If you find a bug or have a suggestion to improve the app, feel free to open an issue in the repository. Make sure to provide as many details as possible, including steps to reproduce the issue.
 
-Se trovi un bug o hai un suggerimento per migliorare l'app, sentiti libero di aprire un issue nel repository.
-Assicurati di fornire il maggior numero di dettagli possibile, inclusi i passaggi per riprodurre il problema.
+## Thank You!
 
-## Grazie!
-
-Ogni contributo è apprezzato, che si tratti di piccole correzioni o di grandi nuove funzionalità.
-Grazie per aver dedicato il tuo tempo a migliorare Weather App!
+Every contribution is appreciated, whether it’s small fixes or large new features. Thank you for taking the time to improve Weather App!
