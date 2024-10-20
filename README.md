@@ -3,70 +3,70 @@
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![Hacktoberfest](https://img.shields.io/badge/Hacktoberfest-2024-orange)
 
-Weather App è un'applicazione che permette di visualizzare il meteo corrente e le previsioni per più città utilizzando l'API di OpenWeatherMap. L'app consente agli utenti registrati di salvare le loro città preferite. Il progetto include un backend per l'autenticazione (login e registrazione) e la gestione delle preferenze.
+Weather App is an application that allows users to view the current weather and forecasts for multiple cities using the OpenWeatherMap API. The app enables registered users to save their favorite cities. The project includes a backend for authentication (login and registration) and preference management.
 
 
 
-- 🌍 **Visualizza il meteo attuale** di qualsiasi città.
-- 🔮 **Previsioni meteo a 5 giorni**.
-- 🔐 **Autenticazione**: sistema di login e registrazione.
-- ⭐ **Salvataggio delle città preferite** per gli utenti registrati.
-- 💻 **Design responsive** per un'esperienza ottimale su mobile e desktop.
+- 🌍 View the current weather for any city.
+- 🔮 5-day weather forecasts.
+- 🔐 Authentication: login and registration system.
+- ⭐ Save favorite cities for registered users.
+- 💻 Responsive design for an optimal experience on mobile and desktop.
 
   ## Screenshot
   ![Screenshot 2024-10-20 002216](https://github.com/user-attachments/assets/810a383b-4a15-4194-8463-9fe06f65b806)
 
 
-## Tecnologie utilizzate
+## Technologies used
 
 - **Frontend**:
-  - React con Vite
+  - React with Vite
   - CSS3 (Flexbox per il layout responsive)
-  - fetch (per chiamate API)
-  
+  **Fetch** (for API calls)
+
 - **Backend**:
-  - Node.js con Express
-  - MongoDB (per la gestione utenti e città preferite)
-  - JWT (per l'autenticazione)
-  - Bcrypt (per la gestione delle password)
+  - Node.js with Express
+  - MongoDB (for user and favorite city management)
+  - JWT (for authentication)
+  - Bcrypt (for password management)
 
 - **API**:
   - OpenWeatherMap
 
-## Installazione e utilizzo
+## Installation and Usage
 
-### Prerequisiti
+### Prerequisites
 
-Assicurati di avere installato Node.js, npm e MongoDB sul tuo computer.
+Make sure you have Node.js, npm, and MongoDB installed on your computer.
 
-### Installazione
+### Installation
 
-1. Clona il repository:
+1. Clone the repository:
 
   ```bash
   git clone https://github.com/nagcas/Weather-App.git
   cd weather-app
   ```
 
-## Installa le dipendenze per il frontend e il backend
+## Install dependencies for the frontend and backend
 
-## Per il frontend
+## For the frontend
 
   ```bash
   cd frontend
   npm install
   ```
 
-## Per il backend
+## For the backend
 
   ```bash
   cd ../backend
   npm install
   ```
 
-## Configura le variabili d'ambiente
+## Configure environment variables
 
-Crea un file `.env` nella cartella `backend` con il seguente contenuto:
+Create a `.env` file in the `backend` folder with the following content:
   
   ```bash
   PORT=5000
@@ -75,14 +75,14 @@ Crea un file `.env` nella cartella `backend` con il seguente contenuto:
   OPENWEATHER_API_KEY=<la tua chiave API di OpenWeatherMap>
   ```
 
-## Avvia il backend
+## Start the backend
   
   ```bash
   cd backend
   npm start
   ```
 
-## Avvia il frontend usando Vite
+## Start the frontend using Vite
 
   ```bash
   cd frontend
@@ -91,17 +91,17 @@ Crea un file `.env` nella cartella `backend` con il seguente contenuto:
 
 ## Contribuire
 
-Contribuire al progetto è semplice! Se vuoi partecipare, segui le istruzioni nel file CONTRIBUTING.md.
+Contributing to the project is easy! If you want to participate, follow the instructions in the CONTRIBUTING.md file.
 
-### Fai un fork del progetto
+### Fork the project
 
-Crea un nuovo branch per la tua feature: `git checkout -b feature/nome-feature`.
-Fai il commit delle tue modifiche: `git commit -m "Aggiunge una nuova feature"`.
-Fai un push al branch: `git push origin feature/nome-feature`.
-Invia una pull request.
+Create a new branch for your feature: `git checkout -b feature/your-feature-name`.
+Commit your changes: `git commit -m "Adds a new feature"`.
+Push to the branch: `git push origin feature/your-feature-name`.
+Submit a pull request.
 
-### Licenza
+### License
 
-Distribuito sotto licenza MIT. Vedi il file LICENSE per maggiori dettagli.
+Distributed under the MIT License. See the LICENSE file for more details.
 
-Progetto creato per Hacktoberfest 2024. 🎃
+Project created for Hacktoberfest 2024. 🎃
