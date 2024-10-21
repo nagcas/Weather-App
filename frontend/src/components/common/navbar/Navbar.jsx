@@ -82,14 +82,15 @@ function NavBar() {
             <Nav className="d-flex justify-content-center align-items-center flex-grow-1 pe-3">
               <NavLink to="/" className="menu__navbar__link nav__menu m-3" onClick={handleClose}>Home</NavLink>
               <NavLink to="/default-weather" className="menu__navbar__link nav__menu m-3" onClick={handleClose}>Default Cities Weather</NavLink>
+              <NavLink to="/city-search" className="menu__navbar__link nav__menu m-3" onClick={handleClose}>City Search</NavLink>
               <NavLink to="/forecast" className="menu__navbar__link nav__menu m-3" onClick={handleClose}>Forecast</NavLink>
               <NavDropdown title="Settings" id="navbarScrollingDropdown">
                 <NavDropdown.Item onClick={handleChangeMetric}>
-                  Celsius (°C)
+                  Unit Metric
                 </NavDropdown.Item>
                 <NavDropdown.Divider />
                 <NavDropdown.Item onClick={handleChangeImperial}>
-                  Fahrenheit (°F)
+                  Unit Imperial
                 </NavDropdown.Item>
               </NavDropdown>
               {isLoggedIn && (
