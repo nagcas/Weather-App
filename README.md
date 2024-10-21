@@ -14,7 +14,7 @@ Weather App is an application that allows users to view the current weather and 
 - 💻 Responsive design for an optimal experience on mobile and desktop.
 
   ## Screenshot
-  ![Screenshot 2024-10-20 002216](https://github.com/user-attachments/assets/810a383b-4a15-4194-8463-9fe06f65b806)
+  ![Screenshot 2024-10-21 230409](https://github.com/user-attachments/assets/f7da5f0a-2e0d-426e-be42-33e04525f7f2)
 
 
 ## Technologies used
