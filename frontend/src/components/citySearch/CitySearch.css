@@ -1,0 +1,107 @@
+.search__section {
+  margin-top: 100px;
+  padding: 20px; 
+}
+
+.title__search {
+  color: #EB6E4B;
+  font-weight: 600;
+  margin-bottom: 40px;
+  font-size: 3.5rem; 
+  text-align: center;
+}
+
+.text__coord {
+  font-size: 1.4rem;
+  color: #f8f9fa;
+}
+
+.input__search {
+  max-width: 400px;
+  font-size: 1.2rem;
+  margin: 0 auto;
+}
+
+.btn__search {
+  background-color: #fff;
+  color: #000;
+  border: 0;
+}
+
+.btn__search:hover {
+  background-color: #fff !important;
+  color: #EB6E4B;
+  outline: none !important;
+}
+
+.card__city__search {
+  background-color: #8f9ba75b;
+  box-shadow: 5px 10px 20px 0px rgba(0, 0, 0, 0.3);
+  border-radius: 15px;
+  margin: 40px auto;
+}
+
+.value__temp__max,
+.value__temp__min,
+.value__humidity,
+.value__pressure,
+.value__wind__speed,
+.value__wind__deg {
+  color: #f8f9fa;
+}
+
+.card__temperature,
+.card__humidity,
+.card__pressure,
+.card__wind {
+  color: #ccc;
+}
+
+.card__city__search i {
+  font-size: 1.5rem;
+}
+
+.content__legend {
+  background-color: #f8f9fa;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+  font-family: 'Arial', sans-serif;
+}
+
+.content__legend h2 {
+  font-size: 1.8rem;
+  color: #343a40;
+  margin-bottom: 15px;
+  border-bottom: 2px solid #EB6E4B;
+  padding-bottom: 5px;
+  text-align: left;
+}
+
+.content__legend p {
+  font-size: 1rem;
+  color: #495057;
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+.content__legend span.fw-bold {
+  color: #EB6E4B;
+  font-weight: bold;
+}
+
+.content__legend p:last-child {
+  margin-bottom: 0;
+}
+
+
+@media (max-width: 768px) {
+  .search__section {
+    margin-top: 50px; 
+    padding: 10px; 
+  }
+
+  .title__search {
+    font-size: 2.5rem; 
+  }
+}
