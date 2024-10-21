@@ -15,6 +15,7 @@ import Page404 from "./pages/page404/Page404";
 import DefaultWeather from "./components/defaultWeather/DefaultWeather";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import AuthProvider from "./modules/AuthProvider";
+import CitySearch from "./components/citySearch/CitySearch";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/default-weather" element={<DefaultWeather />} />
           <Route path="/forecast" element={<Forecast />} />
+          <Route path="/city-search" element={<CitySearch />} />
           <Route path="/favorites" element={<Favorites />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="/favorites" element={<Favorites />} />
