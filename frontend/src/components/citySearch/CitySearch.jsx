@@ -4,70 +4,79 @@ import { Alert, Button, Card, Col, Container, Form, Image, InputGroup, Row } fro
 import { Context } from "../../modules/Context";
 
 function CitySearch() {
-  // Retrieve the temperature unit from the global context (imperial or metric)
-  const { temperatureUnit } = useContext(Context);
+    // Retrieve the temperature unit from the global context (imperial or metric)
+    const { temperatureUnit } = useContext(Context);
 
-  // Retrieve the weather API key from environment variables
-  const apiKey = import.meta.env.VITE_API_WEATHER;
-
-  // State to store the unit symbol (°C or °F)
-  const [unit, setUnit] = useState("°C");
-  // State to stare the unit (meter/sec, miles/hour)
-  const [wind, setWind] = useState("meter/sec");
-
-  // Update unit symbol (°C or °F) when the temperature unit changes
-  useEffect(() => {
-    if (temperatureUnit === "imperial") {
-      setUnit("°F");
-      setWind("miles/hour");
-    } else {
-      setUnit("°C");
-      setWind("meter/sec")
-    }
-  }, [temperatureUnit]);
-
-  // State to manage the search input, loading status, error messages, and fetched weather data
-  const [search, setSearch] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [weatherData, setWeatherData] = useState(null);
-
-  // Fetch weather data from the OpenWeather API based on the city name entered by the user
-  const getWeatherInfo = async (search) => {
-    setLoading(true);  // Set loading status to true while fetching data
-    setError(null);    // Clear any previous errors
-
-    const URL_API = `https://api.openweathermap.org/data/2.5/weather?q=${search}&units=${temperatureUnit}&appid=${apiKey}`;
-    try {
-      const response = await fetch(URL_API); // Fetch weather data from API
-      if (!response.ok) {
-        throw new Error(`Error fetching data for ${search}`); // Throw an error if request fails
+    // Retrieve the weather API key from environment variables
+    const apiKey = import.meta.env.VITE_API_WEATHER;
+  
+    // State to store the unit symbol (°C or °F)
+    const [unit, setUnit] = useState("°C");
+    // State to stare the unit (meter/sec, miles/hour)
+    const [wind, setWind] = useState("meter/sec");
+  
+    // State to manage the search input, loading status, error messages, and fetched weather data
+    const [search, setSearch] = useState("");
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+    const [weatherData, setWeatherData] = useState(null);
+  
+    // State to store the city to be searched after submit
+    const [city, setCity] = useState("");
+  
+    // Function to fetch weather data from the OpenWeather API
+    const getWeatherInfo = async (city) => {
+      if (!city) return;
+      setLoading(true);  // Set loading status to true while fetching data
+      setError(null);    // Clear any previous errors
+    
+      const URL_API = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=${temperatureUnit}&appid=${apiKey}`;
+      try {
+        const response = await fetch(URL_API); // Fetch weather data from API
+        if (!response.ok) {
+          throw new Error(`Error fetching data for ${city}`); // Throw an error if request fails
+        }
+  
+        // Parse the response as JSON and store it in the weatherData state
+        const data = await response.json();
+        setWeatherData(data);
+        console.log(data); // Log the data for debugging purposes
+      } catch (error) {
+        setError(error.message); // Set the error message in case of failure
+      } finally {
+        setLoading(false); // Stop the loading spinner after data is fetched
       }
-
-      // Parse the response as JSON and store it in the weatherData state
-      const data = await response.json();
-      setWeatherData(data);
-      console.log(data); // Log the data for debugging purposes
-    } catch (error) {
-      setError(error.message); // Set the error message in case of failure
-    } finally {
-      setLoading(false); // Stop the loading spinner after data is fetched
-    }
-  };
-
-  // Update the search state when the user types in the input field
-  const handleSearch = (e) => {
-    setSearch(e.target.value);
-  };
-
-  // Handle form submission to trigger the weather search
-  const handleSubmitSearch = (e) => {
-    e.preventDefault();
-    if (search.trim().toLowerCase()) {
-      getWeatherInfo(search);  // Fetch the weather information for the entered city
-      setSearch("");           // Clear the input field after submitting
-    }
-  };
+    };
+  
+    // Effect to update unit symbol (°C or °F) when the temperature unit changes
+    useEffect(() => {
+      if (temperatureUnit === "imperial") {
+        setUnit("°F");
+        setWind("miles/hour");
+      } else {
+        setUnit("°C");
+        setWind("meter/sec");
+      }
+      // Re-fetch the weather data if it has already been fetched for a city
+      if (city) {
+        getWeatherInfo(city); // Update the weather data based on the new temperature unit
+      }
+    }, [temperatureUnit]);
+  
+    // Update the search state when the user types in the input field
+    const handleSearch = (e) => {
+      setSearch(e.target.value);
+    };
+  
+    // Handle form submission to trigger the weather search
+    const handleSubmitSearch = (e) => {
+      e.preventDefault();
+      if (search.trim().toLowerCase()) {
+        setCity(search);  // Set the city to be searched
+        getWeatherInfo(search);  // Fetch the weather information for the entered city
+        setSearch("");  // Clear the input field after submitting
+      }
+    };
 
   return (
     <section className="search__section">
