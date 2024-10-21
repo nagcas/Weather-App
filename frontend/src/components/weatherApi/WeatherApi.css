@@ -5,7 +5,7 @@
 
 .card__city {
   max-width: 300px;
-  height: 560px;
+  height: 650px;
   background-color: #8f9ba75b;
   box-shadow: 5px 10px 20px 0px rgba(0, 0, 0, 0.3);
   border-radius: 15px;
@@ -16,6 +16,11 @@
   font-size: 2.5rem;
   color: #fff;
   text-align: center;
+}
+
+.city__date {
+  font-size: 1.2rem;
+  color: #f8f9fa;
 }
 
 .card__temp {
