@@ -11,6 +11,11 @@
   text-align: center;
 }
 
+.city__date {
+  font-size: 1.5rem;
+  color: #f8f9fa;
+}
+
 .text__coord {
   font-size: 1.4rem;
   color: #f8f9fa;

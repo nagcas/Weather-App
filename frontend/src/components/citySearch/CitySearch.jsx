@@ -2,6 +2,7 @@ import "./CitySearch.css";
 import { useContext, useEffect, useState } from "react";
 import { Alert, Button, Card, Col, Container, Form, Image, InputGroup, Row } from "react-bootstrap";
 import { Context } from "../../modules/Context";
+import { formatWeatherDate } from "../../modules/useTime.js";
 
 function CitySearch() {
     // Retrieve the temperature unit from the global context (imperial or metric)
@@ -115,10 +116,15 @@ function CitySearch() {
               {/* Weather data with city name, country, and coordinates */}
               <Col sm={12} md={6} lg={6} className="d-flex flex-column justify-content-center align-items-center p-4">
                 <Card.Title className="title__search">
-                  {weatherData.name} ({weatherData.sys?.country})
                   <div className="d-flex flex-column justify-content-center align-items-center">
-                    <span className="text__coord">Coord. lon. {weatherData.coord?.lon}</span>
+                    {weatherData.name} ({weatherData.sys?.country})
+                    <span className="text__coord mt-4">Coord. lon. {weatherData.coord?.lon}</span>
                     <span className="text__coord">Coord. lat. {weatherData.coord?.lat}</span>
+                  </div>
+                  <div>
+                    <span className="city__date">
+                      {formatWeatherDate(weatherData.dt, weatherData.timezone)}
+                    </span>
                   </div>
                 </Card.Title>
                 {/* Weather icon */}

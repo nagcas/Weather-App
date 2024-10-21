@@ -2,6 +2,7 @@ import "./WeatherApi.css";
 import { useState, useEffect, useContext } from "react";
 import { Card, Col, Container, Row, Image } from "react-bootstrap";
 import { Context } from "../../modules/Context";
+import { formatWeatherDate } from "../../modules/useTime";
 
 function WeatherApi() {
 
@@ -98,6 +99,7 @@ function WeatherApi() {
                     className="card-img-top"
                   />
                   <Card.Body>
+                    <Card.Text className="city__date">{formatWeatherDate(data.dt, data.timezone)}</Card.Text>
                     <Card.Title className="card__title">{city}</Card.Title>
                     <Card.Text>
                       <span className="card__temp">{Math.floor(data.main?.temp)} {unit}</span>
