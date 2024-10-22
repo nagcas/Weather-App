@@ -15,7 +15,6 @@ function Footer() {
     <ul className="nav justify-content-center border-bottom pb-3 mb-3">
       <li className="nav__item"><Link to="/" className="nav__link px-2">Home</Link></li>
       <li className="nav__item"><Link to="/default-weather" className="nav__link px-2">Default Cities Weather</Link></li>
-      <li className="nav__item"><Link to="/forecast" className="nav__link px-2">Forecast</Link></li>
       {isLoggedIn && (
         <li className="nav__item"><Link to="/favorites" className="nav__link px-2">Favorites City</Link></li>
       )}
