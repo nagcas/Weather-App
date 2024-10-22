@@ -69,11 +69,11 @@ function CitySearch() {
       setWind("meter/sec");
     }
     // If a city is already searched, re-fetch weather and forecast
-    if (search) {
-      getWeatherForecast(search);
-      getWeatherInfo(search);
+    if (weatherData) {
+      getWeatherInfo(weatherData.name);
+      getWeatherForecast(weatherData.name);
     }
-  }, [temperatureUnit]);
+  }, [temperatureUnit, search]);
 
   // Handle search input change
   const handleSearch = (e) => {
