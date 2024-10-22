@@ -4,7 +4,7 @@ import { Container } from "react-bootstrap";
 function About() {
   return (
     <section className="about__section">
-      <Container>
+      <Container className="content__about">
         <h2 className="title__about">About Weather App</h2>
         <p>
           Welcome to <span className="fw-bold">Weather App</span>, an open-source project developed during <span className="fw-bold">Hacktoberfest</span>! This app provides real-time weather updates, forecasts, and settings to personalize your experience. The project was built with a passion for technology and community-driven collaboration.
