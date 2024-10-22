@@ -5,79 +5,93 @@ import { Context } from "../../modules/Context";
 import { formatWeatherDate } from "../../modules/useTime.js";
 
 function CitySearch() {
-    // Retrieve the temperature unit from the global context (imperial or metric)
-    const { temperatureUnit } = useContext(Context);
+  const { temperatureUnit } = useContext(Context);
+  const apiKey = import.meta.env.VITE_API_WEATHER;
 
-    // Retrieve the weather API key from environment variables
-    const apiKey = import.meta.env.VITE_API_WEATHER;
-  
-    // State to store the unit symbol (°C or °F)
-    const [unit, setUnit] = useState("°C");
-    // State to stare the unit (meter/sec, miles/hour)
-    const [wind, setWind] = useState("meter/sec");
-  
-    // State to manage the search input, loading status, error messages, and fetched weather data
-    const [search, setSearch] = useState("");
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
-    const [weatherData, setWeatherData] = useState(null);
-  
-    // State to store the city to be searched after submit
-    const [city, setCity] = useState("");
-  
-    // Function to fetch weather data from the OpenWeather API
-    const getWeatherInfo = async (city) => {
-      if (!city) return;
-      setLoading(true);  // Set loading status to true while fetching data
-      setError(null);    // Clear any previous errors
-    
-      const URL_API = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=${temperatureUnit}&appid=${apiKey}`;
-      try {
-        const response = await fetch(URL_API); // Fetch weather data from API
-        if (!response.ok) {
-          throw new Error(`Error fetching data for ${city}`); // Throw an error if request fails
-        }
-  
-        // Parse the response as JSON and store it in the weatherData state
-        const data = await response.json();
-        setWeatherData(data);
-        console.log(data); // Log the data for debugging purposes
-      } catch (error) {
-        setError(error.message); // Set the error message in case of failure
-      } finally {
-        setLoading(false); // Stop the loading spinner after data is fetched
+  // States
+  const [unit, setUnit] = useState("°C");
+  const [wind, setWind] = useState("meter/sec");
+  const [search, setSearch] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [weatherData, setWeatherData] = useState(null);
+  const [weatherDataForecast, setWeatherDataForecast] = useState(null);
+
+  // Fetch current weather data
+  const getWeatherInfo = async (city) => {
+    if (!city) return;
+    setLoading(true);
+    setError(null);
+
+    const URL_API = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=${temperatureUnit}&appid=${apiKey}`;
+    try {
+      const response = await fetch(URL_API);
+      if (!response.ok) {
+        throw new Error(`Error fetching data for ${city}`);
       }
-    };
-  
-    // Effect to update unit symbol (°C or °F) when the temperature unit changes
-    useEffect(() => {
-      if (temperatureUnit === "imperial") {
-        setUnit("°F");
-        setWind("miles/hour");
-      } else {
-        setUnit("°C");
-        setWind("meter/sec");
+      const data = await response.json();
+      setWeatherData(data);
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Fetch weather forecast data
+  const getWeatherForecast = async (city) => {
+    if (!city) return;
+    setLoading(true);
+    setError(null);
+
+    const URL_API_FORECAST = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=${temperatureUnit}&appid=${apiKey}`;
+    try {
+      const response = await fetch(URL_API_FORECAST);
+      if (!response.ok) {
+        throw new Error(`Error fetching forecast for ${city}`);
       }
-      // Re-fetch the weather data if it has already been fetched for a city
-      if (city) {
-        getWeatherInfo(city); // Update the weather data based on the new temperature unit
-      }
-    }, [temperatureUnit]);
-  
-    // Update the search state when the user types in the input field
-    const handleSearch = (e) => {
-      setSearch(e.target.value);
-    };
-  
-    // Handle form submission to trigger the weather search
-    const handleSubmitSearch = (e) => {
-      e.preventDefault();
-      if (search.trim().toLowerCase()) {
-        setCity(search);  // Set the city to be searched
-        getWeatherInfo(search);  // Fetch the weather information for the entered city
-        setSearch("");  // Clear the input field after submitting
-      }
-    };
+      const dataForecast = await response.json();
+      setWeatherDataForecast(dataForecast);
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Update unit symbol (°C or °F) when the temperature unit changes
+  useEffect(() => {
+    if (temperatureUnit === "imperial") {
+      setUnit("°F");
+      setWind("miles/hour");
+    } else {
+      setUnit("°C");
+      setWind("meter/sec");
+    }
+    // If a city is already searched, re-fetch weather and forecast
+    if (search) {
+      getWeatherForecast(search);
+      getWeatherInfo(search);
+    }
+  }, [temperatureUnit]);
+
+  // Handle search input change
+  const handleSearch = (e) => {
+    setSearch(e.target.value);
+  };
+
+  // Handle form submission
+  const handleSubmitSearch = (e) => {
+    e.preventDefault();
+    const city = search.trim().toLowerCase();
+    if (city) {
+      Promise.all([getWeatherInfo(city), getWeatherForecast(city)])
+        .then(() => {
+          setSearch("");  // Clear the input field after both requests complete
+        })
+        .catch((error) => setError(error.message));
+    }
+  };
 
   return (
     <section className="search__section">
@@ -89,31 +103,26 @@ function CitySearch() {
           <InputGroup className="input__search mb-3">
             <Form.Control
               type="search"
-              placeholder="example: Rome, it"  // Placeholder to guide users on input format
+              placeholder="example: Rome, it"
               aria-label="City Search"
               aria-describedby="search"
-              value={search}  // Bind input value to search state
-              onChange={handleSearch}  // Update search state on user input
+              value={search}
+              onChange={handleSearch}
             />
             <InputGroup.Text id="search">
               <Button className="btn__search" type="submit">
-                <i className="bi bi-search"></i>  {/* Search icon for visual indication */}
+                <i className="bi bi-search"></i>
               </Button>
             </InputGroup.Text>
           </InputGroup>
         </Form>
 
-        {/* Display loading message when data is being fetched */}
         {loading && <p>Loading...</p>}
-
-        {/* Display error message if the API request fails */}
         {error && <Alert variant="danger" className="error-message">{error}</Alert>}
-        
-        {/* Display the weather data if it exists */}
+
         {weatherData && (
           <Card className="card__city__search">
             <Row className="d-flex justify-content-center align-items-center">
-              {/* Weather data with city name, country, and coordinates */}
               <Col sm={12} md={6} lg={6} className="d-flex flex-column justify-content-center align-items-center p-4">
                 <Card.Title className="title__search">
                   <div className="d-flex flex-column justify-content-center align-items-center">
@@ -127,33 +136,30 @@ function CitySearch() {
                     </span>
                   </div>
                 </Card.Title>
-                {/* Weather icon */}
                 <Image
                   src={`https://openweathermap.org/img/wn/${weatherData.weather[0]?.icon}@4x.png`}
                   alt="Weather icon"
                 />
               </Col>
-
-              {/* Weather data details like temperature, humidity, pressure, and wind */}
               <Col sm={12} md={6} lg={6}>
                 <Card.Body>
                   <Card.Text>
-                    <span className="card__temp">{Math.floor(weatherData.main?.temp)} {unit}</span> {/* Display temperature */}
+                    <span className="card__temp">{Math.floor(weatherData.main?.temp)} {unit}</span>
                   </Card.Text>
                   <Card.Text className="card__temperature">
-                    <i class="bi bi-thermometer-high"></i>Temp. Max <span className="value__temp__max">{Math.floor(weatherData.main?.temp_max)} {unit}</span>
+                    <i className="bi bi-thermometer-high"></i> Temp. Max <span className="value__temp__max">{Math.floor(weatherData.main?.temp_max)} {unit}</span>
                     <br/>
-                    <i class="bi bi-thermometer-low"></i>Temp. Min <span className="value__temp__min">{Math.floor(weatherData.main?.temp_min)} {unit}</span>
+                    <i className="bi bi-thermometer-low"></i> Temp. Min <span className="value__temp__min">{Math.floor(weatherData.main?.temp_min)} {unit}</span>
                   </Card.Text>
                   <Card.Text className="card__humidity">
-                    <i className="bi bi-droplet"></i> Humidity: <span className="value__humidity">{weatherData.main?.humidity} %</span> {/* Display humidity */}
+                    <i className="bi bi-droplet"></i> Humidity: <span className="value__humidity">{weatherData.main?.humidity} %</span>
                   </Card.Text>
                   <Card.Text className="card__pressure">
-                    <i class="bi bi-speedometer2"></i> Pressure: <span className="value__pressure">{weatherData.main?.pressure} hPa</span> {/* Display pressure */}
+                    <i className="bi bi-speedometer2"></i> Pressure: <span className="value__pressure">{weatherData.main?.pressure} hPa</span>
                   </Card.Text>
                   <Card.Text className="card__wind">
-                      <i className="bi bi-wind"></i> Wind speed: <span className="value__wind__speed">{Math.floor(weatherData.wind?.speed)} {wind}</span> <br/>
-                      <i class="bi bi-compass"></i> Wind deg: <span className="value__wind__deg">{Math.floor(weatherData.wind?.deg)}°</span> {/* Display wind direction */}
+                    <i className="bi bi-wind"></i> Wind speed: <span className="value__wind__speed">{Math.floor(weatherData.wind?.speed)} {wind}</span> <br/>
+                    <i className="bi bi-compass"></i> Wind deg: <span className="value__wind__deg">{Math.floor(weatherData.wind?.deg)}°</span>
                   </Card.Text>
                 </Card.Body>
               </Col>
@@ -161,7 +167,24 @@ function CitySearch() {
           </Card>
         )}
 
-        {/* Display a legend explaining the weather data terminology */}
+        {weatherDataForecast && weatherDataForecast.list && (
+          <Row>
+            {weatherDataForecast.list
+              .filter((_, index) => [8, 16, 24, 32].includes(index))
+              .map((forecast, index) => (
+                <Col key={index} md={6} lg={3}>
+                  <Card className="card__forecast">
+                    <Card.Title className="forecast__title">{formatWeatherDate(forecast.dt, weatherDataForecast.city.timezone)}</Card.Title>
+                    <Image src={`https://openweathermap.org/img/wn/${forecast.weather[0]?.icon}@2x.png`} />
+                    <Card.Text className="forecast__temp">Temp: {Math.floor(forecast.main.temp)} {unit}</Card.Text>
+                    <Card.Text className="forecast__humidity">Humidity: {forecast.main.humidity}%</Card.Text>
+                    <Card.Text className="forecast__clouds">Clouds: {forecast.clouds.all}%</Card.Text>
+                  </Card>
+                </Col>
+              ))}
+          </Row>
+        )}
+
         {weatherData && (
           <Container className="content__legend">
             <h2 className="mb-4">Weather Data Legend</h2>
@@ -182,4 +205,5 @@ function CitySearch() {
 }
 
 export default CitySearch;
+
 
