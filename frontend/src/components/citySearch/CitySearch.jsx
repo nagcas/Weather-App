@@ -12,18 +12,20 @@ function CitySearch() {
   const [unit, setUnit] = useState("°C");
   const [wind, setWind] = useState("meter/sec");
   const [search, setSearch] = useState("");
+  const [nameCity, setNameCity] = useState([]);
+  const [nameCountry, setNameCountry] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [weatherData, setWeatherData] = useState(null);
   const [weatherDataForecast, setWeatherDataForecast] = useState(null);
 
   // Fetch current weather data
-  const getWeatherInfo = async (city) => {
-    if (!city) return;
+  const getWeatherInfo = async (city, country) => {
+    if (!city || !country) return;
     setLoading(true);
     setError(null);
 
-    const URL_API = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=${temperatureUnit}&appid=${apiKey}`;
+    const URL_API = `https://api.openweathermap.org/data/2.5/weather?q=${city},${country}&units=${temperatureUnit}&appid=${apiKey}`;
     try {
       const response = await fetch(URL_API);
       if (!response.ok) {
@@ -39,12 +41,12 @@ function CitySearch() {
   };
 
   // Fetch weather forecast data
-  const getWeatherForecast = async (city) => {
-    if (!city) return;
+  const getWeatherForecast = async (city, country) => {
+    if (!city || !country) return;
     setLoading(true);
     setError(null);
 
-    const URL_API_FORECAST = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=${temperatureUnit}&appid=${apiKey}`;
+    const URL_API_FORECAST = `https://api.openweathermap.org/data/2.5/forecast?q=${city},${country}&units=${temperatureUnit}&appid=${apiKey}`;
     try {
       const response = await fetch(URL_API_FORECAST);
       if (!response.ok) {
@@ -70,8 +72,8 @@ function CitySearch() {
     }
     // If a city is already searched, re-fetch weather and forecast
     if (weatherData) {
-      getWeatherInfo(weatherData.name);
-      getWeatherForecast(weatherData.name);
+      getWeatherInfo(weatherData.name, weatherData.country);
+      getWeatherForecast(weatherData.name, weatherData.country);
     }
   }, [temperatureUnit, search]);
 
@@ -83,13 +85,31 @@ function CitySearch() {
   // Handle form submission
   const handleSubmitSearch = (e) => {
     e.preventDefault();
-    const city = search.trim().toLowerCase();
-    if (city) {
-      Promise.all([getWeatherInfo(city), getWeatherForecast(city)])
-        .then(() => {
-          setSearch("");  // Clear the input field after both requests complete
-        })
-        .catch((error) => setError(error.message));
+    const searchInput = search.trim().toLowerCase();  // Clean and standardize the input
+    
+    if (searchInput) {
+      const name = searchInput.split(",");  // Split the input into city and country
+      
+      // Check if the input contains both city and country
+      if (name.length === 2) {
+        const city = name[0].trim();  // Extract and clean the city
+        const country = name[1].trim();  // Extract and clean the country
+        
+        setNameCity(city);  // Set the city state
+        setNameCountry(country);  // Set the country state
+        
+        // console.log("City: ", city);
+        // console.log("Country: ", country);
+
+        // Make the API calls
+        Promise.all([getWeatherInfo(city, country), getWeatherForecast(city, country)])
+          .then(() => {
+            setSearch("");  // Clear the input field after the requests
+          })
+          .catch((error) => setError(error.message));  // Handle any API errors
+      } else {
+        setError("Please provide both a city and a country code (e.g., 'Rome, it').");  // Show error if input is incomplete
+      }
     }
   };
 
@@ -115,6 +135,7 @@ function CitySearch() {
               </Button>
             </InputGroup.Text>
           </InputGroup>
+          <p className="fw-bold text-white">Please enter the city name and country code, separated by a comma.</p>
         </Form>
 
         {loading && <p>Loading...</p>}
