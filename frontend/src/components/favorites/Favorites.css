@@ -1,6 +1,9 @@
 .favorites__section {
   margin-top: 100px;
   padding: 20px;
+  display: grid;
+  min-height: 60dvh;
+  grid-template-rows: auto 1fr auto;
 }
 
 .title__favorites {
