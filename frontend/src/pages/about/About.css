@@ -1,6 +1,16 @@
 .about__section {
   margin-top: 10vh;
   padding: 20px;
+  display: grid;
+  min-height: 60dvh;
+  grid-template-rows: auto 1fr auto;
+}
+
+.content__about {
+  background-color: #8f9ba75b;
+  box-shadow: 5px 10px 20px 0px rgba(0, 0, 0, 0.3);
+  border-radius: 15px;
+  padding: 40px;
 }
 
 .title__about {
@@ -12,7 +22,7 @@
 
 .about__section p {
   text-align: left;
-  color: #ccc;
+  color: #f8f9fa;
   font-size: 1rem;
 }
 

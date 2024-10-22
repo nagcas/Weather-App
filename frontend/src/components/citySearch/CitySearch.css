@@ -1,6 +1,9 @@
 .search__section {
   margin-top: 100px;
-  padding: 20px; 
+  padding: 20px;
+  display: grid;
+  min-height: 60dvh;
+  grid-template-rows: auto 1fr auto;
 }
 
 .title__search {
@@ -41,7 +44,7 @@
 
 .card__city__search {
   background-color: #8f9ba75b;
-  box-shadow: 5px 10px 20px 0px rgba(0, 0, 0, 0.3);
+  box-shadow: 5px 10px 20px 0px rgba(0, 0, 0, 0.4);
   border-radius: 15px;
   margin: 40px auto;
 }
