@@ -72,8 +72,8 @@ function CitySearch() {
     }
     // If a city is already searched, re-fetch weather and forecast
     if (weatherData) {
-      getWeatherInfo(weatherData.name, weatherData.country);
-      getWeatherForecast(weatherData.name, weatherData.country);
+      getWeatherInfo(weatherData.name, weatherData.sys.country);
+      getWeatherForecast(weatherData.name, weatherData.sys.country);
     }
   }, [temperatureUnit, search]);
 
