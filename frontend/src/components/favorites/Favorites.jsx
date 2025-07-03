@@ -1,4 +1,4 @@
-import { Button, Card, Col, Container, Row } from 'react-bootstrap';
+import { Alert, Button, Card, Col, Container, Row } from 'react-bootstrap';
 import './Favorites.css';
 import { useContext, useEffect, useState } from 'react';
 import { Context } from '../../modules/Context';
@@ -11,7 +11,7 @@ function Favorites() {
   const [favorites, setFavorites] = useState([]);
 
   const token = localStorage.getItem('token');
-  const { userLogin } = useContext(Context);
+  const { userLogin, isLoggedIn } = useContext(Context);
 
   useEffect(() => {
     if (userLogin && userLogin._id) {
@@ -46,29 +46,35 @@ function Favorites() {
     getAllFavorite();
   }, [userId, token, URL_API_DEV]);
 
-  console.log(favorites)
-
   return (
     <section className='favorites__section'>
       <Container>
-        <h2 className='title__favorites'>Favorite Cities</h2>
-        <Row>
-            {favorites.length === 0 ? (
-              <p>No favorites found.</p>
-            ) : (
-              favorites.map((city, index) => (
-                <Col>
-                <Card key={index} style={{ width: '18rem', marginBottom: '1rem' }}>
-                  <Card.Body>
-                    <Card.Title>{city.cityName}</Card.Title>
-                    <Card.Subtitle className='mb-2 text-muted'>{city.country}</Card.Subtitle>
-                    <Card.Text>ID: {city.cityId}</Card.Text>
-                  </Card.Body>
-                </Card>
-              </Col>
-              ))
-            )}
-        </Row>
+        {isLoggedIn ? (
+          <>
+            <h2 className='title__favorites'>Favorite Cities</h2>
+            <Row>
+                {favorites.length === 0 ? (
+                  <p>No favorites found</p>
+                ) : (
+                  favorites.map((city) => (
+                    <Col key={city._id}>
+                    <Card style={{ width: '18rem', marginBottom: '1rem' }}>
+                      <Card.Body>
+                        <Card.Title>{city.cityName}</Card.Title>
+                        <Card.Subtitle className='mb-2 text-muted'>{city.country}</Card.Subtitle>
+                        <Card.Text>ID: {city.cityId}</Card.Text>
+                      </Card.Body>
+                    </Card>
+                  </Col>
+                  ))
+                )}
+            </Row>
+          </>
+        ) : (
+          <Alert variant='warning' className='text-center'>
+            Oops! You need to log in to see this page
+          </Alert>
+        )}
       </Container>
     </section>
   );

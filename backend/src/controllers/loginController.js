@@ -39,10 +39,13 @@ const login = async (req, res) => {
       SECRET_KEY
     )
 
+    // Convert user to plain object and remove password
+    const { password: _, ...userWithoutPassword } = existingUser.toObject()
+
     // Return success response with user info and token
     return res.status(200).json(
       {
-        user: existingUser,
+        user: userWithoutPassword,
         token,
         message: 'Login successful'
       }

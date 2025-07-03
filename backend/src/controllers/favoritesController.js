@@ -44,7 +44,7 @@ const addFavoriteCities = async (req, res) => {
       // Check if the city is already in user's favorite list
       const alreadyAdded = user.favoriteCities.some(fav => fav.toString() === city._id.toString())
       if (alreadyAdded) {
-        return res.status(200).send("City is already in the user's favorite list")
+        return res.status(200).json({ message: "City is already in the user's favorite list" })
       }
 
       // Add the city to user's favorites and save the user
@@ -52,7 +52,7 @@ const addFavoriteCities = async (req, res) => {
       await user.save()
 
       // Respond with success and info about the added city
-      return res.status(200).json({
+      res.status(200).json({
         message: 'City added to favorites',
         city: {
           name: city.cityName,
@@ -70,7 +70,7 @@ const addFavoriteCities = async (req, res) => {
 
       // If no cities found
       if (cityData.count === 0) {
-        return res.status(200).send('No cities found')
+        return res.status(200).json({ message: 'No cities found' })
       }
 
       // If multiple cities found with the same name
@@ -104,7 +104,7 @@ const addFavoriteCities = async (req, res) => {
       }
 
       // Respond with success and info of added city
-      return res.status(200).json({
+      res.status(200).json({
         message: 'City added to favorites',
         city: {
           name: singleCity.name,
@@ -115,7 +115,7 @@ const addFavoriteCities = async (req, res) => {
     }
 
     // If neither cityId nor cityName provided, respond with error
-    return res.status(400).json({ message: 'Please provide cityName or cityId' })
+    res.status(400).json({ message: 'Please provide cityName or cityId' })
   } catch (error) {
     // Log the error and respond with server error
     console.error('Error fetching city data:', error.message)
