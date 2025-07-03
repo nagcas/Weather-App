@@ -1,47 +1,46 @@
-import userModel from "../models/user.js";
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
-import dotenv from "dotenv";
+import userModel from '../models/user.js'
+import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
+import dotenv from 'dotenv'
 
 // Configuring dotenv to load environment variables from the .env file
-dotenv.config();
+dotenv.config()
 
-const SECRET_KEY = process.env.JWT_SECRET;
+const SECRET_KEY = process.env.JWT_SECRET
 
 // const SECRET_KEY = 'Register_api'; //will change it afterwards
 
 const register = async (req, res) => {
-  
   try {
-    const { email, password, username } = req.body;
+    const { email, password, username } = req.body
     // console.log(email, password, username);
-  
-    //checking existing user . as it connects with db to find that user ,we need to make it await
-    const existingUser = await userModel.findOne({ email });
+
+    // Checking existing user . as it connects with db to find that user ,we need to make it await
+    const existingUser = await userModel.findOne({ email })
 
     if (existingUser) {
-      return res.status(400).send("This email already exist");
+      return res.status(400).send('This email already exist')
     }
 
-    // if user doesnt exist then we create a hashed password and create a user object to store it
+    // If user doesnt exist then we create a hashed password and create a user object to store it
 
-    const hashPassword = await bcrypt.hash(password, 10);
+    const hashPassword = await bcrypt.hash(password, 10)
 
     const user = {
-      email: email,
+      email,
       password: hashPassword,
-      username: username,
-    };
+      username
+    }
 
-    const result = await userModel.create(user);
+    const result = await userModel.create(user)
 
-    const token = jwt.sign({ email: result.email, id: result._id }, SECRET_KEY);
+    const token = jwt.sign({ email: result.email, id: result._id }, SECRET_KEY)
 
-    return res.status(201).json({ user: result, token: token });
+    return res.status(201).json({ user: result, token })
   } catch (error) {
-    console.log("error while crating user: ", error);
-    return res.status(500).send("Some error occured.");
+    console.log('error while crating user: ', error)
+    return res.status(500).send('Some error occured.')
   }
-};
+}
 
-export default register;
+export default register
