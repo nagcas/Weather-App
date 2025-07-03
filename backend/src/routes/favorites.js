@@ -5,7 +5,12 @@ import authMiddleware from '../middlewares/auth.js'
 
 const router = express.Router()
 
+// Route to add a city to the user's favorite list
+// Uses authMiddleware to ensure the user is authenticated
 router.post('/add-favorite-city', authMiddleware, addfavoriteCities)
-router.get('/get-favorite-city', authMiddleware, getFavoriteCities)
+
+// Route to get the list of user's favorite cities
+// Also protected by authMiddleware for authentication
+router.post('/get-favorite-city', authMiddleware, getFavoriteCities)
 
 export default router
