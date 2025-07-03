@@ -6,8 +6,6 @@ import Legend from './Legend';
 import SingleCard from './SingleCard';
 import InputSearch from './InputSearch';
 import CardsForecast from './CardsForecast';
-import { getWeatherForecast } from '../services/useFetchForecast.js';
-import { getWeatherInfo } from '../services/useFetchCurrent.js';
 
 function CitySearch() {
   const { temperatureUnit } = useContext(Context);
@@ -17,60 +15,56 @@ function CitySearch() {
   const [unit, setUnit] = useState('°C');
   const [wind, setWind] = useState('meter/sec');
   const [search, setSearch] = useState('');
-  const [nameCity, setNameCity] = useState([]);
-  const [nameCountry, setNameCountry] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [weatherData, setWeatherData] = useState(null);
   const [weatherDataForecast, setWeatherDataForecast] = useState(null);
 
   // Fetch current weather data
-  const getWeatherInfo = async (city, country) => {
+  const fetchCurrentWeather = async (city, country) => {
+    if (!city || !country) return;
     setLoading(true);
-    const { data, error } = await getWeatherInfo(
-      city,
-      country,
-      temperatureUnit,
-      apiKey
-    );
-    setWeatherData(data);
-    setLoading(false);
+    setError(null);
+
+    const URL_API_CURRENT = `https://api.openweathermap.org/data/2.5/weather?q=${city},${country}&units=${temperatureUnit}&appid=${apiKey}`;
+
+    try {
+      const response = await fetch(URL_API_CURRENT);
+      if (!response.ok) {
+        throw new Error(`Error fetching current weather for ${city}`);
+      }
+      const data = await response.json();
+      setWeatherData(data);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  // Fetch weather forecast data
-  const getWeatherForecast = async (city, country) => {
+  // Fetch forecast weather data
+  const fetchForecastWeather = async (city, country) => {
+    if (!city || !country) return;
     setLoading(true);
-    const { dataForecast, error } = await getWeatherForecast(
-      city,
-      country,
-      temperatureUnit,
-      apiKey
-    );
-    setWeatherData(dataForecast);
-    setLoading(false);
+    setError(null);
+
+    const URL_API_FORECAST = `https://api.openweathermap.org/data/2.5/forecast?q=${city},${country}&units=${temperatureUnit}&appid=${apiKey}`;
+
+    try {
+      const response = await fetch(URL_API_FORECAST);
+      if (!response.ok) {
+        throw new Error(`Error fetching forecast for ${city}`);
+      }
+      const data = await response.json();
+      setWeatherDataForecast(data);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  // const getWeatherForecast = async (city, country) => {
-  //   if (!city || !country) return;
-  //   setLoading(true);
-  //   setError(null);
-
-  //   const URL_API_FORECAST = `https://api.openweathermap.org/data/2.5/forecast?q=${city},${country}&units=${temperatureUnit}&appid=${apiKey}`;
-  //   try {
-  //     const response = await fetch(URL_API_FORECAST);
-  //     if (!response.ok) {
-  //       throw new Error(`Error fetching forecast for ${city}`);
-  //     }
-  //     const dataForecast = await response.json();
-  //     setWeatherDataForecast(dataForecast);
-  //   } catch (error) {
-  //     setError(error.message);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
-  // Update unit symbol (°C or °F) when the temperature unit changes
+  // Update unit when temperature unit changes
   useEffect(() => {
     if (temperatureUnit === 'imperial') {
       setUnit('°F');
@@ -79,52 +73,36 @@ function CitySearch() {
       setUnit('°C');
       setWind('meter/sec');
     }
-    // If a city is already searched, re-fetch weather and forecast
-    if (weatherData) {
-      getWeatherInfo(weatherData.name, weatherData.sys.country);
-      getWeatherForecast(weatherData.name, weatherData.sys.country);
-    }
-  }, [temperatureUnit, search]);
 
-  // Handle search input change
+    // If a city is already selected, refresh the data
+    if (weatherData) {
+      fetchCurrentWeather(weatherData.name, weatherData.sys.country);
+      fetchForecastWeather(weatherData.name, weatherData.sys.country);
+    }
+  }, [temperatureUnit]);
+
+  // Handle search input
   const handleSearch = (e) => {
     setSearch(e.target.value);
   };
 
-  // Handle form submission
+  // Handle form submit
   const handleSubmitSearch = (e) => {
     e.preventDefault();
-    const searchInput = search.trim().toLowerCase(); // Clean and standardize the input
 
-    if (searchInput) {
-      const name = searchInput.split(','); // Split the input into city and country
+    const trimmed = search.trim().toLowerCase();
+    if (!trimmed) return;
 
-      // Check if the input contains both city and country
-      if (name.length === 2) {
-        const city = name[0].trim(); // Extract and clean the city
-        const country = name[1].trim(); // Extract and clean the country
+    const [city, country] = trimmed.split(',').map((s) => s.trim());
 
-        setNameCity(city); // Set the city state
-        setNameCountry(country); // Set the country state
-
-        // console.log("City: ", city);
-        // console.log("Country: ", country);
-
-        // Make the API calls
-        Promise.all([
-          getWeatherInfo(city, country),
-          getWeatherForecast(city, country),
-        ])
-          .then(() => {
-            setSearch(''); // Clear the input field after the requests
-          })
-          .catch((error) => setError(error.message)); // Handle any API errors
-      } else {
-        setError(
-          "Please provide both a city and a country code (e.g., 'Rome, it')."
-        ); // Show error if input is incomplete
-      }
+    if (!city || !country) {
+      setError("Please enter city and country code (e.g. 'Rome, IT')");
+      return;
     }
+
+    fetchCurrentWeather(city, country);
+    fetchForecastWeather(city, country);
+    setSearch('');
   };
 
   return (
@@ -132,7 +110,6 @@ function CitySearch() {
       <Container>
         <h2 className='title__search'>City Search</h2>
 
-        {/* Form to search for a city's weather data */}
         <InputSearch
           handleSubmitSearch={handleSubmitSearch}
           search={search}
@@ -141,32 +118,22 @@ function CitySearch() {
 
         {loading && <p>Loading...</p>}
         {error && (
-          <Alert
-            variant='danger'
-            className='error-message'
-          >
+          <Alert variant='danger' className='error-message'>
             {error}
           </Alert>
         )}
 
-        {/* Wiew single card weather */}
+        {/* Show current weather */}
         {weatherData && (
-          <SingleCard
-            weatherData={weatherData}
-            unit={unit}
-            wind={wind}
-          />
+          <SingleCard weatherData={weatherData} unit={unit} wind={wind} />
         )}
 
-        {/* Wiew ard forestac with map and filter */}
-        {weatherDataForecast && weatherDataForecast.list && (
-          <CardsForecast
-            weatherDataForecast={weatherDataForecast}
-            unit={unit}
-          />
+        {/* Show forecast weather */}
+        {weatherDataForecast?.list && (
+          <CardsForecast weatherDataForecast={weatherDataForecast} unit={unit} />
         )}
 
-        {/* Wiew legend weather */}
+        {/* Show legend */}
         {weatherData && <Legend />}
       </Container>
     </section>
@@ -174,3 +141,4 @@ function CitySearch() {
 }
 
 export default CitySearch;
+
