@@ -1,14 +1,73 @@
-import { Container } from 'react-bootstrap';
+import { Button, Card, Container } from 'react-bootstrap';
 import './Favorites.css';
+import { useContext, useEffect, useState } from 'react';
+import { Context } from '../../modules/Context';
 
 function Favorites() {
+  const apiKey = import.meta.env.VITE_API_WEATHER;
+  const URL_API_DEV = import.meta.env.VITE_API_URL_DEV;
+
+  const [userId, setUserId] = useState('');
+  const [favorites, setFavorites] = useState([]);
+
+  const token = localStorage.getItem('token');
+  const { userLogin } = useContext(Context);
+
+  useEffect(() => {
+    if (userLogin && userLogin._id) {
+      setUserId(userLogin._id);
+    }
+  }, [userLogin]);
+
+  // Fetch favorite cities
+  useEffect(() => {
+    const getAllFavorite = async () => {
+      if (!userId) return;
+
+      try {
+        const response = await fetch(`${URL_API_DEV}/api/favorites/get-favorite-city`, {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ userId }),
+        });
+
+        const data = await response.json();
+        if (data.list) {
+          setFavorites(data.list);
+        }
+      } catch (error) {
+        console.error('Failed to fetch favorites:', error);
+      }
+    };
+
+    getAllFavorite();
+  }, [userId, token, URL_API_DEV]);
+
   return (
     <section className='favorites__section'>
       <Container>
-        <h2 className='title__favorites'>Favorites</h2>
+        <h2 className='title__favorites'>Favorite Cities</h2>
+
+        {favorites.length === 0 ? (
+          <p>No favorites found.</p>
+        ) : (
+          favorites.map((city, index) => (
+            <Card key={index} style={{ width: '18rem', marginBottom: '1rem' }}>
+              <Card.Body>
+                <Card.Title>{city.cityName}</Card.Title>
+                <Card.Subtitle className='mb-2 text-muted'>{city.country}</Card.Subtitle>
+                <Card.Text>ID: {city.cityId}</Card.Text>
+              </Card.Body>
+            </Card>
+          ))
+        )}
       </Container>
     </section>
   );
 }
 
 export default Favorites;
+
