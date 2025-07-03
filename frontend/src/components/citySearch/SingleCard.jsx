@@ -1,7 +1,12 @@
-import { Card, Col, Image, Row } from 'react-bootstrap';
+import { Button, Card, Col, Image, Row } from 'react-bootstrap';
 import { formatWeatherDate } from '../../modules/useTime.js';
+import { useContext } from 'react';
+import { Context } from '../../modules/Context.jsx';
+import AddFavoriteCity from '../addFavoriteCity/AddFavoriteCity.jsx';
 
 function SingleCard({ weatherData, unit, wind }) {
+  const { isLoggedIn } = useContext(Context);
+
   return (
     <Card className='card__city__search'>
       <Row className='d-flex justify-content-center align-items-center'>
@@ -14,6 +19,11 @@ function SingleCard({ weatherData, unit, wind }) {
           <Card.Title className='title__search'>
             <div className='d-flex flex-column justify-content-center align-items-center'>
               {weatherData.name} ({weatherData.sys?.country})
+              {isLoggedIn && (
+                <div className='mt-4'>
+                  <AddFavoriteCity weatherData={weatherData} />
+                </div>
+              )}
               <span className='text__coord mt-4'>
                 Coord. lon. {weatherData.coord?.lon}
               </span>

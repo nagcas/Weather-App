@@ -22,7 +22,9 @@ body {
   }
 }
 
-.btn__login {
+.btn__login,
+.btn__add__favorite,
+.btn__save {
   background-color: #fff;
   color: #000;
   box-shadow: 5px 10px 20px 0px rgba(0, 0, 0, 0.3);
@@ -35,7 +37,9 @@ body {
   transition: background-color 0.3s ease;
 }
 
-.btn__login:hover {
+.btn__login:hover,
+.btn__add__favorite:hover,
+.btn__save:hover {
   background-color: #ffffff26;
   color: #fff;
 }
@@ -48,7 +52,8 @@ body {
 
 .btn__signUp,
 .btn__logout,
-.btn__hero {
+.btn__hero,
+.btn__close {
   background-color: #545553;
   box-shadow: 5px 10px 20px 0px rgba(0, 0, 0, 0.3);
   color: #fff;
@@ -61,7 +66,8 @@ body {
 
 .btn__signUp:hover,
 .btn__logout:hover,
-.btn__hero:hover {
+.btn__hero:hover,
+.btn__close:hover {
   background-color: #40413f;
   color: #fff;
 }
@@ -77,6 +83,19 @@ body {
   background-color: #40413f !important;
   outline: none !important; 
 }
+
+/* Change the background color of the entire modal */
+.custom-modal .modal-content {
+  background-color: #40413f;
+  color: #fff; /* readable text color */
+  border-radius: 10px; /* rounded corners for a smoother look */
+}
+
+/* Change only the background color of the modal body */
+.custom-modal .modal-body {
+  background-color: #40413f;
+}
+
 
 @media (max-width: 768px) {
   .btn__login, 
