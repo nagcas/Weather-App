@@ -5,7 +5,7 @@ import { Context } from '../../modules/Context';
 
 function Favorites() {
   const apiKey = import.meta.env.VITE_API_WEATHER;
-  const URL_API_DEV = import.meta.env.VITE_API_URL_DEV;
+  const URL_API = import.meta.env.VITE_API_URL_DEV;
 
   const [userId, setUserId] = useState('');
   const [favorites, setFavorites] = useState([]);
@@ -25,7 +25,7 @@ function Favorites() {
       if (!userId) return;
 
       try {
-        const response = await fetch(`${URL_API_DEV}/api/favorites/get-favorite-city`, {
+        const response = await fetch(`${URL_API}/api/favorites/get-favorite-city`, {
           method: 'POST',
           headers: {
             Authorization: `Bearer ${token}`,
