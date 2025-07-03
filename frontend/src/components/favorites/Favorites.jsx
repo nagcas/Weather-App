@@ -1,10 +1,9 @@
-import { Alert, Button, Card, Col, Container, Row } from 'react-bootstrap';
 import './Favorites.css';
+import { Alert, Card, Col, Container, Row } from 'react-bootstrap';
 import { useContext, useEffect, useState } from 'react';
 import { Context } from '../../modules/Context';
 
 function Favorites() {
-  const apiKey = import.meta.env.VITE_API_WEATHER;
   const URL_API = import.meta.env.VITE_API_URL_DEV;
 
   const [userId, setUserId] = useState('');
@@ -44,7 +43,7 @@ function Favorites() {
     };
 
     getAllFavorite();
-  }, [userId, token, URL_API_DEV]);
+  }, [userId, token, URL_API]);
 
   return (
     <section className='favorites__section'>
