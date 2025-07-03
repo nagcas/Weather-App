@@ -60,10 +60,16 @@ function AddFavoriteCity({ weatherData }) {
 
       if (typeof data === 'string' && data.includes("already in the user's favorite list")) {
         setErrorMessage('City is already in your favorite list.');
+        setTimeout(() => {
+          handleClose()
+        }, 3000)
         return;
       }
 
       setSuccessMessage('City successfully added to favorites!');
+      setTimeout(() => {
+        handleClose();
+      }, 3000)
     } catch (error) {
       setErrorMessage(error.message || 'An error occurred.');
     } finally {
@@ -127,7 +133,7 @@ function AddFavoriteCity({ weatherData }) {
           <Button
             className='btn__save'
             onClick={handleFavoriteCitySubmit}
-            disabled={isLoading}
+            disabled={isLoading || errorMessage || successMessage}
           >
             {isLoading ? 'Adding city...' : 'Save city'}
           </Button>
