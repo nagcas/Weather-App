@@ -1,8 +1,8 @@
-import "./Auth.css";
-import React, { useState, useEffect, useContext } from "react";
-import { Link, useNavigate, useLocation, Navigate } from "react-router-dom";
-import { Button, Container, FloatingLabel, Form, Alert } from "react-bootstrap";
-import { Context } from "../../modules/Context";
+import './Auth.css';
+import React, { useState, useEffect, useContext } from 'react';
+import { Link, useNavigate, useLocation, Navigate } from 'react-router-dom';
+import { Button, Container, FloatingLabel, Form, Alert } from 'react-bootstrap';
+import { Context } from '../../modules/Context';
 
 function Login() {
   // useNavigate is used for programmatic navigation after login
@@ -28,8 +28,8 @@ function Login() {
 
   // State for storing user login details (email and password)
   const [login, setLogin] = useState({
-    email: "",
-    password: "",
+    email: '',
+    password: '',
   });
 
   // Handle changes in form inputs and reset validation errors for the field being updated
@@ -39,17 +39,17 @@ function Login() {
       ...login,
       [name]: value,
     });
-    setErrors((prevErrors) => ({ ...prevErrors, [name]: "" }));
+    setErrors((prevErrors) => ({ ...prevErrors, [name]: '' }));
   };
 
   // Validate login form inputs before submission
   const validate = () => {
     const newErrors = {};
     if (!login.email.trim()) {
-      newErrors.email = "Please enter your email!";
+      newErrors.email = 'Please enter your email!';
     }
     if (!login.password.trim()) {
-      newErrors.password = "Please enter your password!";
+      newErrors.password = 'Please enter your password!';
     }
     return newErrors;
   };
@@ -72,40 +72,37 @@ function Login() {
 
     try {
       // Send POST request to the login API with user credentials
-      const response = await fetch(
-        `${API_URL}/api/register/userLogin`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(login),
-        }
-      );
+      const response = await fetch(`${API_URL}/api/users/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(login),
+      });
 
       const result = await response.json();
 
       // Check if the response is successful; otherwise, throw an error
       if (!response.ok) {
-        throw new Error(result.message || "Failed to login!");
+        throw new Error(result.message || 'Failed to login!');
       }
-      
+
       // Successful login: store user data and token in localStorage
       setIsLoading(result);
-      localStorage.setItem("userLogin", JSON.stringify(result.user));
-      localStorage.setItem("token", result.token);
+      localStorage.setItem('userLogin', JSON.stringify(result.user));
+      localStorage.setItem('token', result.token);
 
       // Dispatch a storage event to notify other tabs of the login state
-      window.dispatchEvent(new Event("storage"));
+      window.dispatchEvent(new Event('storage'));
 
       // Redirect to the homepage after login
-      navigate("/");
+      navigate('/');
     } catch (error) {
       // Set appropriate error message based on the type of error
-      if (error.message.includes("Invalid credentials!")) {
-        setApiError("Invalid email or password. Please try again!");
+      if (error.message.includes('Invalid credentials!')) {
+        setApiError('Invalid email or password. Please try again!');
       } else {
-        setApiError("An error occurred during login. Please try again later!");
+        setApiError('An error occurred during login. Please try again later!');
       }
     } finally {
       // Stop the loading state after completion
@@ -116,44 +113,44 @@ function Login() {
   // Effect to handle login using a token passed in the URL query parameters
   useEffect(() => {
     const params = new URLSearchParams(location.search);
-    const token = params.get("token");
+    const token = params.get('token');
 
     // If a token is found, store it in localStorage and redirect to the homepage
     if (token) {
-      localStorage.setItem("token", token);
-      window.dispatchEvent(new Event("storage"));
-      navigate("/");
+      localStorage.setItem('token', token);
+      window.dispatchEvent(new Event('storage'));
+      navigate('/');
     }
   }, [location, navigate]);
 
   return (
-    <Container className="d-flex justify-content-center align-items-center">
+    <Container className='d-flex justify-content-center align-items-center'>
       {!isLoggedIn ? ( // If the user is not logged in, show the login form
-        <div className="form__login d-flex justify-content-center align-items-center">
-          <div className="content__form__login">
-            <div className="form__content__title__login d-flex flex-column justify-content-center align-items-center">
-              <p className="title__login">Login</p>
+        <div className='form__login d-flex justify-content-center align-items-center'>
+          <div className='content__form__login'>
+            <div className='form__content__title__login d-flex flex-column justify-content-center align-items-center'>
+              <p className='title__login'>Login</p>
             </div>
 
             {/* Form to handle user login */}
             <Form onSubmit={handleLoginSubmit}>
               {/* Email input field with floating label */}
               <FloatingLabel
-                controlId="login-email"
+                controlId='login-email'
                 label={
                   errors.email ? (
-                    <span className="text-danger">{errors.email}</span>
+                    <span className='text-danger'>{errors.email}</span>
                   ) : (
-                    "Email"
+                    'Email'
                   )
                 }
-                className="mb-3"
+                className='mb-3'
               >
                 <Form.Control
-                  type="email"
-                  name="email"
-                  aria-label="Enter email"
-                  placeholder="email@example.com"
+                  type='email'
+                  name='email'
+                  aria-label='Enter email'
+                  placeholder='email@example.com'
                   onChange={handleInputChange}
                   isInvalid={!!errors.email} // Show validation error if present
                 />
@@ -161,20 +158,20 @@ function Login() {
 
               {/* Password input field with floating label */}
               <FloatingLabel
-                controlId="login-password"
+                controlId='login-password'
                 label={
                   errors.password ? (
-                    <span className="text-danger">{errors.password}</span>
+                    <span className='text-danger'>{errors.password}</span>
                   ) : (
-                    "Password"
+                    'Password'
                   )
                 }
               >
                 <Form.Control
-                  type="password"
-                  name="password"
-                  aria-label="Enter password"
-                  placeholder="password"
+                  type='password'
+                  name='password'
+                  aria-label='Enter password'
+                  placeholder='password'
                   onChange={handleInputChange}
                   isInvalid={!!errors.password} // Show validation error if present
                 />
@@ -182,39 +179,52 @@ function Login() {
 
               {/* Display API error message if login fails */}
               {apiError && (
-                <Alert variant="danger" className="mt-3">
+                <Alert
+                  variant='danger'
+                  className='mt-3'
+                >
                   {apiError}
                 </Alert>
               )}
 
               {/* Submit button for login */}
               <Button
-                type="submit"
-                className="btn__login w-75 mt-4"
-                aria-label="login"
+                type='submit'
+                className='btn__login w-75 mt-4'
+                aria-label='login'
                 disabled={isLoading} // Disable button while loading
               >
-                {isLoading ? "Logging in..." : "Login"}
+                {isLoading ? 'Logging in...' : 'Login'}
               </Button>
             </Form>
 
             {/* Links to sign up or recover password */}
-            <p className="text__signup mt-3">
-              Not registered yet?{" "}
-              <Link className="link__signUp" to="/signUp">
+            <p className='text__signup mt-3'>
+              Not registered yet?{' '}
+              <Link
+                className='link__signUp'
+                to='/signUp'
+              >
                 Sign Up
               </Link>
             </p>
-            <p className="text__password__forgot">
-              Forgot your password?{" "}
-              <Link className="link__forgot" to="/forgot-password">
+            <p className='text__password__forgot'>
+              Forgot your password?{' '}
+              <Link
+                className='link__forgot'
+                to='/forgot-password'
+              >
                 Recover
               </Link>
             </p>
           </div>
         </div>
-      ) : ( // If the user is logged in, redirect to homepage
-        <Navigate to='/' replace={true} />
+      ) : (
+        // If the user is logged in, redirect to homepage
+        <Navigate
+          to='/'
+          replace={true}
+        />
       )}
     </Container>
   );

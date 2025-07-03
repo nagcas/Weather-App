@@ -1,8 +1,8 @@
-import "./LoggedIn.css";
-import { useContext, useEffect, useState } from "react";
-import { Button } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
-import { Context } from "../../../modules/Context";
+import './LoggedIn.css';
+import { useContext, useEffect, useState } from 'react';
+import { Button } from 'react-bootstrap';
+import { Link, useNavigate } from 'react-router-dom';
+import { Context } from '../../../modules/Context';
 
 function LoggedIn({ handleClose }) {
   const navigate = useNavigate();
@@ -16,8 +16,8 @@ function LoggedIn({ handleClose }) {
 
   useEffect(() => {
     const checkLoginStatus = async () => {
-      const storedToken = localStorage.getItem("token");
-      const storedUserLogin = localStorage.getItem("userLogin");
+      const storedToken = localStorage.getItem('token');
+      const storedUserLogin = localStorage.getItem('userLogin');
       // console.log("token: ", storedToken);
 
       if (storedToken) {
@@ -35,16 +35,16 @@ function LoggedIn({ handleClose }) {
             }
           } else {
             // Handle expired or invalid token
-            localStorage.removeItem("token");
-            localStorage.removeItem("userLogin");
+            localStorage.removeItem('token');
+            localStorage.removeItem('userLogin');
             setIsLoggedIn(false);
             setUserLogin(null);
-            navigate("/login");
+            navigate('/login');
           }
         } catch (error) {
-          console.error("Error during token verification: ", error);
-          localStorage.removeItem("token");
-          localStorage.removeItem("userLogin");
+          console.error('Error during token verification: ', error);
+          localStorage.removeItem('token');
+          localStorage.removeItem('userLogin');
           setIsLoggedIn(false);
           setUserLogin(null);
         }
@@ -59,57 +59,59 @@ function LoggedIn({ handleClose }) {
     checkLoginStatus();
 
     // Add event listener to check login status on storage changes
-    window.addEventListener("storage", checkLoginStatus);
+    window.addEventListener('storage', checkLoginStatus);
     // Event listener to check login status when state changes
-    window.addEventListener("loginStateChange", checkLoginStatus);
+    window.addEventListener('loginStateChange', checkLoginStatus);
 
     // Remove event listeners when the component is unmounted or updated
     return () => {
-      window.removeEventListener("storage", checkLoginStatus);
-      window.removeEventListener("loginStateChange", checkLoginStatus);
+      window.removeEventListener('storage', checkLoginStatus);
+      window.removeEventListener('loginStateChange', checkLoginStatus);
     };
   }, [setIsLoggedIn, setUserLogin, navigate]);
 
   // Handle user logout, clear local storage and update context state
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("userLogin");
+    localStorage.removeItem('token');
+    localStorage.removeItem('userLogin');
     setIsLoggedIn(false);
     setUserLogin(null);
     handleClose();
-    navigate("/");
+    navigate('/');
   };
 
   return (
     <>
       {!isLoggedIn && !userLogin ? (
-        <div className="d-flex justify-content-center align-items-center">
+        <div className='d-flex justify-content-center align-items-center'>
           <Button
             as={Link}
-            to="/login"
-            aria-label="Button login"
-            className="btn__login"
+            to='/login'
+            aria-label='Button login'
+            className='btn__login'
             onClick={handleClose}
           >
             Login
           </Button>
           <Button
             as={Link}
-            to="/signUp"
-            aria-label="Button signup"
-            className="btn__signUp"
+            to='/signUp'
+            aria-label='Button signup'
+            className='btn__signUp'
             onClick={handleClose}
           >
             Sign Up
           </Button>
         </div>
       ) : (
-        <div className="d-flex justify-content-center align-items-center">
-          <p className="user__logged m-0 me-3">Welcome <span className="username">{userLogin.username}</span></p>
+        <div className='d-flex justify-content-center align-items-center'>
+          <p className='user__logged m-0 me-3'>
+            Welcome <span className='username'>{userLogin.username}</span>
+          </p>
           <Button
             onClick={handleLogout}
-            aria-label="Button logout"
-            className="btn__logout"
+            aria-label='Button logout'
+            className='btn__logout'
           >
             Logout
           </Button>
@@ -120,4 +122,3 @@ function LoggedIn({ handleClose }) {
 }
 
 export default LoggedIn;
-
