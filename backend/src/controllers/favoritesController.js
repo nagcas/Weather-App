@@ -1,62 +1,64 @@
-import cityModel from "../models/cities.js";
-import userModel from "../models/user.js";
-import axios from "axios";
+import userModel from '../models/user.js'
+import axios from 'axios'
 
 const addFavoriteCities = async (req, res) => {
   try {
-    const { cityName, cityId } = req.body;
-    const userId = req.userId;
-    const apiKey = process.env.OPENWEATHER_API_KEY;
+    const { cityName, cityId } = req.body
+    const userId = req.userId
+    const apiKey = process.env.OPENWEATHER_API_KEY
 
-    //let city =  await cityModel.findOne({  cityName,country });
-
+    // PART 1: Add a city by its ID to the user's favorites
     if (cityId) {
-      const user = await userModel.findById(userId);
-      const alreadyAdded = user.favoriteCities.includes(cityId);
-      //we are checking if the given city is already in usersfavrotie list or not
+      const user = await userModel.findById(userId)
+
+      if (!user) return res.status(404).json({ message: 'User not found.' })
+
+      const alreadyAdded = user.favoriteCities.includes(cityId)
 
       if (alreadyAdded) {
-        return res
-          .send("City is already present in user's favorite list.")
-          .status(200);
+        return res.status(200).send("City is already in the user's favorite list.")
       }
 
-      //else adding it to favroite list
-      user.favoriteCities.push(cityId);
-      await user.save();
+      user.favoriteCities.push(cityId)
+      await user.save()
 
-      return res.send("City added to favorite.").status(200);
+      return res.status(200).send('City added to favorites.')
     }
 
-    //-----------Part2----------------------
-    //if no id is provided ,search for cities.the user will send the city name ,we will check if its available in openweather api and then send list as response to allow him to select one city.
+    // PART 2: If no ID is provided, search for the city using OpenWeather API
+    if (cityName) {
+      const url = `https://api.openweathermap.org/data/2.5/find?q=${encodeURIComponent(cityName)}&appid=${apiKey}&units=metric`
 
-    if (cityName);
+      // Request city data from OpenWeather
+      const response = await axios.get(url)
+      const cityData = response.data
 
-    //getting city data from openweather api
-    let url = `https://api.openweathermap.org/data/2.5/find?q=${cityName}&appid=${apiKey}&units=metric`;
+      // If no city is found
+      if (cityData.count === 0) {
+        return res.status(200).send('No cities found.')
+      }
 
-    //it will check if city exist in its db or not
+      // If multiple cities with the same name are found
+      if (cityData.count > 1) {
+        return res.status(200).json({
+          message: 'Multiple cities found, please select one.',
+          cities: cityData.list
+        })
+      }
 
-    const response = await axios.get(url);
-    const cityData = response.data;
-    //it returns a object which contains list of cities with same name;
-    //{"message":"accurate","cod":"200","count":0,"list":[]}
-
-    if (cityData.count == 0) return res.send("No cities found.").status(200);
-    //if cities with same name exist then it shows a dropdown with different lat and longitutde and with country name;
-    //then we have to select the particular city of particular country to send the main request of getting data;
-    else if (cityData.count > 1) {
-      res.status(200).json({
-        message: "Multiple cities found, select one.",
-        cities: cityData.list,
-      });
-      //no return keyword here as we want to move froward with request processing,as the user will be selecting and sending the city now.
+      // If exactly one city is found, return it (or you could add it directly here)
+      return res.status(200).json({
+        message: 'One city found.',
+        city: cityData.list[0]
+      })
     }
+
+    // If neither cityId nor cityName is provided
+    return res.status(400).json({ message: 'Please provide cityName or cityId.' })
   } catch (error) {
-    console.error("Error fetching city data: ", error);
-    res.status(500).json({ message: "Error fetching city data." });
+    console.error('Error fetching city data:', error)
+    res.status(500).json({ message: 'Server error while processing city.' })
   }
-};
+}
 
-export default addFavoriteCities;
+export default addFavoriteCities
