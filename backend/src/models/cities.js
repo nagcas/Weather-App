@@ -13,7 +13,12 @@ const citySchema = new Schema(
       required: true, // Corrected from 'require' to 'required'
       trim: true // Removes any leading or trailing whitespace
     },
-    users: [
+    cityId: {
+      type: String,
+      required: true, // Corrected from 'require' to 'required'
+      trim: true // Removes any leading or trailing whitespace
+    },
+    userId: [
       {
         type: Schema.Types.ObjectId, // This stores the IDs of users who have this city as a favorite
         ref: 'User' // Reference to the User model
