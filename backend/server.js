@@ -9,7 +9,7 @@ import favoriteRouter from './src/routes/favorites.js'
 // Configuring dotenv to load environment variables from the .env file
 dotenv.config()
 
-// setting up basic express server
+// Setting up basic express server
 const app = express()
 
 // Definition of the port on which the server will listen

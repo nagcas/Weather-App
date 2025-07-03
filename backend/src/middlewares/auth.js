@@ -1,29 +1,40 @@
-import jwt from 'jsonwebtoken'
-import dotenv from 'dotenv'
+import { verifyJWT } from '../utils/jwt.js'
+import User from '../models/user.js'
 
-// Configuring dotenv to load environment variables from the .env file
-dotenv.config()
-
-const SECRET_KEY = process.env.JWT_SECRET
-
-const authMiddleware = (req, res, next) => {
-  // Extract token from Authorization header
-  const authHeader = req.headers.authorization
-  if (!authHeader) {
-    return res.status(401).send('Access Denied. Token not provided.')
-  }
-
-  // The token is expected to be in format "Bearer <token>"
-  const token = authHeader.replace('Bearer ', '')
-
+// Authentication middleware
+export const authMiddleware = async (req, res, next) => {
   try {
-    // Verify the token
-    const result = jwt.verify(token, SECRET_KEY)
-    req.userId = result._id
+    // Extract the JWT token from the request's authorization header
+    const token = req.headers.authorization?.replace('Bearer ', '')
+
+    // Check if the token is present
+    if (!token) {
+      return res.status(401).json({ message: 'Token missing!' })
+    }
+
+    // Verify the token and decode the payload
+    const decoded = await verifyJWT(token)
+
+    // Find the user in the database using the ID decoded from the token
+    const user = await User.findById(decoded.id).select('-password')
+
+    // If the user is not found, send a 401 Unauthorized response
+    if (!user) {
+      return res.status(401).json({ message: 'User not found!' })
+    }
+
+    // Attach the decoded user to the request for future use
+    req.user = user
+
+    // Pass control to the next middleware in the chain
     next()
   } catch (error) {
-    return res.status(401).send('Access Denied. Invalid token.')
+    console.error('Authentication error:', error)
+    if (error.name === 'JsonWebTokenError') {
+      // In case of an error (e.g. invalid token), send a 401 Unauthorized response
+      return res.status(401).json({ message: 'Invalid token!' })
+    }
+    // For unknown errors, send a 500 Internal Server Error response
+    res.status(500).json({ message: 'Internal server error during authentication!' })
   }
 }
-
-export default authMiddleware
