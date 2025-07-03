@@ -30,7 +30,7 @@ const login = async (req, res) => {
 
     // If password does not match, return 400 error with message
     if (!matchPassword) {
-      return res.send(400).json({ message: 'Invalid Password' })
+      return res.status(400).json({ message: 'Invalid Password' })
     }
 
     // Generate a JWT token with user's email and id, signed with the secret key

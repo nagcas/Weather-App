@@ -108,7 +108,7 @@ function CitySearch() {
   return (
     <section className='search__section'>
       <Container>
-        <h2 className='title__search'>City Search</h2>
+        <h2 className='title__search'>City Search and add favorite</h2>
 
         <InputSearch
           handleSubmitSearch={handleSubmitSearch}
