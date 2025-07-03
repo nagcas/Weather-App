@@ -1,4 +1,4 @@
-import { Button, Card, Container } from 'react-bootstrap';
+import { Button, Card, Col, Container, Row } from 'react-bootstrap';
 import './Favorites.css';
 import { useContext, useEffect, useState } from 'react';
 import { Context } from '../../modules/Context';
@@ -46,24 +46,29 @@ function Favorites() {
     getAllFavorite();
   }, [userId, token, URL_API_DEV]);
 
+  console.log(favorites)
+
   return (
     <section className='favorites__section'>
       <Container>
         <h2 className='title__favorites'>Favorite Cities</h2>
-
-        {favorites.length === 0 ? (
-          <p>No favorites found.</p>
-        ) : (
-          favorites.map((city, index) => (
-            <Card key={index} style={{ width: '18rem', marginBottom: '1rem' }}>
-              <Card.Body>
-                <Card.Title>{city.cityName}</Card.Title>
-                <Card.Subtitle className='mb-2 text-muted'>{city.country}</Card.Subtitle>
-                <Card.Text>ID: {city.cityId}</Card.Text>
-              </Card.Body>
-            </Card>
-          ))
-        )}
+        <Row>
+            {favorites.length === 0 ? (
+              <p>No favorites found.</p>
+            ) : (
+              favorites.map((city, index) => (
+                <Col>
+                <Card key={index} style={{ width: '18rem', marginBottom: '1rem' }}>
+                  <Card.Body>
+                    <Card.Title>{city.cityName}</Card.Title>
+                    <Card.Subtitle className='mb-2 text-muted'>{city.country}</Card.Subtitle>
+                    <Card.Text>ID: {city.cityId}</Card.Text>
+                  </Card.Body>
+                </Card>
+              </Col>
+              ))
+            )}
+        </Row>
       </Container>
     </section>
   );
