@@ -1,63 +1,126 @@
-import userModel from '../models/user.js'
+import User from '../models/user.js'
+import City from '../models/cities.js'
 import axios from 'axios'
 
 const addFavoriteCities = async (req, res) => {
   try {
-    const { cityName, cityId } = req.body
-    const userId = req.userId
+    const { cityName, cityId, userId } = req.body
     const apiKey = process.env.OPENWEATHER_API_KEY
 
-    // PART 1: Add a city by its ID to the user's favorites
+    console.log(`cityName: ${cityName}`)
+    console.log(`cityId: ${cityId}`)
+    console.log(`userId: ${userId}`)
+
+    // Find the user in the database by userId
+    const user = await User.findById(userId)
+    if (!user) return res.status(404).json({ message: 'User not found' })
+
+    // If cityId is provided
     if (cityId) {
-      const user = await userModel.findById(userId)
+      // Search for the city in the DB
+      let city = await City.findOne({ cityId })
 
-      if (!user) return res.status(404).json({ message: 'User not found.' })
+      // If it doesn't exist, fetch it from OpenWeather using city ID endpoint
+      if (!city) {
+        const url = `https://api.openweathermap.org/data/2.5/weather?id=${encodeURIComponent(cityId)}&appid=${apiKey}&units=metric`
+        const response = await axios.get(url)
+        const cityData = response.data
 
-      const alreadyAdded = user.favoriteCities.includes(cityId)
+        // If no data or missing id in response
+        if (!cityData || !cityData.id) {
+          return res.status(404).json({ message: 'City not found on OpenWeather' })
+        }
 
-      if (alreadyAdded) {
-        return res.status(200).send("City is already in the user's favorite list.")
+        // Create the city in the DB with data from OpenWeather
+        city = new City({
+          cityName: cityData.name,
+          country: cityData.sys.country,
+          cityId: String(cityData.id),
+          userId: [user._id]
+        })
+        await city.save()
       }
 
-      user.favoriteCities.push(cityId)
+      // Check if the city is already in user's favorite list
+      const alreadyAdded = user.favoriteCities.some(fav => fav.toString() === city._id.toString())
+      if (alreadyAdded) {
+        return res.status(200).send("City is already in the user's favorite list")
+      }
+
+      // Add the city to user's favorites and save the user
+      user.favoriteCities.push(city._id)
       await user.save()
 
-      return res.status(200).send('City added to favorites.')
+      // Respond with success and info about the added city
+      return res.status(200).json({
+        message: 'City added to favorites',
+        city: {
+          name: city.cityName,
+          country: city.country,
+          id: city.cityId
+        }
+      })
     }
 
-    // PART 2: If no ID is provided, search for the city using OpenWeather API
+    // If cityName is provided, search and add (like before)
     if (cityName) {
       const url = `https://api.openweathermap.org/data/2.5/find?q=${encodeURIComponent(cityName)}&appid=${apiKey}&units=metric`
-
-      // Request city data from OpenWeather
       const response = await axios.get(url)
       const cityData = response.data
 
-      // If no city is found
+      // If no cities found
       if (cityData.count === 0) {
-        return res.status(200).send('No cities found.')
+        return res.status(200).send('No cities found')
       }
 
-      // If multiple cities with the same name are found
+      // If multiple cities found with the same name
       if (cityData.count > 1) {
         return res.status(200).json({
-          message: 'Multiple cities found, please select one.',
+          message: 'Multiple cities found, please select one',
           cities: cityData.list
         })
       }
 
-      // If exactly one city is found, return it (or you could add it directly here)
+      // If only one city found, take it
+      const singleCity = cityData.list[0]
+      let city = await City.findOne({ cityId: String(singleCity.id) })
+
+      // If not in DB, create it
+      if (!city) {
+        city = new City({
+          cityName: singleCity.name,
+          country: singleCity.sys.country,
+          cityId: String(singleCity.id),
+          userId: [user._id]
+        })
+        await city.save()
+      }
+
+      // Check if city is already in user's favorites, if not add it
+      const alreadyAdded = user.favoriteCities.some(fav => fav.toString() === city._id.toString())
+      if (!alreadyAdded) {
+        user.favoriteCities.push(city._id)
+        await user.save()
+      }
+
+      // Respond with success and info of added city
       return res.status(200).json({
-        message: 'One city found.',
-        city: cityData.list[0]
+        message: 'City added to favorites',
+        city: {
+          name: singleCity.name,
+          country: singleCity.sys.country,
+          id: singleCity.id
+        }
       })
     }
 
-    // If neither cityId nor cityName is provided
-    return res.status(400).json({ message: 'Please provide cityName or cityId.' })
+    // If neither cityId nor cityName provided, respond with error
+    return res.status(400).json({ message: 'Please provide cityName or cityId' })
   } catch (error) {
-    console.error('Error fetching city data:', error)
-    res.status(500).json({ message: 'Server error while processing city.' })
+    // Log the error and respond with server error
+    console.error('Error fetching city data:', error.message)
+    console.error(error.stack)
+    res.status(500).json({ message: 'Server error while processing city', error: error.message })
   }
 }
 

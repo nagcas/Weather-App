@@ -46,26 +46,27 @@ app.use(cors(corsOptions))
 // Middleware for parsing the body of JSON requests
 app.use(express.json())
 
-// Connect to MongoDB
-mongoose
-  .connect(process.env.MONGO_URI)
-  .then(() => {
-    // Start the server only when we are connected to the DB
-    app.listen(PORT, () => {
-      console.log(`Server turned on on the port ${PORT}`)
-      console.log('The following endpoints are available:')
-      console.table(endpoints(app))
-    })
-  })
-  .catch((error) =>
-    console.log('error establishing connection to mongodb ', error)
-  )
-
 // Handle GET requests on the base API endpoint
 app.get('/api', (req, res) => {
   res.status(200).send('Handling basic get request on /api endpoint')
 })
 
 // Use routes for user registration
-app.use('/api', userRouter)
-app.use('/api', favoriteRouter)
+app.use('/api/users', userRouter)
+app.use('/api/favorites', favoriteRouter)
+
+// Connect to MongoDB
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(() => {
+    // Start the server only when we are connected to the DB
+    app.listen(PORT, () => {
+      console.clear()
+      console.log(`Server turned on on the port ${PORT}`)
+      console.log('The following endpoints are available:')
+      console.table(endpoints(app))
+    })
+  })
+  .catch((error) =>
+    console.log('Error establishing connection to mongodb ', error)
+  )
