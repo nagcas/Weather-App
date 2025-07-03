@@ -20,7 +20,7 @@ const userSchema = new Schema(
     favoriteCities: [
       {
         type: Schema.Types.ObjectId, // This stores the IDs of the favorite cities
-        ref: 'City' // Reference to the City model
+        ref: 'cities' // Reference to the City model
         // Each user can have a list of favorite cities, referenced by their IDs
       }
     ]
