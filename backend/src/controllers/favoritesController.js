@@ -7,9 +7,9 @@ const addFavoriteCities = async (req, res) => {
     const { cityName, cityId, userId } = req.body
     const apiKey = process.env.OPENWEATHER_API_KEY
 
-    console.log(`cityName: ${cityName}`)
-    console.log(`cityId: ${cityId}`)
-    console.log(`userId: ${userId}`)
+    // console.log(`cityName: ${cityName}`)
+    // console.log(`cityId: ${cityId}`)
+    // console.log(`userId: ${userId}`)
 
     // Find the user in the database by userId
     const user = await User.findById(userId)
@@ -60,6 +60,7 @@ const addFavoriteCities = async (req, res) => {
           id: city.cityId
         }
       })
+      return
     }
 
     // If cityName is provided, search and add (like before)
@@ -112,6 +113,7 @@ const addFavoriteCities = async (req, res) => {
           id: singleCity.id
         }
       })
+      return
     }
 
     // If neither cityId nor cityName provided, respond with error
