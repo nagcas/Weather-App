@@ -1,0 +1,35 @@
+.card__city__info {
+  background-color: #40413f;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  text-align: center;
+}
+
+.card__title {
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin-top: 0.5rem;
+}
+
+.weather-icon {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  margin: auto;
+}
+
+.city__date {
+  font-size: 0.9rem;
+  color: #6c757d;
+}
+
+.card__temp,
+.card__humidity,
+.card__wind {
+  display: block;
+  font-size: 1rem;
+  margin: 0.3rem 0;
+}
+

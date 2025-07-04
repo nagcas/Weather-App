@@ -1,7 +1,8 @@
 import './Favorites.css';
-import { Alert, Card, Col, Container, Row, Spinner } from 'react-bootstrap';
+import { Alert, Button, Card, Col, Container, Row, Spinner } from 'react-bootstrap';
 import { useContext, useEffect, useState } from 'react';
 import { Context } from '../../modules/Context';
+import InfoWeatherCity from '../infoWeatherCity/InfoWeatherCity';
 
 function Favorites() {
   const URL_API = import.meta.env.VITE_API_URL;
@@ -66,11 +67,12 @@ function Favorites() {
                 ) : (
                   favorites.map((city) => (
                     <Col key={city._id}>
-                    <Card style={{ width: '18rem', marginBottom: '1rem' }}>
+                    <Card style={{ width: '20rem', marginBottom: '1rem', backgroundColor: '#8f9ba75b' }}>
                       <Card.Body>
-                        <Card.Title>{city.cityName}</Card.Title>
-                        <Card.Subtitle className='mb-2 text-muted'>{city.country}</Card.Subtitle>
+                        <Card.Title className='text-light'>{city.cityName}</Card.Title>
+                        <Card.Subtitle className='mb-2 text-light'>{city.country}</Card.Subtitle>
                         <Card.Text>ID: {city.cityId}</Card.Text>
+                        <InfoWeatherCity city={city} />
                       </Card.Body>
                     </Card>
                   </Col>

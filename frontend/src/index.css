@@ -53,7 +53,8 @@ body {
 .btn__signUp,
 .btn__logout,
 .btn__hero,
-.btn__close {
+.btn__close,
+.btn__info {
   background-color: #545553;
   box-shadow: 5px 10px 20px 0px rgba(0, 0, 0, 0.3);
   color: #fff;
@@ -67,7 +68,8 @@ body {
 .btn__signUp:hover,
 .btn__logout:hover,
 .btn__hero:hover,
-.btn__close:hover {
+.btn__close:hover,
+.btn__info:hover {
   background-color: #40413f;
   color: #fff;
 }
