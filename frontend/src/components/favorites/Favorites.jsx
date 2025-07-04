@@ -1,5 +1,5 @@
 import './Favorites.css';
-import { Alert, Card, Col, Container, Row } from 'react-bootstrap';
+import { Alert, Card, Col, Container, Row, Spinner } from 'react-bootstrap';
 import { useContext, useEffect, useState } from 'react';
 import { Context } from '../../modules/Context';
 
@@ -8,6 +8,7 @@ function Favorites() {
 
   const [userId, setUserId] = useState('');
   const [favorites, setFavorites] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const token = localStorage.getItem('token');
   const { userLogin, isLoggedIn } = useContext(Context);
@@ -23,6 +24,8 @@ function Favorites() {
     const getAllFavorite = async () => {
       if (!userId) return;
 
+      setLoading(true);
+
       try {
         const response = await fetch(`${URL_API}/api/favorites/get-favorite-city`, {
           method: 'POST',
@@ -36,6 +39,7 @@ function Favorites() {
         const data = await response.json();
         if (data.list) {
           setFavorites(data.list);
+          setLoading(false);
         }
       } catch (error) {
         console.error('Failed to fetch favorites:', error);
@@ -51,6 +55,11 @@ function Favorites() {
         {isLoggedIn ? (
           <>
             <h2 className='title__favorites'>Favorite Cities</h2>
+            {loading && (
+              <Spinner animation='border' role='status' className='text-light p-4'>
+                <span className='visually-hidden'>Loading...</span>
+              </Spinner>
+            )}
             <Row>
                 {favorites.length === 0 ? (
                   <p>No favorites found</p>
