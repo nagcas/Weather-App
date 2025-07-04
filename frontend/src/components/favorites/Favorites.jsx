@@ -4,7 +4,7 @@ import { useContext, useEffect, useState } from 'react';
 import { Context } from '../../modules/Context';
 
 function Favorites() {
-  const URL_API = import.meta.env.VITE_API_URL_DEV;
+  const URL_API = import.meta.env.VITE_API_URL;
 
   const [userId, setUserId] = useState('');
   const [favorites, setFavorites] = useState([]);
