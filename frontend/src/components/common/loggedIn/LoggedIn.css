@@ -1,7 +1,7 @@
-* User logged styles */
+/* User logged styles */
 .user__logged {
   color: #ccc;
-  font-size: 1rem;
+  font-size: 1.2rem;
   margin: 10px 0; 
 }
 
@@ -12,7 +12,20 @@
   font-size: 1.2rem; 
 }
 
-@media (max-width: 768px) {
+.dropdown__account {
+  background-color: transparent;
+  border: none;
+}
+
+.dropdown-menu[data-bs-popper] {
+  top: -170px;
+}
+
+.user__logged {
+  font-weight: 500;
+}
+
+@media (min-width: 992px) {
   .user__logged {
     font-size: 0.9rem; 
   }
@@ -21,3 +34,4 @@
     font-size: 1rem; 
   }
 }
+

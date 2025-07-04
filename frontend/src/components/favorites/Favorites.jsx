@@ -61,7 +61,7 @@ function Favorites() {
                 <span className='visually-hidden'>Loading...</span>
               </Spinner>
             )}
-            <Row>
+            <Row className='m-0'>
                 {favorites.length === 0 ? (
                   <p>No favorites found</p>
                 ) : (

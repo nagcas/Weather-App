@@ -1,6 +1,6 @@
 import './LoggedIn.css'
 import { useContext, useEffect, useState } from 'react'
-import { Button } from 'react-bootstrap'
+import { Button, Dropdown, DropdownButton } from 'react-bootstrap'
 import { Link, useNavigate } from 'react-router-dom'
 import { Context } from '../../../modules/Context'
 
@@ -10,6 +10,24 @@ function LoggedIn({ handleClose }) {
 
   // Backend URL
   const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000'
+
+  const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 992)
+
+  useEffect(() => {
+    // Function to check if the screen width is greater than or equal to 992px
+    const handleResize = () => {
+      setIsDesktop(window.innerWidth >= 992)
+    };
+
+    // Call it once on component mount to set the initial state
+    handleResize()
+
+    // Listen for window resize events
+    window.addEventListener('resize', handleResize)
+
+    // Cleanup the event listener when the component is unmounted
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
 
   const { isLoggedIn, setIsLoggedIn, userLogin, setUserLogin } =
     useContext(Context)
@@ -53,7 +71,7 @@ function LoggedIn({ handleClose }) {
         setIsLoggedIn(false)
         setUserLogin(null)
       }
-    }
+    };
 
     // Check login status on component mount
     checkLoginStatus()
@@ -66,8 +84,8 @@ function LoggedIn({ handleClose }) {
     // Remove event listeners when the component is unmounted or updated
     return () => {
       window.removeEventListener('storage', checkLoginStatus)
-      window.removeEventListener('loginStateChange', checkLoginStatus)
-    }
+      window.removeEventListener('loginStateChange', checkLoginStatus);
+    };
   }, [setIsLoggedIn, setUserLogin, navigate])
 
   // Handle user logout, clear local storage and update context state
@@ -78,7 +96,7 @@ function LoggedIn({ handleClose }) {
     setUserLogin(null)
     handleClose()
     navigate('/')
-  }
+  };
 
   return (
     <>
@@ -91,7 +109,7 @@ function LoggedIn({ handleClose }) {
             className='btn__login'
             onClick={handleClose}
           >
-            Login
+            Sign In
           </Button>
           <Button
             as={Link}
@@ -104,21 +122,51 @@ function LoggedIn({ handleClose }) {
           </Button>
         </div>
       ) : (
-        <div className='d-flex justify-content-center align-items-center'>
-          <p className='user__logged m-0 me-3'>
-            Welcome <span className='username'>{userLogin.username}</span>
-          </p>
-          <Button
-            onClick={handleLogout}
-            aria-label='Button logout'
-            className='btn__logout'
+        <div className='d-flex justify-content-center align-items-center gap-3'>
+          <DropdownButton
+            variant='secondary'
+            title='Account'
+            className='dropdown__account responsive-dropdown'
+            drop={isDesktop ? 'start' : 'down'}
           >
-            Logout
-          </Button>
+            <Dropdown.Item
+              as={Link}
+              onClick={handleClose}
+              to='/change-password'
+            >
+              Change Password
+            </Dropdown.Item>
+            <Dropdown.Item
+              as={Link}
+              onClick={handleClose}
+              to='/favorites'
+            >
+              Favorites City
+            </Dropdown.Item>
+            <Dropdown.Item
+              as={Link}
+              onClick={handleClose}
+              to='/delete-account'
+            >
+              Delete Profile
+            </Dropdown.Item>
+            <Dropdown.Divider />
+            <Dropdown.Item
+              onClick={() => {
+                handleLogout();
+                handleClose();
+              }}
+            >
+              Logout
+            </Dropdown.Item>
+          </DropdownButton>
+          <span className='user__logged'>
+            Welcome <span className='username'>{userLogin.username}</span>
+          </span>
         </div>
       )}
     </>
-  )
+  );
 }
 
 export default LoggedIn
