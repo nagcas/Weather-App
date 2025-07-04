@@ -16,7 +16,7 @@ router.post('/add-favorite-city', authMiddleware, addfavoriteCities)
 router.post('/get-favorite-city', authMiddleware, getFavoriteCities)
 
 // Route to get weather meteo favorite city
-router.get('/weather-favorite-city/:cityId', authMiddleware, getWeatherFavoriteCity)
+router.get('/weather-favorite-city/:cityId/:temperatureUnit', authMiddleware, getWeatherFavoriteCity)
 
 // Route to delete one favorite city
 router.delete('/delete-favorite-city', authMiddleware, deleteFavoriteCity)
