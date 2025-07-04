@@ -6,12 +6,28 @@ import { Context } from '../../../modules/Context'
 
 function LoggedIn({ handleClose }) {
   const navigate = useNavigate()
+  const { isLoggedIn, setIsLoggedIn, userLogin, setUserLogin, temperatureUnit, setTemperatureUnit } =
+    useContext(Context)
   const [token, setToken] = useState(null)
 
   // Backend URL
   const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000'
 
   const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 992)
+
+  // Set metric unit
+  const handleChangeMetric = () => {
+    // console.log("°C")
+    setTemperatureUnit('metric')
+    handleClose();
+  }
+
+  // Set imperial unit
+  const handleChangeImperial = () => {
+    // console.log("°F")
+    setTemperatureUnit('imperial')
+    handleClose()
+  };
 
   useEffect(() => {
     // Function to check if the screen width is greater than or equal to 992px
@@ -28,9 +44,6 @@ function LoggedIn({ handleClose }) {
     // Cleanup the event listener when the component is unmounted
     return () => window.removeEventListener('resize', handleResize)
   }, [])
-
-  const { isLoggedIn, setIsLoggedIn, userLogin, setUserLogin } =
-    useContext(Context)
 
   useEffect(() => {
     const checkLoginStatus = async () => {
@@ -84,7 +97,7 @@ function LoggedIn({ handleClose }) {
     // Remove event listeners when the component is unmounted or updated
     return () => {
       window.removeEventListener('storage', checkLoginStatus)
-      window.removeEventListener('loginStateChange', checkLoginStatus);
+      window.removeEventListener('loginStateChange', checkLoginStatus)
     };
   }, [setIsLoggedIn, setUserLogin, navigate])
 
@@ -151,6 +164,22 @@ function LoggedIn({ handleClose }) {
               Delete Profile
             </Dropdown.Item>
             <Dropdown.Divider />
+            <Dropdown.Header>Temperature Unit</Dropdown.Header>
+            <Dropdown.Item
+              onClick={handleChangeMetric}
+              active={temperatureUnit === 'metric'}
+              disabled={temperatureUnit === 'metric'}
+            >
+              °C — Metric
+            </Dropdown.Item>
+            <Dropdown.Item
+              onClick={handleChangeImperial}
+              active={temperatureUnit === 'imperial'}
+              disabled={temperatureUnit === 'imperial'}
+            >
+              °F — Imperial
+            </Dropdown.Item>
+            <Dropdown.Divider />
             <Dropdown.Item
               onClick={() => {
                 handleLogout();
@@ -169,4 +198,4 @@ function LoggedIn({ handleClose }) {
   );
 }
 
-export default LoggedIn
+export default LoggedIn;

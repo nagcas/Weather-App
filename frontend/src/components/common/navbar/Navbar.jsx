@@ -107,18 +107,6 @@ function NavBar() {
               >
                 City Search
               </NavLink>
-              <NavDropdown
-                title='Settings'
-                id='navbarScrollingDropdown'
-              >
-                <NavDropdown.Item onClick={handleChangeMetric}>
-                  Unit Metric
-                </NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item onClick={handleChangeImperial}>
-                  Unit Imperial
-                </NavDropdown.Item>
-              </NavDropdown>
               {isLoggedIn && (
                 <NavLink
                   to='/favorites'

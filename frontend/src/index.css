@@ -7,7 +7,7 @@
 
 
 body {
-  background: url('./assets/background/background3.jpg') rgba(0, 0, 0, 0.7) fixed;
+  background: url('./assets/background/background3.jpg') rgba(0, 0, 0, 0.9) fixed;
   background-blend-mode: multiply;
   background-position: center;
   background-size: cover;
