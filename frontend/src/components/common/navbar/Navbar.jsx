@@ -1,5 +1,5 @@
-import './NavBar.css';
-import { useContext, useState } from 'react';
+import './NavBar.css'
+import { useContext, useState } from 'react'
 import {
   Button,
   Container,
@@ -9,32 +9,32 @@ import {
   Navbar,
   NavDropdown,
   Offcanvas,
-} from 'react-bootstrap';
-import { Link, NavLink } from 'react-router-dom';
-import LoggedIn from '../loggedIn/LoggedIn';
-import logo from '../../../assets/images/Weather.256.png';
-import { Context } from '../../../modules/Context';
+} from 'react-bootstrap'
+import { Link, NavLink } from 'react-router-dom'
+import LoggedIn from '../loggedIn/LoggedIn'
+import logo from '../../../assets/images/Weather.256.png'
+import { Context } from '../../../modules/Context'
 
 function NavBar() {
-  const [showOffcanvas, setShowOffcanvas] = useState(false);
-  const { isLoggedIn, setTemperatureUnit } = useContext(Context);
+  const [showOffcanvas, setShowOffcanvas] = useState(false)
+  const { isLoggedIn, setTemperatureUnit } = useContext(Context)
 
-  const handleClose = () => setShowOffcanvas(false);
-  const handleShow = () => setShowOffcanvas(true);
+  const handleClose = () => setShowOffcanvas(false)
+  const handleShow = () => setShowOffcanvas(true)
 
   // Set metric unit
   const handleChangeMetric = () => {
-    // console.log("°C");
-    setTemperatureUnit('metric');
-    handleClose();
-  };
+    // console.log("°C")
+    setTemperatureUnit('metric')
+    handleClose()
+  }
 
   // Set imperial unit
   const handleChangeImperial = () => {
-    // console.log("°F");
-    setTemperatureUnit('imperial');
-    handleClose();
-  };
+    // console.log("°F")
+    setTemperatureUnit('imperial')
+    handleClose()
+  }
 
   return (
     <Navbar
@@ -141,7 +141,7 @@ function NavBar() {
         </Navbar.Offcanvas>
       </Container>
     </Navbar>
-  );
+  )
 }
 
-export default NavBar;
+export default NavBar

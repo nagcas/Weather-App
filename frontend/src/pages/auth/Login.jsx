@@ -1,74 +1,74 @@
-import './Auth.css';
-import React, { useState, useEffect, useContext } from 'react';
-import { Link, useNavigate, useLocation, Navigate } from 'react-router-dom';
-import { Button, Container, FloatingLabel, Form, Alert } from 'react-bootstrap';
-import { Context } from '../../modules/Context';
+import './Auth.css'
+import React, { useState, useEffect, useContext } from 'react'
+import { Link, useNavigate, useLocation, Navigate } from 'react-router-dom'
+import { Button, Container, FloatingLabel, Form, Alert } from 'react-bootstrap'
+import { Context } from '../../modules/Context'
 
 function Login() {
   // useNavigate is used for programmatic navigation after login
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   // useLocation is used to capture the current location or any query parameters
-  const location = useLocation();
+  const location = useLocation()
 
   // useContext is used to manage global login state
-  const { isLoggedIn, setIsLoggedIn, setUserLogin } = useContext(Context);
+  const { isLoggedIn, setIsLoggedIn, setUserLogin } = useContext(Context)
 
   // Backend URL for the API, can be set via environment variable or defaults to localhost
-  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000'
 
   // State to manage form validation errors
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState({})
 
   // State to manage API-related errors during login
-  const [apiError, setApiError] = useState(null);
+  const [apiError, setApiError] = useState(null)
 
   // State to indicate loading status while submitting login
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false)
 
   // State for storing user login details (email and password)
   const [login, setLogin] = useState({
     email: '',
     password: '',
-  });
+  })
 
   // Handle changes in form inputs and reset validation errors for the field being updated
   const handleInputChange = (event) => {
-    const { name, value } = event.target;
+    const { name, value } = event.target
     setLogin({
       ...login,
       [name]: value,
-    });
-    setErrors((prevErrors) => ({ ...prevErrors, [name]: '' }));
-  };
+    })
+    setErrors((prevErrors) => ({ ...prevErrors, [name]: '' }))
+  }
 
   // Validate login form inputs before submission
   const validate = () => {
-    const newErrors = {};
+    const newErrors = {}
     if (!login.email.trim()) {
-      newErrors.email = 'Please enter your email!';
+      newErrors.email = 'Please enter your email!'
     }
     if (!login.password.trim()) {
-      newErrors.password = 'Please enter your password!';
+      newErrors.password = 'Please enter your password!'
     }
-    return newErrors;
-  };
+    return newErrors
+  }
 
   // Handle form submission for user login
   const handleLoginSubmit = async (event) => {
-    event.preventDefault();
+    event.preventDefault()
 
     // Validate form fields and set errors if any
-    const validationErrors = validate();
+    const validationErrors = validate()
     if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
-      return;
+      setErrors(validationErrors)
+      return
     }
 
     // Clear previous errors and set loading state
-    setErrors({});
-    setIsLoading(true);
-    setApiError(null);
+    setErrors({})
+    setIsLoading(true)
+    setApiError(null)
 
     try {
       // Send POST request to the login API with user credentials
@@ -78,50 +78,50 @@ function Login() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(login),
-      });
+      })
 
-      const result = await response.json();
+      const result = await response.json()
 
-      // Check if the response is successful; otherwise, throw an error
+      // Check if the response is successful otherwise, throw an error
       if (!response.ok) {
-        throw new Error(result.message || 'Failed to login!');
+        throw new Error(result.message || 'Failed to login!')
       }
 
       // Successful login: store user data and token in localStorage
-      setIsLoading(result);
-      localStorage.setItem('userLogin', JSON.stringify(result.user));
-      localStorage.setItem('token', result.token);
+      setIsLoading(result)
+      localStorage.setItem('userLogin', JSON.stringify(result.user))
+      localStorage.setItem('token', result.token)
 
       // Dispatch a storage event to notify other tabs of the login state
-      window.dispatchEvent(new Event('storage'));
+      window.dispatchEvent(new Event('storage'))
 
       // Redirect to the homepage after login
-      navigate('/');
+      navigate('/')
     } catch (error) {
       // Set appropriate error message based on the type of error
       if (error.message.includes('Invalid credentials!')) {
-        setApiError('Invalid email or password. Please try again!');
+        setApiError('Invalid email or password. Please try again!')
       } else {
-        setApiError('An error occurred during login. Please try again later!');
+        setApiError('An error occurred during login. Please try again later!')
       }
     } finally {
       // Stop the loading state after completion
-      setIsLoading(false);
+      setIsLoading(false)
     }
-  };
+  }
 
   // Effect to handle login using a token passed in the URL query parameters
   useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    const token = params.get('token');
+    const params = new URLSearchParams(location.search)
+    const token = params.get('token')
 
     // If a token is found, store it in localStorage and redirect to the homepage
     if (token) {
-      localStorage.setItem('token', token);
-      window.dispatchEvent(new Event('storage'));
-      navigate('/');
+      localStorage.setItem('token', token)
+      window.dispatchEvent(new Event('storage'))
+      navigate('/')
     }
-  }, [location, navigate]);
+  }, [location, navigate])
 
   return (
     <Container className='d-flex justify-content-center align-items-center'>
@@ -227,7 +227,7 @@ function Login() {
         />
       )}
     </Container>
-  );
+  )
 }
 
-export default Login;
+export default Login

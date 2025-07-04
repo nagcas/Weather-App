@@ -1,4 +1,4 @@
-import { Button, Form, InputGroup } from 'react-bootstrap';
+import { Button, Form, InputGroup } from 'react-bootstrap'
 
 function InputSearch({ handleSubmitSearch, search, handleSearch }) {
   return (
@@ -25,7 +25,7 @@ function InputSearch({ handleSubmitSearch, search, handleSearch }) {
         Please enter the city name and country code, separated by a comma.
       </p>
     </Form>
-  );
+  )
 }
 
-export default InputSearch;
+export default InputSearch

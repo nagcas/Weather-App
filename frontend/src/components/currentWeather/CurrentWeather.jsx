@@ -1,6 +1,6 @@
-import './CurrentWeather.css';
-import { Container } from 'react-bootstrap';
-import WeatherApi from '../weatherApi/WeatherApi';
+import './CurrentWeather.css'
+import { Container } from 'react-bootstrap'
+import WeatherApi from '../weatherApi/WeatherApi'
 
 function CurrentWeather() {
   return (
@@ -10,7 +10,7 @@ function CurrentWeather() {
         <WeatherApi />
       </Container>
     </section>
-  );
+  )
 }
 
-export default CurrentWeather;
+export default CurrentWeather

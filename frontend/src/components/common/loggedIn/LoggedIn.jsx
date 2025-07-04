@@ -1,84 +1,84 @@
-import './LoggedIn.css';
-import { useContext, useEffect, useState } from 'react';
-import { Button } from 'react-bootstrap';
-import { Link, useNavigate } from 'react-router-dom';
-import { Context } from '../../../modules/Context';
+import './LoggedIn.css'
+import { useContext, useEffect, useState } from 'react'
+import { Button } from 'react-bootstrap'
+import { Link, useNavigate } from 'react-router-dom'
+import { Context } from '../../../modules/Context'
 
 function LoggedIn({ handleClose }) {
-  const navigate = useNavigate();
-  const [token, setToken] = useState(null);
+  const navigate = useNavigate()
+  const [token, setToken] = useState(null)
 
   // Backend URL
-  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000'
 
   const { isLoggedIn, setIsLoggedIn, userLogin, setUserLogin } =
-    useContext(Context);
+    useContext(Context)
 
   useEffect(() => {
     const checkLoginStatus = async () => {
-      const storedToken = localStorage.getItem('token');
-      const storedUserLogin = localStorage.getItem('userLogin');
-      // console.log("token: ", storedToken);
+      const storedToken = localStorage.getItem('token')
+      const storedUserLogin = localStorage.getItem('userLogin')
+      // console.log("token: ", storedToken)
 
       if (storedToken) {
         try {
           // Check if the token is valid
-          const isTokenValid = true; // This should be replaced with actual validation logic
+          const isTokenValid = true // This should be replaced with actual validation logic
 
           if (isTokenValid) {
-            setIsLoggedIn(true);
-            setToken(storedToken);
+            setIsLoggedIn(true)
+            setToken(storedToken)
 
             if (storedUserLogin) {
-              const parsedUserLogin = JSON.parse(storedUserLogin);
-              setUserLogin(parsedUserLogin);
+              const parsedUserLogin = JSON.parse(storedUserLogin)
+              setUserLogin(parsedUserLogin)
             }
           } else {
             // Handle expired or invalid token
-            localStorage.removeItem('token');
-            localStorage.removeItem('userLogin');
-            setIsLoggedIn(false);
-            setUserLogin(null);
-            navigate('/login');
+            localStorage.removeItem('token')
+            localStorage.removeItem('userLogin')
+            setIsLoggedIn(false)
+            setUserLogin(null)
+            navigate('/login')
           }
         } catch (error) {
-          console.error('Error during token verification: ', error);
-          localStorage.removeItem('token');
-          localStorage.removeItem('userLogin');
-          setIsLoggedIn(false);
-          setUserLogin(null);
+          console.error('Error during token verification: ', error)
+          localStorage.removeItem('token')
+          localStorage.removeItem('userLogin')
+          setIsLoggedIn(false)
+          setUserLogin(null)
         }
       } else {
         // No token found, set user as logged out
-        setIsLoggedIn(false);
-        setUserLogin(null);
+        setIsLoggedIn(false)
+        setUserLogin(null)
       }
-    };
+    }
 
     // Check login status on component mount
-    checkLoginStatus();
+    checkLoginStatus()
 
     // Add event listener to check login status on storage changes
-    window.addEventListener('storage', checkLoginStatus);
+    window.addEventListener('storage', checkLoginStatus)
     // Event listener to check login status when state changes
-    window.addEventListener('loginStateChange', checkLoginStatus);
+    window.addEventListener('loginStateChange', checkLoginStatus)
 
     // Remove event listeners when the component is unmounted or updated
     return () => {
-      window.removeEventListener('storage', checkLoginStatus);
-      window.removeEventListener('loginStateChange', checkLoginStatus);
-    };
-  }, [setIsLoggedIn, setUserLogin, navigate]);
+      window.removeEventListener('storage', checkLoginStatus)
+      window.removeEventListener('loginStateChange', checkLoginStatus)
+    }
+  }, [setIsLoggedIn, setUserLogin, navigate])
 
   // Handle user logout, clear local storage and update context state
   const handleLogout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('userLogin');
-    setIsLoggedIn(false);
-    setUserLogin(null);
-    handleClose();
-    navigate('/');
-  };
+    localStorage.removeItem('token')
+    localStorage.removeItem('userLogin')
+    setIsLoggedIn(false)
+    setUserLogin(null)
+    handleClose()
+    navigate('/')
+  }
 
   return (
     <>
@@ -118,7 +118,7 @@ function LoggedIn({ handleClose }) {
         </div>
       )}
     </>
-  );
+  )
 }
 
-export default LoggedIn;
+export default LoggedIn

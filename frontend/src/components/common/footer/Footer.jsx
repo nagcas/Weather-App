@@ -1,13 +1,13 @@
-import { useContext } from 'react';
-import './Footer.css';
+import { useContext } from 'react'
+import './Footer.css'
 
-import { Link } from 'react-router-dom';
-import { Context } from '../../../modules/Context';
+import { Link } from 'react-router-dom'
+import { Context } from '../../../modules/Context'
 
 function Footer() {
-  const { isLoggedIn } = useContext(Context);
+  const { isLoggedIn } = useContext(Context)
 
-  const currentYear = new Date().getFullYear();
+  const currentYear = new Date().getFullYear()
 
   return (
     <footer>
@@ -63,7 +63,7 @@ function Footer() {
         {currentYear} Gianluca Chiaravalloti and Team
       </p>
     </footer>
-  );
+  )
 }
 
-export default Footer;
+export default Footer

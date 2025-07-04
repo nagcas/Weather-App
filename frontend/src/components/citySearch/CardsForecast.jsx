@@ -1,5 +1,5 @@
-import { Card, Col, Image, Row } from 'react-bootstrap';
-import { formatWeatherDate } from '../../modules/useTime.js';
+import { Card, Col, Image, Row } from 'react-bootstrap'
+import { formatWeatherDate } from '../../modules/useTime.js'
 
 function CardsForecast({ weatherDataForecast, unit }) {
   return (
@@ -35,7 +35,7 @@ function CardsForecast({ weatherDataForecast, unit }) {
           </Col>
         ))}
     </Row>
-  );
+  )
 }
 
-export default CardsForecast;
+export default CardsForecast

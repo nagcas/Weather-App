@@ -8,12 +8,12 @@ dotenv.config()
 
 const SECRET_KEY = process.env.JWT_SECRET
 
-// const SECRET_KEY = 'Register_api'; //will change it afterwards
+// const SECRET_KEY = 'Register_api' //will change it afterwards
 
 const register = async (req, res) => {
   try {
     const { email, password, username } = req.body
-    // console.log(email, password, username);
+    // console.log(email, password, username)
 
     // Checking existing user . as it connects with db to find that user ,we need to make it await
     const existingUser = await userModel.findOne({ email })

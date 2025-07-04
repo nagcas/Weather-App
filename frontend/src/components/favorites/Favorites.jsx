@@ -1,31 +1,31 @@
-import './Favorites.css';
-import { Alert, Button, Card, Col, Container, Row, Spinner } from 'react-bootstrap';
-import { useContext, useEffect, useState } from 'react';
-import { Context } from '../../modules/Context';
-import InfoWeatherCity from '../infoWeatherCity/InfoWeatherCity';
+import './Favorites.css'
+import { Alert, Button, Card, Col, Container, Row, Spinner } from 'react-bootstrap'
+import { useContext, useEffect, useState } from 'react'
+import { Context } from '../../modules/Context'
+import InfoWeatherCity from '../infoWeatherCity/InfoWeatherCity'
 
 function Favorites() {
-  const URL_API = import.meta.env.VITE_API_URL;
+  const URL_API = import.meta.env.VITE_API_URL
 
-  const [userId, setUserId] = useState('');
-  const [favorites, setFavorites] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [userId, setUserId] = useState('')
+  const [favorites, setFavorites] = useState([])
+  const [loading, setLoading] = useState(false)
 
-  const token = localStorage.getItem('token');
-  const { userLogin, isLoggedIn } = useContext(Context);
+  const token = localStorage.getItem('token')
+  const { userLogin, isLoggedIn } = useContext(Context)
 
   useEffect(() => {
     if (userLogin && userLogin._id) {
-      setUserId(userLogin._id);
+      setUserId(userLogin._id)
     }
-  }, [userLogin]);
+  }, [userLogin])
 
   // Fetch favorite cities
   useEffect(() => {
     const getAllFavorite = async () => {
-      if (!userId) return;
+      if (!userId) return
 
-      setLoading(true);
+      setLoading(true)
 
       try {
         const response = await fetch(`${URL_API}/api/favorites/get-favorite-city`, {
@@ -35,20 +35,20 @@ function Favorites() {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({ userId }),
-        });
+        })
 
-        const data = await response.json();
+        const data = await response.json()
         if (data.list) {
-          setFavorites(data.list);
-          setLoading(false);
+          setFavorites(data.list)
+          setLoading(false)
         }
       } catch (error) {
-        console.error('Failed to fetch favorites:', error);
+        console.error('Failed to fetch favorites:', error)
       }
-    };
+    }
 
-    getAllFavorite();
-  }, [userId, token, URL_API]);
+    getAllFavorite()
+  }, [userId, token, URL_API])
 
   return (
     <section className='favorites__section'>
@@ -87,8 +87,8 @@ function Favorites() {
         )}
       </Container>
     </section>
-  );
+  )
 }
 
-export default Favorites;
+export default Favorites
 

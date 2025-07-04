@@ -1,14 +1,14 @@
-import { useState } from 'react';
-import { Context } from './Context.jsx';
+import { useState } from 'react'
+import { Context } from './Context.jsx'
 
 // AuthProvider component that provides authentication state and user to child components
 const AuthProvider = ({ children }) => {
   // State to store user/login details
-  const [userLogin, setUserLogin] = useState({});
+  const [userLogin, setUserLogin] = useState({})
   // State to manage whether the user is logged in or not
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
   // State of the temperature setting
-  const [temperatureUnit, setTemperatureUnit] = useState('metric');
+  const [temperatureUnit, setTemperatureUnit] = useState('metric')
 
   return (
     // Context provider that makes values available to other components
@@ -24,7 +24,7 @@ const AuthProvider = ({ children }) => {
     >
       {children}
     </Context.Provider>
-  );
-};
+  )
+}
 
-export default AuthProvider;
+export default AuthProvider
