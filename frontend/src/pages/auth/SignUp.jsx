@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { Button, Container, FloatingLabel, Form } from 'react-bootstrap'
 import Loading from '../../components/loading/Loading'
+import { FaEye, FaEyeSlash } from 'react-icons/fa'
 
 function SignUp() {
   // Backend URL, using environment variable or fallback to localhost
@@ -11,6 +12,11 @@ function SignUp() {
   // useNavigate is used for navigation to other routes
   const navigate = useNavigate()
 
+  // State to show password
+  const [showPassword, setShowPassword] = useState(false)
+  
+  const togglePassword = () => setShowPassword((prev) => !prev)
+
   // States to manage errors, loading state, API error, and user input for sign-up
   const [errors, setErrors] = useState({})
   const [apiError, setApiError] = useState(null)
@@ -18,7 +24,7 @@ function SignUp() {
   const [signUp, setSignUp] = useState({
     username: '',
     email: '',
-    password: '',
+    password: ''
   })
 
   // Handles input changes and clears errors for the current input field
@@ -26,7 +32,7 @@ function SignUp() {
     const { name, value } = event.target
     setSignUp({
       ...signUp,
-      [name]: value,
+      [name]: value
     })
     setErrors((prevErrors) => ({ ...prevErrors, [name]: '' }))
   }
@@ -105,7 +111,7 @@ function SignUp() {
   }
 
   return (
-    <Container className='d-flex justify-content-center align-items-center'>
+    <Container className='d-flex justify-content-center align-items-center p-5'>
       <div className='form__signUp d-flex justify-content-center align-items-center'>
         <div className='content__form__signUp'>
           <div className='form__content__title__signUp d-flex flex-column justify-content-center align-items-center'>
@@ -120,7 +126,7 @@ function SignUp() {
                 errors.username ? (
                   <span className='text-danger'>{errors.username}</span>
                 ) : (
-                  'Insert username'
+                  'Username'
                 )
               }
               className='mb-3'
@@ -128,7 +134,7 @@ function SignUp() {
               <Form.Control
                 type='text'
                 name='username'
-                aria-label='Insert username'
+                aria-label='Username'
                 placeholder='username'
                 onChange={handleInputChange}
                 isInvalid={!!errors.username}
@@ -141,7 +147,7 @@ function SignUp() {
                 errors.email ? (
                   <span className='text-danger'>{errors.email}</span>
                 ) : (
-                  'Insert email'
+                  'Email'
                 )
               }
               className='mb-3'
@@ -149,7 +155,7 @@ function SignUp() {
               <Form.Control
                 type='email'
                 name='email'
-                aria-label='Insert email'
+                aria-label='Email'
                 placeholder='email@example.com'
                 onChange={handleInputChange}
                 isInvalid={!!errors.email}
@@ -157,23 +163,31 @@ function SignUp() {
             </FloatingLabel>
 
             <FloatingLabel
+              className='mb-3 position-relative'
               controlId='signUp-password'
               label={
                 errors.password ? (
                   <span className='text-danger'>{errors.password}</span>
                 ) : (
-                  'Insert password'
+                  'Password'
                 )
               }
             >
               <Form.Control
-                type='password'
+                type={showPassword ? 'text' : 'password'}
                 name='password'
-                aria-label='Insert password'
+                aria-label='Password'
                 placeholder='password'
                 onChange={handleInputChange}
                 isInvalid={!!errors.password}
               />
+              <Button
+                variant='light'
+                className='position-absolute top-50 end-0 translate-middle-y me-2 d-flex align-items-center justify-content-center'
+                onClick={togglePassword}
+              >
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
+              </Button>
             </FloatingLabel>
 
             {/* Display API error message if there's one */}

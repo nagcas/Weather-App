@@ -131,7 +131,7 @@ function Login() {
   }, [location, navigate])
 
   return (
-    <Container className='d-flex justify-content-center align-items-center'>
+    <Container className='d-flex justify-content-center align-items-center p-5'>
       {!isLoggedIn ? ( // If the user is not logged in, show the login form
         <div className='form__login d-flex justify-content-center align-items-center'>
           <div className='content__form__login'>
@@ -156,7 +156,7 @@ function Login() {
                 <Form.Control
                   type='email'
                   name='email'
-                  aria-label='Enter email'
+                  aria-label='Email'
                   placeholder='email@example.com'
                   onChange={handleInputChange}
                   isInvalid={!!errors.email} // Show validation error if present
@@ -178,7 +178,7 @@ function Login() {
                 <Form.Control
                   type={showPassword ? 'text': 'password'}
                   name='password'
-                  aria-label='Enter password'
+                  aria-label='Password'
                   placeholder='password'
                   onChange={handleInputChange}
                   isInvalid={!!errors.password} // Show validation error if present
