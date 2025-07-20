@@ -4,6 +4,7 @@ import { Link, useNavigate, useLocation, Navigate } from 'react-router-dom'
 import { Button, Container, FloatingLabel, Form, Alert } from 'react-bootstrap'
 import { Context } from '../../modules/Context'
 import Loading from '../../components/loading/Loading'
+import { FaEye, FaEyeSlash } from 'react-icons/fa'
 
 function Login() {
   // useNavigate is used for programmatic navigation after login
@@ -20,6 +21,11 @@ function Login() {
 
   // State to manage form validation errors
   const [errors, setErrors] = useState({})
+
+  // State to show password
+  const [showPassword, setShowPassword] = useState(false)
+
+  const togglePassword = () => setShowPassword((prev) => !prev)
 
   // State to manage API-related errors during login
   const [apiError, setApiError] = useState(null)
@@ -159,6 +165,7 @@ function Login() {
 
               {/* Password input field with floating label */}
               <FloatingLabel
+                className='mb-3 position-relative'
                 controlId='login-password'
                 label={
                   errors.password ? (
@@ -169,13 +176,20 @@ function Login() {
                 }
               >
                 <Form.Control
-                  type='password'
+                  type={showPassword ? 'text': 'password'}
                   name='password'
                   aria-label='Enter password'
                   placeholder='password'
                   onChange={handleInputChange}
                   isInvalid={!!errors.password} // Show validation error if present
                 />
+                <Button
+                  variant='light'
+                  className='position-absolute top-50 end-0 translate-middle-y me-2 d-flex align-items-center justify-content-center'
+                  onClick={togglePassword}
+                >
+                  {showPassword ? <FaEyeSlash /> : <FaEye />}
+                </Button>
               </FloatingLabel>
 
               {/* Display API error message if login fails */}
