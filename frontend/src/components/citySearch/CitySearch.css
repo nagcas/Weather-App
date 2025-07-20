@@ -43,6 +43,7 @@
 }
 
 .card__city__search {
+  height: auto;
   background-color: #8f9ba75b;
   box-shadow: 5px 10px 20px 0px rgba(0, 0, 0, 0.4);
   border-radius: 15px;
@@ -104,7 +105,6 @@
 }
 
 .card__forecast {
-  height: 450px;
   background-color: #46494d93;
   box-shadow: 5px 10px 20px 0px rgba(0, 0, 0, 0.3);
   border-radius: 15px;
@@ -126,6 +126,11 @@
   color: #ccc;
 }
 
+.image__card {
+  margin: 0 auto;
+  width: 200px;
+}
+
 
 @media (max-width: 768px) {
   .search__section {
@@ -142,7 +147,7 @@
   }
 
   .card__forecast {
-    height: 550px;
+    height: auto;
     margin-top: 40px;
   }
 }

@@ -21,6 +21,7 @@ function CardsForecast({ weatherDataForecast, unit }) {
               </Card.Title>
               <Image
                 src={`https://openweathermap.org/img/wn/${forecast.weather[0]?.icon}@2x.png`}
+                className='image__card'
               />
               <Card.Text className='forecast__temp'>
                 Temp: {Math.floor(forecast.main.temp)} {unit}
