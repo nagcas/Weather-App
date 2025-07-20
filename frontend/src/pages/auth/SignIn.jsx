@@ -1,8 +1,9 @@
 import './Auth.css'
-import React, { useState, useEffect, useContext } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { Link, useNavigate, useLocation, Navigate } from 'react-router-dom'
 import { Button, Container, FloatingLabel, Form, Alert } from 'react-bootstrap'
 import { Context } from '../../modules/Context'
+import Loading from '../../components/loading/Loading'
 
 function Login() {
   // useNavigate is used for programmatic navigation after login
@@ -29,7 +30,7 @@ function Login() {
   // State for storing user login details (email and password)
   const [login, setLogin] = useState({
     email: '',
-    password: '',
+    password: ''
   })
 
   // Handle changes in form inputs and reset validation errors for the field being updated
@@ -37,7 +38,7 @@ function Login() {
     const { name, value } = event.target
     setLogin({
       ...login,
-      [name]: value,
+      [name]: value
     })
     setErrors((prevErrors) => ({ ...prevErrors, [name]: '' }))
   }
@@ -129,7 +130,7 @@ function Login() {
         <div className='form__login d-flex justify-content-center align-items-center'>
           <div className='content__form__login'>
             <div className='form__content__title__login d-flex flex-column justify-content-center align-items-center'>
-              <p className='title__login'>Login</p>
+              <p className='title__login'>Sign In</p>
             </div>
 
             {/* Form to handle user login */}
@@ -191,10 +192,10 @@ function Login() {
               <Button
                 type='submit'
                 className='btn__login w-75 mt-4'
-                aria-label='login'
+                aria-label='signin'
                 disabled={isLoading} // Disable button while loading
               >
-                {isLoading ? 'Logging in...' : 'Login'}
+                {isLoading ? <Loading dimension='sm' /> : 'Sign In'}
               </Button>
             </Form>
 
@@ -203,7 +204,7 @@ function Login() {
               Not registered yet?{' '}
               <Link
                 className='link__signUp'
-                to='/signUp'
+                to='/signup'
               >
                 Sign Up
               </Link>

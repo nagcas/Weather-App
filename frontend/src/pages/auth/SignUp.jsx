@@ -2,6 +2,7 @@ import './Auth.css'
 import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { Button, Container, FloatingLabel, Form } from 'react-bootstrap'
+import Loading from '../../components/loading/Loading'
 
 function SignUp() {
   // Backend URL, using environment variable or fallback to localhost
@@ -192,7 +193,7 @@ function SignUp() {
               aria-label='signup'
               disabled={isLoading}
             >
-              {isLoading ? 'Signing up...' : 'Sign Up'}
+              {isLoading ? <Loading dimension='sm' /> : 'Sign Up'}
             </Button>
           </Form>
 
@@ -201,9 +202,9 @@ function SignUp() {
             You are already registered?{' '}
             <Link
               className='link__login'
-              to='/login'
+              to='/signin'
             >
-              Login
+              Sign In
             </Link>
           </p>
         </div>

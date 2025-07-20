@@ -9,7 +9,7 @@ import Favorites from './components/favorites/Favorites'
 import Settings from './components/settings/Settings'
 import About from './pages/about/About'
 import Footer from './components/common/footer/Footer'
-import Login from './pages/auth/Login'
+import Login from './pages/auth/SignIn'
 import SignUp from './pages/auth/SignUp'
 import Page404 from './pages/page404/Page404'
 import DefaultWeather from './components/defaultWeather/DefaultWeather'
@@ -56,11 +56,11 @@ function App() {
             element={<About />}
           />
           <Route
-            path='/login'
+            path='/signin'
             element={<Login />}
           />
           <Route
-            path='/signUp'
+            path='/signup'
             element={<SignUp />}
           />
           <Route
