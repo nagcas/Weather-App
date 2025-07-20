@@ -114,10 +114,10 @@ function LoggedIn({ handleClose }) {
   return (
     <>
       {!isLoggedIn && !userLogin ? (
-        <div className='d-flex justify-content-center align-items-center'>
+        <div className='d-flex flex-column flex-lg-row justify-content-center align-items-center gap-4'>
           <Button
             as={Link}
-            to='/login'
+            to='/signin'
             aria-label='Button login'
             className='btn__login'
             onClick={handleClose}
@@ -126,7 +126,7 @@ function LoggedIn({ handleClose }) {
           </Button>
           <Button
             as={Link}
-            to='/signUp'
+            to='/signup'
             aria-label='Button signup'
             className='btn__signUp'
             onClick={handleClose}
