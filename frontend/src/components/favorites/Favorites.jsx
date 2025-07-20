@@ -56,29 +56,31 @@ function Favorites() {
         {isLoggedIn ? (
           <>
             <h2 className='title__favorites'>Favorite Cities</h2>
-            {loading && (
+            {loading ? (
               <Spinner animation='border' role='status' className='text-light p-4'>
                 <span className='visually-hidden'>Loading...</span>
               </Spinner>
+            ) : (
+              <Row className='m-0'>
+                  {favorites.length > 0 ?
+                    (
+                    favorites.map((city) => (
+                      <Col key={city._id}>
+                      <Card style={{ width: '20rem', marginBottom: '1rem', backgroundColor: '#8f9ba75b' }}>
+                        <Card.Body>
+                          <Card.Title className='text-light'>{city.cityName}</Card.Title>
+                          <Card.Subtitle className='mb-2 text-light'>{city.country}</Card.Subtitle>
+                          <Card.Text>ID: {city.cityId}</Card.Text>
+                          <InfoWeatherCity city={city} />
+                        </Card.Body>
+                      </Card>
+                    </Col>
+                    ))
+                  ) : (
+                    <Alert variant='warning' className='text-center'>No favorites found</Alert>
+                  )}
+              </Row>
             )}
-            <Row className='m-0'>
-                {favorites.length === 0 ? (
-                  <p>No favorites found</p>
-                ) : (
-                  favorites.map((city) => (
-                    <Col key={city._id}>
-                    <Card style={{ width: '20rem', marginBottom: '1rem', backgroundColor: '#8f9ba75b' }}>
-                      <Card.Body>
-                        <Card.Title className='text-light'>{city.cityName}</Card.Title>
-                        <Card.Subtitle className='mb-2 text-light'>{city.country}</Card.Subtitle>
-                        <Card.Text>ID: {city.cityId}</Card.Text>
-                        <InfoWeatherCity city={city} />
-                      </Card.Body>
-                    </Card>
-                  </Col>
-                  ))
-                )}
-            </Row>
           </>
         ) : (
           <Alert variant='warning' className='text-center'>
