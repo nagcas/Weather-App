@@ -1,21 +1,21 @@
-import './App.css'
-import 'bootstrap/dist/css/bootstrap.min.css'
-import 'bootstrap-icons/font/bootstrap-icons.css'
+import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap-icons/font/bootstrap-icons.css';
 
-import Home from './pages/home/Home'
-import NavBar from './components/common/navbar/Navbar'
-import Forecast from './components/forecast/Forecast'
-import Favorites from './components/favorites/Favorites'
-import Settings from './components/settings/Settings'
-import About from './pages/about/About'
-import Footer from './components/common/footer/Footer'
-import Login from './pages/auth/SignIn'
-import SignUp from './pages/auth/SignUp'
-import Page404 from './pages/page404/Page404'
-import DefaultWeather from './components/defaultWeather/DefaultWeather'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import AuthProvider from './modules/AuthProvider'
-import CitySearch from './components/citySearch/CitySearch'
+import Home from './pages/home/Home';
+import NavBar from './components/common/navbar/Navbar';
+import Forecast from './components/forecast/Forecast';
+import Favorites from './components/favorites/Favorites';
+import Settings from './components/settings/Settings';
+import About from './pages/about/About';
+import Footer from './components/common/footer/Footer';
+import Login from './pages/auth/SignIn';
+import SignUp from './pages/auth/SignUp';
+import Page404 from './pages/page404/Page404';
+import DefaultWeather from './components/defaultWeather/DefaultWeather';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import AuthProvider from './modules/AuthProvider';
+import CitySearch from './components/citySearch/CitySearch';
 
 function App() {
   return (
@@ -71,7 +71,7 @@ function App() {
         <Footer />
       </Router>
     </AuthProvider>
-  )
+  );
 }
 
-export default App
+export default App;

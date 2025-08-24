@@ -1,114 +1,120 @@
-import './LoggedIn.css'
-import { useContext, useEffect, useState } from 'react'
-import { Button, Dropdown, DropdownButton } from 'react-bootstrap'
-import { Link, useNavigate } from 'react-router-dom'
-import { Context } from '../../../modules/Context'
+import './LoggedIn.css';
+import { useContext, useEffect, useState } from 'react';
+import { Button, Dropdown, DropdownButton } from 'react-bootstrap';
+import { Link, useNavigate } from 'react-router-dom';
+import { Context } from '../../../modules/Context';
 
 function LoggedIn({ handleClose }) {
-  const navigate = useNavigate()
-  const { isLoggedIn, setIsLoggedIn, userLogin, setUserLogin, temperatureUnit, setTemperatureUnit } =
-    useContext(Context)
-  const [token, setToken] = useState(null)
+  const navigate = useNavigate();
+  const {
+    isLoggedIn,
+    setIsLoggedIn,
+    userLogin,
+    setUserLogin,
+    temperatureUnit,
+    setTemperatureUnit,
+  } = useContext(Context);
+  const [token, setToken] = useState(null);
 
   // Backend URL
-  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000'
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
-  const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 992)
+  const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 992);
 
   // Set metric unit
   const handleChangeMetric = () => {
     // console.log("°C")
-    setTemperatureUnit('metric')
+    setTemperatureUnit('metric');
     handleClose();
-  }
+  };
 
   // Set imperial unit
   const handleChangeImperial = () => {
     // console.log("°F")
-    setTemperatureUnit('imperial')
-    handleClose()
+    setTemperatureUnit('imperial');
+    handleClose();
   };
 
   useEffect(() => {
     // Function to check if the screen width is greater than or equal to 992px
     const handleResize = () => {
-      setIsDesktop(window.innerWidth >= 992)
+      setIsDesktop(window.innerWidth >= 992);
     };
 
     // Call it once on component mount to set the initial state
-    handleResize()
+    handleResize();
 
     // Listen for window resize events
-    window.addEventListener('resize', handleResize)
+    window.addEventListener('resize', handleResize);
 
     // Cleanup the event listener when the component is unmounted
-    return () => window.removeEventListener('resize', handleResize)
-  }, [])
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   useEffect(() => {
     const checkLoginStatus = async () => {
-      const storedToken = localStorage.getItem('token')
-      const storedUserLogin = localStorage.getItem('userLogin')
+      const storedToken = localStorage.getItem('token');
+      const storedUserLogin = localStorage.getItem('userLogin');
       // console.log("token: ", storedToken)
 
       if (storedToken) {
         try {
           // Check if the token is valid
-          const isTokenValid = true // This should be replaced with actual validation logic
+          const isTokenValid = true; // This should be replaced with actual validation logic
 
           if (isTokenValid) {
-            setIsLoggedIn(true)
-            setToken(storedToken)
+            setIsLoggedIn(true);
+            setToken(storedToken);
 
             if (storedUserLogin) {
-              const parsedUserLogin = JSON.parse(storedUserLogin)
-              setUserLogin(parsedUserLogin)
+              const parsedUserLogin = JSON.parse(storedUserLogin);
+              setUserLogin(parsedUserLogin);
             }
           } else {
             // Handle expired or invalid token
-            localStorage.removeItem('token')
-            localStorage.removeItem('userLogin')
-            setIsLoggedIn(false)
-            setUserLogin(null)
-            navigate('/login')
+            localStorage.removeItem('token');
+            localStorage.removeItem('userLogin');
+            setIsLoggedIn(false);
+            setUserLogin(null);
+            navigate('/login');
           }
         } catch (error) {
-          console.error('Error during token verification: ', error)
-          localStorage.removeItem('token')
-          localStorage.removeItem('userLogin')
-          setIsLoggedIn(false)
-          setUserLogin(null)
+          console.error('Error during token verification: ', error);
+          localStorage.removeItem('token');
+          localStorage.removeItem('userLogin');
+          setIsLoggedIn(false);
+          setUserLogin(null);
         }
       } else {
         // No token found, set user as logged out
-        setIsLoggedIn(false)
-        setUserLogin(null)
+        setIsLoggedIn(false);
+        setUserLogin(null);
       }
     };
 
     // Check login status on component mount
-    checkLoginStatus()
+    checkLoginStatus();
 
     // Add event listener to check login status on storage changes
-    window.addEventListener('storage', checkLoginStatus)
+    window.addEventListener('storage', checkLoginStatus);
     // Event listener to check login status when state changes
-    window.addEventListener('loginStateChange', checkLoginStatus)
+    window.addEventListener('loginStateChange', checkLoginStatus);
 
     // Remove event listeners when the component is unmounted or updated
     return () => {
-      window.removeEventListener('storage', checkLoginStatus)
-      window.removeEventListener('loginStateChange', checkLoginStatus)
+      window.removeEventListener('storage', checkLoginStatus);
+      window.removeEventListener('loginStateChange', checkLoginStatus);
     };
-  }, [setIsLoggedIn, setUserLogin, navigate])
+  }, [setIsLoggedIn, setUserLogin, navigate]);
 
   // Handle user logout, clear local storage and update context state
   const handleLogout = () => {
-    localStorage.removeItem('token')
-    localStorage.removeItem('userLogin')
-    setIsLoggedIn(false)
-    setUserLogin(null)
-    handleClose()
-    navigate('/')
+    localStorage.removeItem('token');
+    localStorage.removeItem('userLogin');
+    setIsLoggedIn(false);
+    setUserLogin(null);
+    handleClose();
+    navigate('/');
   };
 
   return (

@@ -1,6 +1,6 @@
-import './Page404.css'
-import { Container } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import './Page404.css';
+import { Container } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 function Page404() {
   return (
@@ -18,7 +18,7 @@ function Page404() {
         </Link>
       </div>
     </Container>
-  )
+  );
 }
 
-export default Page404
+export default Page404;

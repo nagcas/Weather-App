@@ -1,81 +1,87 @@
-import React, { useContext, useState } from 'react'
-import { Button, Modal, Alert } from 'react-bootstrap'
-import { Context } from '../../modules/Context'
+import React, { useContext, useState } from 'react';
+import { Button, Modal, Alert } from 'react-bootstrap';
+import { Context } from '../../modules/Context';
 
 function AddFavoriteCity({ weatherData }) {
   // Backend URL
-  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000'
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
-  const { userLogin } = useContext(Context)
+  const { userLogin } = useContext(Context);
 
-  const [isLoading, setIsLoading] = useState(false)
-  const [show, setShow] = useState(false)
-  const [errorMessage, setErrorMessage] = useState('')
-  const [successMessage, setSuccessMessage] = useState('')
+  const [isLoading, setIsLoading] = useState(false);
+  const [show, setShow] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
 
-  const token = localStorage.getItem('token')
+  const token = localStorage.getItem('token');
 
   const handleClose = () => {
-    setShow(false)
-    setErrorMessage('')
-    setSuccessMessage('')
-  }
+    setShow(false);
+    setErrorMessage('');
+    setSuccessMessage('');
+  };
 
-  const handleShow = () => setShow(true)
+  const handleShow = () => setShow(true);
 
   const favoriteCity = {
     cityId: weatherData?.id || '',
-    userId: userLogin?._id || ''
-  }
+    userId: userLogin?._id || '',
+  };
 
   const handleFavoriteCitySubmit = async (event) => {
-    event.preventDefault()
-    setIsLoading(true)
-    setErrorMessage('')
-    setSuccessMessage('')
+    event.preventDefault();
+    setIsLoading(true);
+    setErrorMessage('');
+    setSuccessMessage('');
 
     try {
-      const response = await fetch(`${API_URL}/api/favorites/add-favorite-city`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(favoriteCity),
-      })
+      const response = await fetch(
+        `${API_URL}/api/favorites/add-favorite-city`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(favoriteCity),
+        }
+      );
 
-      const contentType = response.headers.get('content-type')
-      let data
+      const contentType = response.headers.get('content-type');
+      let data;
 
       if (contentType && contentType.includes('application/json')) {
-        data = await response.json()
+        data = await response.json();
       } else {
-        data = await response.text()
+        data = await response.text();
       }
 
       if (!response.ok) {
-        const message = data?.message || data || 'Failed to add favorite city'
-        throw new Error(message)
+        const message = data?.message || data || 'Failed to add favorite city';
+        throw new Error(message);
       }
 
-      if (typeof data === 'string' && data.includes("already in the user's favorite list")) {
-        setErrorMessage('City is already in your favorite list.')
+      if (
+        typeof data === 'string' &&
+        data.includes("already in the user's favorite list")
+      ) {
+        setErrorMessage('City is already in your favorite list.');
         setTimeout(() => {
-          handleClose()
-        }, 3000)
-        return
+          handleClose();
+        }, 3000);
+        return;
       }
 
-      setSuccessMessage('City successfully added to favorites!')
+      setSuccessMessage('City successfully added to favorites!');
       setTimeout(() => {
-        handleClose()
-      }, 3000)
+        handleClose();
+      }, 3000);
     } catch (error) {
-      setErrorMessage(error.message || 'An error occurred.')
+      setErrorMessage(error.message || 'An error occurred.');
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   return (
     <>
@@ -98,12 +104,18 @@ function AddFavoriteCity({ weatherData }) {
         <Modal.Body>
           {/* Alert messages */}
           {errorMessage && (
-            <Alert variant="warning" className="text-center">
+            <Alert
+              variant='warning'
+              className='text-center'
+            >
               {errorMessage}
             </Alert>
           )}
           {successMessage && (
-            <Alert variant="success" className="text-center">
+            <Alert
+              variant='success'
+              className='text-center'
+            >
               {successMessage}
             </Alert>
           )}
@@ -140,8 +152,7 @@ function AddFavoriteCity({ weatherData }) {
         </Modal.Footer>
       </Modal>
     </>
-  )
+  );
 }
 
-export default AddFavoriteCity
-
+export default AddFavoriteCity;

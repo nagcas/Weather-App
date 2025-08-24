@@ -1,11 +1,11 @@
-import './Hero.css'
-import { Button } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
-import { Context } from '../../../modules/Context'
-import { useContext } from 'react'
+import './Hero.css';
+import { Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import { Context } from '../../../modules/Context';
+import { useContext } from 'react';
 
 function Hero() {
-  const { isLoggedIn } = useContext(Context)
+  const { isLoggedIn } = useContext(Context);
 
   return (
     <>
@@ -38,7 +38,7 @@ function Hero() {
         </div>
       </div>
     </>
-  )
+  );
 }
 
-export default Hero
+export default Hero;

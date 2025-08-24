@@ -1,76 +1,76 @@
-import './Auth.css'
-import { useState } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
-import { Button, Container, FloatingLabel, Form } from 'react-bootstrap'
-import Loading from '../../components/loading/Loading'
-import { FaEye, FaEyeSlash } from 'react-icons/fa'
+import './Auth.css';
+import { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import { Button, Container, FloatingLabel, Form } from 'react-bootstrap';
+import Loading from '../../components/loading/Loading';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 function SignUp() {
   // Backend URL, using environment variable or fallback to localhost
-  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000'
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
   // useNavigate is used for navigation to other routes
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   // State to show password
-  const [showPassword, setShowPassword] = useState(false)
-  
-  const togglePassword = () => setShowPassword((prev) => !prev)
+  const [showPassword, setShowPassword] = useState(false);
+
+  const togglePassword = () => setShowPassword((prev) => !prev);
 
   // States to manage errors, loading state, API error, and user input for sign-up
-  const [errors, setErrors] = useState({})
-  const [apiError, setApiError] = useState(null)
-  const [isLoading, setIsLoading] = useState(false)
+  const [errors, setErrors] = useState({});
+  const [apiError, setApiError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const [signUp, setSignUp] = useState({
     username: '',
     email: '',
-    password: ''
-  })
+    password: '',
+  });
 
   // Handles input changes and clears errors for the current input field
   const handleInputChange = (event) => {
-    const { name, value } = event.target
+    const { name, value } = event.target;
     setSignUp({
       ...signUp,
-      [name]: value
-    })
-    setErrors((prevErrors) => ({ ...prevErrors, [name]: '' }))
-  }
+      [name]: value,
+    });
+    setErrors((prevErrors) => ({ ...prevErrors, [name]: '' }));
+  };
 
   // Validation function to check user inputs
   const validate = () => {
-    const newErrors = {}
+    const newErrors = {};
     if (!signUp.username.trim()) {
-      newErrors.username = 'Please enter a username'
+      newErrors.username = 'Please enter a username';
     }
     if (!signUp.email.trim()) {
-      newErrors.email = 'Please enter your email address'
+      newErrors.email = 'Please enter your email address';
     } else if (!/\S+@\S+\.\S+/.test(signUp.email)) {
-      newErrors.email = 'Please enter a valid email address'
+      newErrors.email = 'Please enter a valid email address';
     }
     if (!signUp.password.trim()) {
-      newErrors.password = 'Please enter a password'
+      newErrors.password = 'Please enter a password';
     } else if (signUp.password.length < 8) {
-      newErrors.password = 'Password must be at least 8 characters long'
+      newErrors.password = 'Password must be at least 8 characters long';
     }
-    return newErrors
-  }
+    return newErrors;
+  };
 
   // Handles form submission for sign-up
   const handleSignUpSubmit = async (event) => {
-    event.preventDefault()
+    event.preventDefault();
 
     // Perform validation before submitting
-    const validationErrors = validate()
+    const validationErrors = validate();
     if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors)
-      return
+      setErrors(validationErrors);
+      return;
     }
 
     // Reset errors and start loading state
-    setErrors({})
-    setIsLoading(true)
-    setApiError(null)
+    setErrors({});
+    setIsLoading(true);
+    setApiError(null);
 
     try {
       // Making a POST request to the backend to create a new user
@@ -80,35 +80,35 @@ function SignUp() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(signUp),
-      })
+      });
 
-      const result = await response.json()
+      const result = await response.json();
 
       // Handle non-success responses from the API
       if (!response.ok) {
-        throw new Error(result.message || 'Failed to sign up')
+        throw new Error(result.message || 'Failed to sign up');
       }
 
       // Successful sign-up, navigate to login page
-      navigate('/login')
+      navigate('/login');
     } catch (error) {
       // Handle API errors based on the message from the backend
       if (error.message.includes('Username already exists')) {
         setApiError(
           'This username is already taken. Please choose a different one.'
-        )
+        );
       } else if (error.message.includes('Email already exists')) {
         setApiError(
           'This email is already registered. Please use a different email or try logging in.'
-        )
+        );
       } else {
-        setApiError('Oops! Something went wrong. Please try again later.')
+        setApiError('Oops! Something went wrong. Please try again later.');
       }
     } finally {
       // Stop the loading state once the process is complete
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   return (
     <Container className='d-flex justify-content-center align-items-center p-5'>
@@ -224,7 +224,7 @@ function SignUp() {
         </div>
       </div>
     </Container>
-  )
+  );
 }
 
-export default SignUp
+export default SignUp;

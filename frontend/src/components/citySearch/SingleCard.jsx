@@ -1,11 +1,11 @@
-import { Button, Card, Col, Image, Row } from 'react-bootstrap'
-import { formatWeatherDate } from '../../modules/useTime.js'
-import { useContext } from 'react'
-import { Context } from '../../modules/Context.jsx'
-import AddFavoriteCity from '../addFavoriteCity/AddFavoriteCity.jsx'
+import { Button, Card, Col, Image, Row } from 'react-bootstrap';
+import { formatWeatherDate } from '../../modules/useTime.js';
+import { useContext } from 'react';
+import { Context } from '../../modules/Context.jsx';
+import AddFavoriteCity from '../addFavoriteCity/AddFavoriteCity.jsx';
 
 function SingleCard({ weatherData, unit, wind }) {
-  const { isLoggedIn } = useContext(Context)
+  const { isLoggedIn } = useContext(Context);
 
   return (
     <Card className='card__city__search'>
@@ -91,7 +91,7 @@ function SingleCard({ weatherData, unit, wind }) {
         </Col>
       </Row>
     </Card>
-  )
+  );
 }
 
-export default SingleCard
+export default SingleCard;

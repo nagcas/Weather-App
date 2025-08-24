@@ -1,4 +1,4 @@
-import { Container } from 'react-bootstrap'
+import { Container } from 'react-bootstrap';
 
 function Legend() {
   return (
@@ -50,7 +50,7 @@ function Legend() {
         indicates wind from the north.
       </p>
     </Container>
-  )
+  );
 }
 
-export default Legend
+export default Legend;
