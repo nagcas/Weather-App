@@ -1,4 +1,5 @@
 import axios from 'axios'
+import handleHttpError from '../utils/handleError.js'
 
 const getWeatherFavoriteCity = async (req, res) => {
   try {
@@ -19,8 +20,11 @@ const getWeatherFavoriteCity = async (req, res) => {
       })
     }
   } catch (error) {
-    console.error('Error occurred while fetching favorite cities: ', error)
-    return res.status(500).json({ message: 'Error occurred while getting city' })
+    console.error('Error occurred while fetching favorite cities: ', error.message)
+    handleHttpError(
+      res,
+      error.message.includes('HTTP error') ? error.message : undefined
+    )
   }
 }
 

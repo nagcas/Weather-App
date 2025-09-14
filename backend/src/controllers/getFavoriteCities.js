@@ -1,4 +1,5 @@
 import User from '../models/user.js'
+import handleHttpError from '../utils/handleError.js'
 
 const getFavoriteCities = async (req, res) => {
   try {
@@ -13,8 +14,11 @@ const getFavoriteCities = async (req, res) => {
 
     res.status(200).json({ list: user.favoriteCities })
   } catch (error) {
-    console.error('Error occurred while fetching favorite cities: ', error)
-    return res.status(500).json({ message: 'Error occurred while getting cities' })
+    console.error('Error occurred while fetching favorite cities: ', error.message)
+    handleHttpError(
+      res,
+      error.message.includes('HTTP error') ? error.message : undefined
+    )
   }
 }
 
