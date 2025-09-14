@@ -1,6 +1,7 @@
 import User from '../models/user.js'
 import City from '../models/cities.js'
 import axios from 'axios'
+import handleHttpError from '../utils/handleError.js'
 
 const addFavoriteCities = async (req, res) => {
   try {
@@ -122,7 +123,10 @@ const addFavoriteCities = async (req, res) => {
     // Log the error and respond with server error
     console.error('Error fetching city data:', error.message)
     console.error(error.stack)
-    res.status(500).json({ message: 'Server error while processing city', error: error.message })
+    handleHttpError(
+      res,
+      error.message.includes('HTTP error') ? error.message : undefined
+    )
   }
 }
 

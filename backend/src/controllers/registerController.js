@@ -2,6 +2,7 @@ import userModel from '../models/user.js'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv'
+import handleHttpError from '../utils/handleError.js'
 
 // Configuring dotenv to load environment variables from the .env file
 dotenv.config()
@@ -38,8 +39,11 @@ const register = async (req, res) => {
 
     return res.status(201).json({ user: result, token })
   } catch (error) {
-    console.log('error while crating user: ', error)
-    return res.status(500).send('Some error occured.')
+    console.log('Error while crating user: ', error.message)
+    handleHttpError(
+      res,
+      error.message.includes('HTTP error') ? error.message : undefined
+    )
   }
 }
 

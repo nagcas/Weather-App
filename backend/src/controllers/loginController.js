@@ -2,6 +2,7 @@ import User from '../models/user.js'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv'
+import handleHttpError from '../utils/handleError.js'
 
 // Configure dotenv to load environment variables from the .env file
 dotenv.config()
@@ -52,8 +53,11 @@ const login = async (req, res) => {
     )
   } catch (error) {
     // Log any errors and return 500 server error
-    console.log('Error while logging in User: ', error)
-    return res.status(500).send('Some error occured')
+    console.log('Error while logging in User: ', error.message)
+    handleHttpError(
+      res,
+      error.message.includes('HTTP error') ? error.message : undefined
+    )
   }
 }
 
