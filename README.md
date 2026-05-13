@@ -54,14 +54,14 @@ Make sure you have Node.js, npm, and MongoDB installed on your computer.
 
   ```bash
   cd frontend
-  npm install
+  pnpm install
   ```
 
 ## For the backend
 
   ```bash
   cd ../backend
-  npm install
+  pnpm install
   ```
 
 ## Configure environment variables
@@ -79,14 +79,14 @@ Create a `.env` file in the `backend` folder with the following content:
   
   ```bash
   cd backend
-  npm start
+  pnpm start
   ```
 
 ## Start the frontend using Vite
 
   ```bash
   cd frontend
-  npm run dev
+  pnpm dev
   ```
 
 ## Contribuire
